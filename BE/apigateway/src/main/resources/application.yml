@@ -1,0 +1,25 @@
+# Gateway ?? ??
+server:
+  port: 8000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #??? ?? ??
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: apigateway
+#  cloud:
+#    gateway:
+#      routes:
+#        # ????? ??? ???.
+#        - id: first-service
+#          uri: http://localhost:8081/
+#          # ?????? ????? uri: lb://MY-FIRST-SERVICE
+#          # predicates? ?????? ???? ??. ???? ??? Path? xxx?? ? uri? ??
+#          predicates:
+#            - Path=/first-service/**
