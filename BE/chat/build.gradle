@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.backtoback'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -20,7 +20,7 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2022.0.2")
+    set('springCloudVersion', "2021.0.6")
 }
 
 dependencies {
