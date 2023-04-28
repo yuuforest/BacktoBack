@@ -1,7 +1,8 @@
-package com.backtoback.point.entity;
+package com.backtoback.point.member.domain;
 
 import java.io.Serializable;
 
+import com.backtoback.point.team.domain.Team;
 import org.hibernate.annotations.ColumnDefault;
 
 

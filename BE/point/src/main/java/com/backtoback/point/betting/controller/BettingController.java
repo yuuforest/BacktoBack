@@ -1,6 +1,8 @@
 package com.backtoback.point.betting.controller;
 
 
+import com.backtoback.point.betting.dto.request.StreamingRoomInfoReq;
+import com.backtoback.point.betting.service.BettingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +22,15 @@ public class BettingController {
 //        return ResponseEntity.status(200).body("EEE");
 //    }
 
+    final BettingService bettingService;
+
     /**
      * 스트리밍 방 생성
-     * 1. 각 팀의 베팅 수 저장 준비 (redis)
-     * 2. 각 팀의 총 베팅 포인트 저장 준비 (redis)
      */
-
-//    @PostMapping("/betting/room-create")
-//    @ApiOperation(value = "스트리밍 방 생성", notes = "스트리밍 방이 처음 생성되면, Redis에 베팅 준비")
-//    public ResponseEntity<?>
+    @PostMapping("/betting/room-create")
+    @ApiOperation(value = "스트리밍 방 생성", notes = "스트리밍 방이 처음 생성되면, Redis에 베팅 준비")
+    public ResponseEntity<?> createStreamingRoom(@RequestBody StreamingRoomInfoReq streamingRoomInfoReq) {
+        bettingService.readyToStartBetting(streamingRoomInfoReq);
+        return ResponseEntity.status(200).body("Success");
+    }
 }

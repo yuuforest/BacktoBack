@@ -1,4 +1,4 @@
-package com.backtoback.point.config;
+package com.backtoback.point.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
