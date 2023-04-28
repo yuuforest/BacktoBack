@@ -17,6 +17,7 @@ import lombok.ToString;
 public class ChatMessage {
 
 	private Long chatRoomId;
+	private ChatRoomType chatRoomType;
 	private Long memberId;
 	private String message;
 

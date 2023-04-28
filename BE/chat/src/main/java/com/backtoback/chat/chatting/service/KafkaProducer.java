@@ -18,8 +18,9 @@ public class KafkaProducer {
 	public void send(String topic, ChatMessage chatMessage){
 		log.info("topic.........................{}", topic);
 		log.info("room....................chatRoomId: {}", chatMessage.getChatRoomId());
+		log.info("roomType...........................: {}", chatMessage.getChatRoomType());
 		log.info("sender...................memberId: {}", chatMessage.getMemberId());
 		log.info("message..................{}", chatMessage.getMessage());
-		kafkaTemplate.send(topic, chatMessage.getChatRoomId(), chatMessage);	//topic, key, value
+		kafkaTemplate.send(topic, chatMessage.getChatRoomId(), chatMessage);	//topic, key, value : topic에 메시지 보내준다.
 	}
 }

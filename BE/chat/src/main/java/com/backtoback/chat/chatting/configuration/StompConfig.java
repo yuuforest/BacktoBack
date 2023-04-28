@@ -11,6 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class StompConfig implements WebSocketMessageBrokerConfigurer {
 
 	/*
+	클라이언트 측에서 연결할 URL Endpoint
 	Stomp Websocket Endpoint: /chat
 	 */
 	@Override
@@ -26,7 +27,7 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
 	 */
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/topic");
-		registry.setApplicationDestinationPrefixes("/kafka");
+		registry.enableSimpleBroker("/topic");	//한 명이 메시지를 발행했을 때 해당 토픽을 구독하고 있는 n명에게 메시지 뿌림
+		registry.setApplicationDestinationPrefixes("/kafka");	//메시지 도착 경로에 대한 prefix 설정
 	}
 }
