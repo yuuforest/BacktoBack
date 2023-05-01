@@ -1,4 +1,14 @@
 package com.backtoback.point.member.repository;
 
-public interface MemberRepository {
+import com.backtoback.point.member.domain.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface MemberRepository extends JpaRepository<Member, Long>{
+
+    Optional<Member> findById(Long memberId);
 }
+

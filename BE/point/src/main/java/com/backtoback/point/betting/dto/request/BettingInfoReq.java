@@ -6,14 +6,15 @@ import lombok.Getter;
 
 @Getter
 @ApiModel("StreamingRoomInfoReq")
-public class StreamingRoomInfoReq {
+public class BettingInfoReq {
 
     @ApiModelProperty(name = "경기 sequence ID")
     private Long gameSeq;
 
-    @ApiModelProperty(name = "home team sequence ID")
-    private Long homeSeq;
+    @ApiModelProperty(name = "베팅팀 sequence ID")
+    private Long teamSeq;
 
-    @ApiModelProperty(name = "away team sequence ID")
-    private Long awaySeq;
+    @ApiModelProperty(name = "베팅 포인트")
+    private Integer bettingPoint;
+
 }
