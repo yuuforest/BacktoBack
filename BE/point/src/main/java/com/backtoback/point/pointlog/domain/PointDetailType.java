@@ -1,4 +1,4 @@
-package com.backtoback.point.entity;
+package com.backtoback.point.pointlog.domain;
 
 import lombok.Getter;
 
