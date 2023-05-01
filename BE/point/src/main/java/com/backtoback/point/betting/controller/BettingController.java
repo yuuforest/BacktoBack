@@ -2,6 +2,8 @@ package com.backtoback.point.betting.controller;
 
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.service.BettingService;
+import com.backtoback.point.member.service.MemberService;
+import com.backtoback.point.pointlog.service.PointLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class BettingController {
 
     final BettingService bettingService;
+    final MemberService memberService;
+    final PointLogService pointLogService;
 
     /**
      * 스트리밍 방 생성
@@ -32,6 +36,8 @@ public class BettingController {
     public ResponseEntity<?> startBetting(@PathVariable("memberSeq") Long memberSeq,
                                           @RequestBody BettingInfoReq bettingInfoReq) {
         bettingService.startBetting(memberSeq, bettingInfoReq);
+        memberService.updateByBetting(memberSeq, bettingInfoReq.getBettingPoint());
+        pointLogService.createPointLog(bettingInfoReq.getBettingPoint(), memberSeq);
         return ResponseEntity.status(200).body("Success");
     }
 }
