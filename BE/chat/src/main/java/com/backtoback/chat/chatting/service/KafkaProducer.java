@@ -16,7 +16,7 @@ public class KafkaProducer {
 	private final KafkaTemplate<Long, ChatMessage> kafkaTemplate;
 
 	public void send(String topic, ChatMessage chatMessage){
-		log.info("topic.........................{}", topic);
+		log.info("Producer!!!!! topic.........................{}", topic);
 		log.info("room....................chatRoomId: {}", chatMessage.getChatRoomId());
 		log.info("roomType...........................: {}", chatMessage.getChatRoomType());
 		log.info("sender...................memberId: {}", chatMessage.getMemberId());

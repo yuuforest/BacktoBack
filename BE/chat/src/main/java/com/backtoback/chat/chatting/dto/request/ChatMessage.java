@@ -21,7 +21,7 @@ public class ChatMessage {
 	private Long memberId;
 	private String message;
 
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	private LocalDateTime time;
+	// @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	// private LocalDateTime time;
 
 }

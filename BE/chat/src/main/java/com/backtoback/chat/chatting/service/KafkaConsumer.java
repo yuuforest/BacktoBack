@@ -21,8 +21,8 @@ public class KafkaConsumer {
 
 	private final SimpMessagingTemplate template;
 
-	@KafkaListener(topics = "kafka-chat", groupId = "kafka-chat-group")
-	public void consume(ChatMessage chatMessage) throws JsonProcessingException {
+	@KafkaListener(topicPattern = "chat.all.game.*")
+	public void consumeAllChat(ChatMessage chatMessage) throws JsonProcessingException {
 		log.info("Consumed ChatMessage.........................{}", chatMessage.getMessage());
 
 		Map<String, String> msg = new HashMap<>();
@@ -35,18 +35,16 @@ public class KafkaConsumer {
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
-		//실제로 사용할 destination 구성
-		// destination.append("/topic")
-		// 			.append("/chat.")
-		// 			.append(chatMessage.getChatRoomType().toString().toLowerCase())
-		// 			.append(".room.")
-		// 			.append(chatMessage.getChatRoomId().toString());
-
-		//임시 destination
-		destination.append("kafka-chat");
+		destination.append("/topic")
+					.append("/chat.message.all.")
+					.append(chatMessage.getChatRoomId().toString());	//실제로는 gameId가 들어가야한다.
 
 		//STOMP Websocket으로 메세지 날려주기
 		template.convertAndSend(String.valueOf(destination), mapper.writeValueAsString(msg));
-
 	}
+
+	/*
+	* team chatting consumer 만들기
+	* */
+
 }
