@@ -3,13 +3,13 @@ package com.backtoback.point.common.exception.business;
 import com.backtoback.point.common.exception.BusinessException;
 import com.backtoback.point.common.exception.ErrorCode;
 
-public class EntityNotFoundException extends BusinessException {
+public class PointLackException extends BusinessException {
 
-    public EntityNotFoundException(String message, ErrorCode errorCode) {
+    public PointLackException(String message, ErrorCode errorCode) {
         super(message, errorCode);
     }
 
-    public EntityNotFoundException(ErrorCode errorCode) {
+    public PointLackException(ErrorCode errorCode) {
         super(errorCode);
     }
 

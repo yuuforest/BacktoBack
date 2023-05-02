@@ -1,6 +1,9 @@
 package com.backtoback.point.betting.controller;
 
+import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.service.BettingService;
+import com.backtoback.point.member.service.MemberService;
+import com.backtoback.point.pointlog.service.PointLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -14,21 +17,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class BettingController {
 
-//    @PostMapping("/register")
-//    @ApiOperation(value = "회원가입", notes = "사용자 정보를 입력받아 회원가입 진행")
-//    public ResponseEntity<?> registerMember() {
-//        return ResponseEntity.status(200).body("EEE");
-//    }
-
     final BettingService bettingService;
+    final MemberService memberService;
+    final PointLogService pointLogService;
 
     /**
      * 스트리밍 방 생성
      */
-    @PostMapping("/betting/start")
+    @PostMapping("betting/start")
     @ApiOperation(value = "베팅을 위한 환경 설정", notes = "베팅을 시작하기 위해, Redis에 환경 설정")
     public ResponseEntity<?> readyToStartBetting(){
         bettingService.readyToStartBetting();
+        return ResponseEntity.status(200).body("Success");
+    }
+
+    @PostMapping("member/{memberSeq}/betting")
+    @ApiOperation(value = "베팅", notes = "회원 각자의 베팅 시작")
+    public ResponseEntity<?> startBetting(@PathVariable("memberSeq") Long memberSeq,
+                                          @RequestBody BettingInfoReq bettingInfoReq) {
+        bettingService.startBetting(memberSeq, bettingInfoReq);
+        memberService.updateByBetting(memberSeq, bettingInfoReq.getBettingPoint());
+        pointLogService.createPointLog(bettingInfoReq.getBettingPoint(), memberSeq);
         return ResponseEntity.status(200).body("Success");
     }
 }
