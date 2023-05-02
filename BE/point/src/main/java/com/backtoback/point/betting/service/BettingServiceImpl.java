@@ -2,6 +2,7 @@ package com.backtoback.point.betting.service;
 
 import com.backtoback.point.betting.domain.Betting;
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
+import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.repository.BettingRepository;
 import com.backtoback.point.common.exception.business.BettingAlreadyExistException;
 import com.backtoback.point.common.exception.business.EntityNotFoundException;
@@ -61,6 +62,12 @@ public class BettingServiceImpl implements BettingService{
             valueOperations.set(homeKey + ":point", 0);
             valueOperations.set(awayKey + ":point", 0);
 
+//            System.out.println("### readyToStartBetting ##############################################################");
+//            System.out.println(valueOperations.get(homeKey + ":count"));
+//            System.out.println(valueOperations.get(awayKey + ":count"));
+//            System.out.println(valueOperations.get(homeKey + ":point"));
+//            System.out.println(valueOperations.get(awayKey + ":point"));
+
             // [Redis] 만료기한
             redisTemplate.expire(homeKey + ":count", 24, TimeUnit.HOURS);
             redisTemplate.expire(awayKey + ":count", 24, TimeUnit.HOURS);
@@ -72,31 +79,25 @@ public class BettingServiceImpl implements BettingService{
     @Override
     public void startBetting(Long memberSeq, BettingInfoReq bettingInfoReq) {
 
-        // *Question*
-        Member member = getMemberByMembers(memberSeq);
+        Member member = getMember(memberSeq);
 
         // 베팅 가능한 포인트인지 확인
         if(bettingInfoReq.getBettingPoint() > member.getPoint()) throw new PointLackException(POINT_LACK_ERROR);
 
         // [betting]
-        createBettingLog(memberSeq, bettingInfoReq);
+        createBettingLog(member, bettingInfoReq);
 
         // [Redis]
         updateRedisLog(bettingInfoReq);
     }
 
     @Override
-    public void createBettingLog(Long memberSeq, BettingInfoReq bettingInfoReq) {
-
-        // *Question*
-        Member member = getMemberByMembers(memberSeq);
-        Game game = getGameByGames(bettingInfoReq.getGameSeq());
-        Team team = getTeamByTeams(bettingInfoReq.getTeamSeq());
+    public void createBettingLog(Member member, BettingInfoReq bettingInfoReq) {
 
         Betting betting = Betting.builder()
                 .bettingPoint(bettingInfoReq.getBettingPoint())
-                .game(game)
-                .team(team)
+                .game(getGame(bettingInfoReq.getGameSeq()))
+                .team(getTeam(bettingInfoReq.getTeamSeq()))
                 .member(member)
                 .build();
 
@@ -112,17 +113,82 @@ public class BettingServiceImpl implements BettingService{
 
         ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
 
+        String key = "game:" + bettingInfoReq.getGameSeq() + ":team:" + bettingInfoReq.getTeamSeq();
+
+        Integer count = valueOperations.get(key + ":count");
+        Integer point = valueOperations.get(key + ":point");
+
+        if(count == null || point == null) throw new RedisNotFoundException(REDIS_NOT_FOUND);
+
+        valueOperations.set(key + ":count", count + 1);
+        valueOperations.set(key + ":point", point + bettingInfoReq.getBettingPoint());
+
+        System.out.println("### updateRedisLog #######################################################################");
+        System.out.println("betting " + bettingInfoReq.getTeamSeq() + " team");
+        System.out.println(valueOperations.get(key + ":count"));
+        System.out.println(valueOperations.get(key + ":point"));
+    }
+
+    @Override
+    public BettingResultRes anticipateBettingResult(Long memberSeq, Long gameSeq) {
+
+        ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
+
         // *Question*
-        Game game = getGameByGames(bettingInfoReq.getGameSeq());
-        Team team = getTeamByTeams(bettingInfoReq.getTeamSeq());
+        Game game = getGame(gameSeq);
+        Long homeSeq = game.getHomeTeam().getTeamSeq();
+        Long awaySeq = game.getAwayTeam().getTeamSeq();
 
-        String key = "game:" + game.getGameSeq() + ":team:" + team.getTeamSeq();
+        // [Redis Key]
+        String redisKey = "game:" + gameSeq + ":team:";
 
-        if(valueOperations.get(key + ":count") == null || valueOperations.get(key + ":point") == null)
-            throw new RedisNotFoundException(REDIS_NOT_FOUND);
+        // [베팅률]
+        double homePercent = calculateHomeRate(homeSeq, awaySeq, redisKey);
+        double awayPercent = 100 - homePercent;
 
-        valueOperations.set(key + ":count", valueOperations.get(key + ":count") + 1);
-        valueOperations.set(key + ":point", valueOperations.get(key + ":point") + bettingInfoReq.getBettingPoint());
+        // [예상 배당금]
+        Integer divdends = calculateDivdends(memberSeq, gameSeq, homeSeq, awaySeq, redisKey);
+
+        return BettingResultRes.builder()
+                .homeSeq(homeSeq)
+                .homePercent(homePercent)
+                .awaySeq(awaySeq)
+                .awayPercent(awayPercent)
+                .divdends(divdends)
+                .build();
+    }
+
+    @Override
+    public double calculateHomeRate(Long homeSeq, Long awaySeq, String key) {
+
+        ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
+
+        Integer homeCount = valueOperations.get(key + homeSeq + ":count");
+        Integer awayCount = valueOperations.get(key + awaySeq + ":count");
+
+        if(homeCount == null || awayCount == null) throw new RedisNotFoundException(REDIS_NOT_FOUND);
+
+        return Math.round(homeCount / (homeCount + awayCount) * 100);
+    }
+
+    @Override
+    public Integer calculateDivdends(Long memberSeq, Long gameSeq, Long homeSeq, Long awaySeq, String key) {
+
+        ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
+
+        Betting betting = bettingRepository.findByMemberAndGame(getMember(memberSeq), getGame(gameSeq))
+                .orElseThrow(() -> new EntityNotFoundException(BETTING_NOT_FOUND));
+
+        Long bettingSeq = betting.getTeam().getTeamSeq();
+        Integer bettingPoint = betting.getBettingPoint();
+
+        Integer homePoint = valueOperations.get(key + homeSeq + ":point");
+        Integer awayPoint  = valueOperations.get(key + awaySeq + ":point");
+
+        if(homePoint == null || awayPoint == null) throw new RedisNotFoundException(REDIS_NOT_FOUND);
+
+        if(bettingSeq.equals(homeSeq)) return Math.round(awayPoint * (bettingPoint/homePoint) * (9/10));
+        else return Math.round(homePoint * (bettingPoint/awayPoint) * (9/10));
     }
 
     // *Question* Rest API로 호출해서 다시 구성해야 함 //////////////////////////////////////////////////////////////////////
@@ -131,15 +197,15 @@ public class BettingServiceImpl implements BettingService{
         return gameRepository.getAllGameByDate(date);
     }
 
-    public Member getMemberByMembers(Long memberSeq) {
+    public Member getMember(Long memberSeq) {
         return memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
     }
 
-    public Game getGameByGames(Long gameSeq) {
+    public Game getGame(Long gameSeq) {
         return gameRepository.findById(gameSeq).orElseThrow(() -> new EntityNotFoundException(GAME_NOT_FOUND));
     }
 
-    public Team getTeamByTeams(Long teamSeq) {
+    public Team getTeam(Long teamSeq) {
         return teamRepository.findById(teamSeq).orElseThrow(() -> new EntityNotFoundException(TEAM_NOT_FOUND));
     }
 

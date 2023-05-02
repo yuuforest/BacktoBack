@@ -1,6 +1,7 @@
 package com.backtoback.point.betting.controller;
 
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
+import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.service.BettingService;
 import com.backtoback.point.member.service.MemberService;
 import com.backtoback.point.pointlog.service.PointLogService;
@@ -39,5 +40,13 @@ public class BettingController {
         memberService.updateByBetting(memberSeq, bettingInfoReq.getBettingPoint());
         pointLogService.createPointLog(bettingInfoReq.getBettingPoint(), memberSeq);
         return ResponseEntity.status(200).body("Success");
+    }
+
+    @GetMapping("member/{memberSeq}/betting")
+    @ApiOperation(value = "베팅 예상 결과 전달", notes = "각 팀의 베팅률과 회원의 예상 배당금 전달")
+    public ResponseEntity<BettingResultRes> anticipateBettingResult (@PathVariable("memberSeq") Long memberSeq,
+                                                                     @RequestParam("gameID") Long gameSeq){
+        BettingResultRes response = bettingService.anticipateBettingResult(memberSeq, gameSeq);
+        return ResponseEntity.status(200).body(response);
     }
 }
