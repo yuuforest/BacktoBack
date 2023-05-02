@@ -11,11 +11,12 @@ public enum ErrorCode { // Response body에 담기는 값 -> front에서 확인
     // betting
     POINT_LACK_ERROR(400, "C002", "포인트가 부족합니다."),
     REDIS_NOT_FOUND(400, "C003", "Redis에 해당하는 key 정보가 존재하지 않습니다."),
+    BETTING_ALREADY_EXIST(400, "C004", "해당 경기에 이미 존재하는 베팅 기록이 있습니다"),
 
     // member & game & team
-    MEMBER_NOT_FOUND(400, "C004", "해당하는 회원 ID 정보가 존재하지 않습니다."),
-    GAME_NOT_FOUND(400, "C005", "해당하는 경기 ID 정보가 존재하지 않습니다. "),
-    TEAM_NOT_FOUND(400, "C006", "해당하는 팀 ID 정보가 존재하지 않습니다. ");
+    MEMBER_NOT_FOUND(400, "C005", "해당하는 회원 ID 정보가 존재하지 않습니다."),
+    GAME_NOT_FOUND(400, "C006", "해당하는 경기 ID 정보가 존재하지 않습니다. "),
+    TEAM_NOT_FOUND(400, "C007", "해당하는 팀 ID 정보가 존재하지 않습니다. ");
 
 
     private final String code;

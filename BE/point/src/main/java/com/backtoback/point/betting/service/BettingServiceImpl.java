@@ -3,6 +3,7 @@ package com.backtoback.point.betting.service;
 import com.backtoback.point.betting.domain.Betting;
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.repository.BettingRepository;
+import com.backtoback.point.common.exception.business.BettingAlreadyExistException;
 import com.backtoback.point.common.exception.business.EntityNotFoundException;
 import com.backtoback.point.common.exception.business.PointLackException;
 import com.backtoback.point.common.exception.business.RedisNotFoundException;
@@ -98,7 +99,12 @@ public class BettingServiceImpl implements BettingService{
                 .team(team)
                 .member(member)
                 .build();
-        bettingRepository.save(betting);
+
+        try {
+            bettingRepository.save(betting);
+        } catch (Exception e) {
+            throw new BettingAlreadyExistException(BETTING_ALREADY_EXIST);
+        }
     }
 
     @Override

@@ -19,14 +19,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void updateByBetting(Long memberSeq, Integer point) {
-        Member member = getMemberByMembers(memberSeq);
+        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
         member.setPoint(member.getPoint() - point);
         member.setBettingTotal(member.getBettingTotal() + 1);
     }
 
-    // *Question* Rest API로 호출해서 다시 구성해야 함 //////////////////////////////////////////////////////////////////////
-
-    public Member getMemberByMembers(Long memberSeq) {
-        return memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
-    }
 }
