@@ -4,6 +4,7 @@ package com.backtoback.point.betting.service;
 import com.backtoback.point.betting.domain.Betting;
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
+import com.backtoback.point.betting.dto.request.KafkaReq;
 import com.backtoback.point.member.domain.Member;
 
 public interface BettingService {
@@ -20,4 +21,7 @@ public interface BettingService {
     BettingResultRes anticipateBettingResult(Long memberSeq, Long gameSeq);
     Long calculateHomeRate(Long homeSeq, Long awaySeq, String key);
     Long calculateDivdends(Betting betting, Long homeSeq, Long awaySeq, String key);
+
+    // [베팅 결과]
+    void getBettingResult(KafkaReq kafkaRes);
 }

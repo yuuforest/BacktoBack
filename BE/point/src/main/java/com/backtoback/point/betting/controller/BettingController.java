@@ -1,10 +1,9 @@
 package com.backtoback.point.betting.controller;
 
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
+import com.backtoback.point.betting.dto.request.KafkaReq;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.service.BettingService;
-import com.backtoback.point.member.service.MemberService;
-import com.backtoback.point.pointlog.service.PointLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class BettingController {
 
-    final BettingService bettingService;
-    final MemberService memberService;
-    final PointLogService pointLogService;
+    private final BettingService bettingService;
 
     /**
      * 스트리밍 방 생성
@@ -37,8 +34,6 @@ public class BettingController {
     public ResponseEntity<?> startBetting(@PathVariable("memberSeq") Long memberSeq,
                                           @RequestBody BettingInfoReq bettingInfoReq) {
         bettingService.startBetting(memberSeq, bettingInfoReq);
-        memberService.updateByBetting(memberSeq, bettingInfoReq.getBettingPoint());
-        pointLogService.createPointLog(bettingInfoReq.getBettingPoint(), memberSeq);
         return ResponseEntity.status(200).body("Success");
     }
 
@@ -48,5 +43,12 @@ public class BettingController {
                                                                      @RequestParam("gameID") Long gameSeq){
         BettingResultRes response = bettingService.anticipateBettingResult(memberSeq, gameSeq);
         return ResponseEntity.status(200).body(response);
+    }
+
+    @PostMapping("betting/result")
+    @ApiOperation(value = "베팅 결과 반영해서 처리", notes = "이거 사라질 예정 왜냐면 kafka로 할거니까")
+    public ResponseEntity<?> getBettingResult (@RequestBody KafkaReq kafkaReq){
+        bettingService.getBettingResult(kafkaReq);
+        return ResponseEntity.status(200).body("Success");
     }
 }

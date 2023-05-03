@@ -18,7 +18,8 @@ public enum ErrorCode { // Response body에 담기는 값 -> front에서 확인
     MEMBER_NOT_FOUND(400, "C006", "해당하는 회원 ID 정보가 존재하지 않습니다."),
     GAME_NOT_FOUND(400, "C007", "해당하는 경기 ID 정보가 존재하지 않습니다. "),
     GAME_NOT_YET_START(400, "C008", "경기 시작 전입니다."),
-    TEAM_NOT_FOUND(400, "C009", "해당하는 팀 ID 정보가 존재하지 않습니다. ");
+    RESULT_NOT_FOUND(400, "C009", "경기 결과를 찾을 수 없습니다."),
+    TEAM_NOT_FOUND(400, "C010", "해당하는 팀 ID 정보가 존재하지 않습니다. ");
 
 
     private final String code;

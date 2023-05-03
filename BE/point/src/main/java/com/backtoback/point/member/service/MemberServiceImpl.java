@@ -14,14 +14,27 @@ import static com.backtoback.point.common.exception.ErrorCode.MEMBER_NOT_FOUND;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    public Member getMember(Long memberSeq) {
+        return memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+    }
 
     @Override
     @Transactional
     public void updateByBetting(Long memberSeq, Integer point) {
-        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+//        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+        Member member = getMember(memberSeq);
         member.setPoint(member.getPoint() - point);
         member.setBettingTotal(member.getBettingTotal() + 1);
+    }
+
+    @Override
+    @Transactional
+    public void updateByBettingResult(Long memberSeq, Integer point) {
+        Member member = getMember(memberSeq);
+        member.setBettingWin(member.getBettingWin() + 1);
+        member.setPoint(member.getPoint() + point);
     }
 
 }

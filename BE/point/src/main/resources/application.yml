@@ -70,6 +70,25 @@ spring:
     host: localhost
     port: 6379
 
+  # kafka
+#  cloud:
+#    function:
+#      definition: process;
+#
+#    stream:
+#      default-binder: kafka
+#
+#      bindings:
+#        process-in-0:
+#          destination: temporary-topic         # 추후 ChatLog 쪽과 이름 통일해야 함
+#          group:  temporary # 컨슈머 그룹        # 추후 ChatLog 쪽과 이름 통일해야 함
+#          content-type: application/json
+#
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+
+
 logging.level:
   #  org.apache: trace
   org.hibernate.SQL: debug

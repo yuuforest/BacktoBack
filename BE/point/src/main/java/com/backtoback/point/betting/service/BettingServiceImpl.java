@@ -3,15 +3,16 @@ package com.backtoback.point.betting.service;
 import com.backtoback.point.betting.domain.Betting;
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
+import com.backtoback.point.betting.dto.request.KafkaReq;
 import com.backtoback.point.betting.repository.BettingRepository;
 import com.backtoback.point.common.exception.business.*;
 import com.backtoback.point.game.domain.Game;
 import com.backtoback.point.game.domain.GameActiveType;
-import com.backtoback.point.game.repository.GameRepository;
+import com.backtoback.point.game.service.GameService;
 import com.backtoback.point.member.domain.Member;
-import com.backtoback.point.member.repository.MemberRepository;
-import com.backtoback.point.team.domain.Team;
-import com.backtoback.point.team.repository.TeamRepository;
+import com.backtoback.point.member.service.MemberService;
+import com.backtoback.point.pointlog.service.PointLogService;
+import com.backtoback.point.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -28,13 +29,14 @@ import static com.backtoback.point.common.exception.ErrorCode.*;
 @RequiredArgsConstructor
 public class BettingServiceImpl implements BettingService{
 
-    final RedisTemplate<String, Integer> redisTemplate;
+    private final RedisTemplate<String, Integer> redisTemplate;
 
-    final BettingRepository bettingRepository;
+    private final MemberService memberService;
+    private final GameService gameService;
+    private final TeamService teamService;
+    private final PointLogService pointLogService;
 
-    final GameRepository gameRepository;
-    final TeamRepository teamRepository;
-    final MemberRepository memberRepository;
+    private final BettingRepository bettingRepository;
 
     // [베팅 시작 전] ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +46,7 @@ public class BettingServiceImpl implements BettingService{
         ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
 
         // *Question* 현재 날짜인 경기 목록 불러오기
-        List<Game> games = getListByGames(String.valueOf(LocalDate.now(ZoneId.of("Asia/Seoul"))));
+        List<Game> games = gameService.getListByGames(String.valueOf(LocalDate.now(ZoneId.of("Asia/Seoul"))));
 
         String homeKey, awayKey;
 
@@ -81,13 +83,17 @@ public class BettingServiceImpl implements BettingService{
     @Override
     public void startBetting(Long memberSeq, BettingInfoReq bettingInfoReq) {
 
-        Member member = getMember(memberSeq);
+        Member member = memberService.getMember(memberSeq);
         // 베팅 가능한 포인트인지 확인
         if(bettingInfoReq.getBettingPoint() > member.getPoint()) throw new PointLackException(POINT_LACK_ERROR);
         // [betting]
         createBettingLog(member, bettingInfoReq);
+        // [member]
+        memberService.updateByBetting(memberSeq, bettingInfoReq.getBettingPoint());
         // [Redis]
         updateRedisLog(bettingInfoReq);
+        // [pointLog]
+        pointLogService.createMinusPointLog(memberSeq, bettingInfoReq.getBettingPoint());
     }
 
     @Override
@@ -95,8 +101,8 @@ public class BettingServiceImpl implements BettingService{
 
         Betting betting = Betting.builder()
                 .bettingPoint(bettingInfoReq.getBettingPoint())
-                .game(getGame(bettingInfoReq.getGameSeq()))
-                .team(getTeam(bettingInfoReq.getTeamSeq()))
+                .game(gameService.getGame(bettingInfoReq.getGameSeq()))
+                .team(teamService.getTeam(bettingInfoReq.getTeamSeq()))
                 .member(member)
                 .build();
 
@@ -135,9 +141,7 @@ public class BettingServiceImpl implements BettingService{
 
         ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
 
-        Game game = getGame(gameSeq);
-
-        System.out.println(game.getGameActiveType());
+        Game game = gameService.getGame(gameSeq);
 
         if(game.getGameActiveType().equals(GameActiveType.BEFORE_GAME))
             throw new GameNotYetStartException(GAME_NOT_YET_START);
@@ -198,31 +202,52 @@ public class BettingServiceImpl implements BettingService{
         Long bettingSeq = betting.getTeam().getTeamSeq();
         Integer bettingPoint = betting.getBettingPoint();
 
-        if(bettingSeq.equals(homeSeq)) return Math.round(awayPoint * ((double)bettingPoint/homePoint) * (9/10.0)) + bettingPoint;
-        else return Math.round(homePoint * ((double)bettingPoint/awayPoint) * (9/10.0)) + bettingPoint;
+        if(bettingSeq.equals(homeSeq))
+            return Math.round(awayPoint * ((double)bettingPoint/homePoint) * (9/10.0)) + bettingPoint;
+        else
+            return Math.round(homePoint * ((double)bettingPoint/awayPoint) * (9/10.0)) + bettingPoint;
+    }
+
+    // [베팅 결과] ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void getBettingResult(KafkaReq kafkaRes) {
+
+        Game game = gameService.getGame(kafkaRes.getGameSeq());
+
+        // 경기 결과 가져오기 - 승리팀 Sequence ID 조회
+        if(game.getWinTeam() == null) throw new ResultNotFoundException(RESULT_NOT_FOUND);
+        Long winSeq = game.getWinTeam().getTeamSeq();
+
+        // 해당 경기에 베팅한 유저 목록 조회
+        List<Betting> bettings = getBettingByGame(game);
+
+        Long gameSeq, homeSeq, awaySeq;
+
+        for (Betting betting : bettings) {
+
+            if(!betting.getTeam().getTeamSeq().equals(winSeq)) continue;
+
+            gameSeq = game.getGameSeq();
+            homeSeq = game.getHomeTeam().getTeamSeq();
+            awaySeq = game.getAwayTeam().getTeamSeq();
+
+            Integer resultPoint = calculateDivdends(betting, homeSeq, awaySeq, "game:" + gameSeq + ":team:").intValue();
+
+            memberService.updateByBettingResult(betting.getMember().getMemberSeq(), resultPoint);
+            pointLogService.createPlusPointLog(betting.getMember().getMemberSeq(), resultPoint);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public List<Game> getListByGames(String date) {
-        return gameRepository.getAllGameByDate(date);
-    }
-
-    public Member getMember(Long memberSeq) {
-        return memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
-    }
-
-    public Game getGame(Long gameSeq) {
-        return gameRepository.findById(gameSeq).orElseThrow(() -> new EntityNotFoundException(GAME_NOT_FOUND));
-    }
-
-    public Team getTeam(Long teamSeq) {
-        return teamRepository.findById(teamSeq).orElseThrow(() -> new EntityNotFoundException(TEAM_NOT_FOUND));
-    }
-
     public Betting getBettingByMemberGame(Long memberSeq, Long gameSeq) {
-        return bettingRepository.findByMemberAndGame(getMember(memberSeq), getGame(gameSeq))
+        return bettingRepository.findByMemberAndGame(memberService.getMember(memberSeq), gameService.getGame(gameSeq))
                 .orElseThrow(() -> new EntityNotFoundException(BETTING_NOT_FOUND));
+    }
+
+    public List<Betting> getBettingByGame(Game game) {
+        return bettingRepository.findByGame(game);
     }
 
 }
