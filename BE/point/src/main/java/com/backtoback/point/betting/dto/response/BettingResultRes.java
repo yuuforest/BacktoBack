@@ -2,8 +2,10 @@ package com.backtoback.point.betting.dto.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 public class BettingResultRes {
 
     //  homePercent awayPercent dividends
