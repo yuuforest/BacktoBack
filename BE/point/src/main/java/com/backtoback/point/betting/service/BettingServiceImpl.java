@@ -123,7 +123,8 @@ public class BettingServiceImpl implements BettingService{
         Integer count = valueOperations.get(key + ":count");
         Integer point = valueOperations.get(key + ":point");
 
-        if(count == null || point == null) throw new RedisNotFoundException(REDIS_NOT_FOUND);
+        if(count == null || point == null) throw new RedisNotFoundException(
+                "해당하는 key 정보가 Redis에 존재하지 않습니다.", REDIS_NOT_FOUND);
 
         valueOperations.set(key + ":count", count + 1);
         valueOperations.set(key + ":point", point + bettingInfoReq.getBettingPoint());
@@ -138,8 +139,6 @@ public class BettingServiceImpl implements BettingService{
 
     @Override
     public BettingResultRes anticipateBettingResult(Long memberSeq, Long gameSeq) {
-
-        ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
 
         Game game = gameService.getGame(gameSeq);
 
@@ -180,7 +179,8 @@ public class BettingServiceImpl implements BettingService{
 //        System.out.println("HOMECOUNT : " + homeCount);
 //        System.out.println("AWAYCOUNT : " + awayCount);
 
-        if(homeCount == null || awayCount == null) throw new RedisNotFoundException(REDIS_NOT_FOUND);
+        if(homeCount == null || awayCount == null) throw new RedisNotFoundException(
+                "해당하는 key 정보가 Redis에 존재하지 않습니다.", REDIS_NOT_FOUND);
 
         return Math.round(homeCount / (double)(homeCount + awayCount) * 100);
     }
@@ -193,7 +193,8 @@ public class BettingServiceImpl implements BettingService{
         Integer homePoint = valueOperations.get(key + homeSeq + ":point");
         Integer awayPoint  = valueOperations.get(key + awaySeq + ":point");
 
-        if(homePoint == null || awayPoint == null) throw new RedisNotFoundException(REDIS_NOT_FOUND);
+        if(homePoint == null || awayPoint == null) throw new RedisNotFoundException(
+                "해당하는 key 정보가 Redis에 존재하지 않습니다.", REDIS_NOT_FOUND);
 
 //        System.out.println("### calculateHomeRate ######################################################################");
 //        System.out.println("HOMEPOINT : " + homePoint);
@@ -216,7 +217,8 @@ public class BettingServiceImpl implements BettingService{
         Game game = gameService.getGame(kafkaRes.getGameSeq());
 
         // 경기 결과 가져오기 - 승리팀 Sequence ID 조회
-        if(game.getWinTeam() == null) throw new ResultNotFoundException(RESULT_NOT_FOUND);
+        if(game.getWinTeam() == null) throw new ResultNotFoundException(
+                "경기 결과를 DB에서 찾을 수 없습니다. ", RESULT_NOT_FOUND);
         Long winSeq = game.getWinTeam().getTeamSeq();
 
         // 해당 경기에 베팅한 유저 목록 조회
@@ -243,7 +245,8 @@ public class BettingServiceImpl implements BettingService{
 
     public Betting getBettingByMemberGame(Long memberSeq, Long gameSeq) {
         return bettingRepository.findByMemberAndGame(memberService.getMember(memberSeq), gameService.getGame(gameSeq))
-                .orElseThrow(() -> new EntityNotFoundException(BETTING_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "해당하는 베팅 ID가 존재하지 않습니다.", ENTITY_NOT_FOUND));
     }
 
     public List<Betting> getBettingByGame(Game game) {

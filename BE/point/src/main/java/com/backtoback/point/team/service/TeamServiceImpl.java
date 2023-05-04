@@ -6,7 +6,7 @@ import com.backtoback.point.team.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.backtoback.point.common.exception.ErrorCode.TEAM_NOT_FOUND;
+import static com.backtoback.point.common.exception.ErrorCode.ENTITY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +16,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team getTeam(Long teamSeq) {
-        return teamRepository.findById(teamSeq).orElseThrow(() -> new EntityNotFoundException(TEAM_NOT_FOUND));
+        return teamRepository.findById(teamSeq).orElseThrow(() -> new EntityNotFoundException(
+                "해당하는 팀 ID 정보가 존재하지 않습니다. ", ENTITY_NOT_FOUND));
     }
 }

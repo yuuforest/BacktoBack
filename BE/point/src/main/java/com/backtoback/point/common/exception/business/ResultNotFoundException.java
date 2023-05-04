@@ -5,8 +5,8 @@ import com.backtoback.point.common.exception.ErrorCode;
 
 public class ResultNotFoundException extends BusinessException {
 
-    public ResultNotFoundException(ErrorCode errorCode) {
-        super(errorCode);
+    public ResultNotFoundException(String message, ErrorCode errorCode) {
+        super(message, errorCode);
     }
 
 }

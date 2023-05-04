@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.backtoback.point.common.exception.ErrorCode.GAME_NOT_FOUND;
+import static com.backtoback.point.common.exception.ErrorCode.ENTITY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +18,8 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game getGame(Long gameSeq) {
-        return gameRepository.findById(gameSeq).orElseThrow(() -> new EntityNotFoundException(GAME_NOT_FOUND));
+        return gameRepository.findById(gameSeq).orElseThrow(() -> new EntityNotFoundException(
+                "해당하는 경기 ID 정보가 존재하지 않습니다. ", ENTITY_NOT_FOUND));
     }
 
     @Override

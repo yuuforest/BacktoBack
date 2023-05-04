@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-import static com.backtoback.point.common.exception.ErrorCode.MEMBER_NOT_FOUND;
+import static com.backtoback.point.common.exception.ErrorCode.ENTITY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +17,13 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     public Member getMember(Long memberSeq) {
-        return memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+        return memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(
+                "해당하는 회원 ID 정보가 존재하지 않습니다.", ENTITY_NOT_FOUND));
     }
 
     @Override
     @Transactional
     public void updateByBetting(Long memberSeq, Integer point) {
-//        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
         Member member = getMember(memberSeq);
         member.setPoint(member.getPoint() - point);
         member.setBettingTotal(member.getBettingTotal() + 1);
