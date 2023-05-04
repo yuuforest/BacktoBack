@@ -2,5 +2,6 @@ package com.backtoback.point.pointlog.service;
 
 public interface PointLogService {
 
-    void createPointLog(Integer point, Long memberSeq);
+    void createMinusPointLog(Long memberSeq, Integer point);
+    void createPlusPointLog(Long memberSeq, Integer point);
 }
