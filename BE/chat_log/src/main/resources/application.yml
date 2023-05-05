@@ -7,12 +7,12 @@ server:
       charset: utf-8
       enabled: true
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
 
 logging:
   level:
@@ -24,32 +24,87 @@ spring:
     name: chat_log
 
   cloud:
+    function:
+      definition: process;
+
+
     stream:
       default-binder: kafka
+
+      bindings:
+        process-in-0:
+          destination: chat-room-1
+          group: group1 # 컨슈머 그룹
+          content-type: application/json
+#          consumer:
+#            batch-mode: true #한꺼번에 가져오기
+#            partitioned: false
+#            instance-count: 1
+
+
+#        process-out-0:
+#          destination: topic2
+#          producer:
+#            auto-startup: false
+#            poller:
+#              fixedDelay: 0
+
+
+        pollableInput: #name of our custom channel
+          group: pollable-group #kafka consumer group
+          destination: chat-room-1 #setting kafka topic to read from
+
+
       kafka:
         binder:
           auto-create-topics: false # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
           brokers: localhost:9092
 
 
+      #          replication-factor: 1
+
+          consumer-properties:
+            max:
+              poll:
+                records: 10000
+#            fetch:
+#              max:
+#                wait:
+#                  ms: 5000
+
+      #          consumer-properties:
+#            auto.offset.reset: latest
+
+
+
+      #        bindings:
+
+  #          process-out-0:
+#            producer:
+#              configuration:
+#                value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+#      pollable-source: chat-room-1
+
+
   datasource:
     # develop 브랜치 용
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: ssafy
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: ssafy
 
     # ssafy 노트북 local 용
-    #        driver-class-name: org.mariadb.jdbc.Driver
-    #        url: jdbc:mariadb://localhost:3306/bundler?useUnicode=true&characterEncoding=utf-8
-    #        username: root
-    #        password: ssafy
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: ssafy
 
     # 효진 노트북 local 용
-    #    url: jdbc:mysql://localhost:3306/bundler?useUnicode=true&characterEncoding=utf-8
-    #    username: ssafy
-    #    password: ssafy
-    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
+    username: ssafy
+    password: ssafy
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
     #추가
     hikari:
@@ -67,7 +122,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none # create, update, none
+      ddl-auto: update # create, update, none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
     #    show-sql: true
@@ -100,6 +155,8 @@ logging.level:
   org.hibernate.type: trace
   org:
     springframework:
+      cloud.stream.binder: trace
+      messaging: trace
 
       security: trace
 

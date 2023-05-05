@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.apache.kafka:kafka-streams'
     implementation 'org.springframework.cloud:spring-cloud-bus'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.cloud:spring-cloud-stream'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka-streams'
@@ -43,6 +43,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.batch:spring-batch-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 dependencyManagement {
