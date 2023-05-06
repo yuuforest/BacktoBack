@@ -1,5 +1,7 @@
 package com.backtoback.chat.chatting.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,15 +24,28 @@ public class StompKafkaController {
 
 	private final KafkaProducer kafkaProducer;
 
-	@MessageMapping("/chat.message.{chatRoomType}.{gameId}")
-	public void message(@RequestBody ChatMessage chatMessage,
-						@DestinationVariable String chatRoomType,
-						@DestinationVariable Long gameId) throws JsonProcessingException {
-		log.info("client message......................... {}", chatMessage);
+	@MessageMapping("/chat.message.all.{gameSeq}")
+	public void messageOfAllChat(@RequestBody ChatMessage chatMessage,
+						@DestinationVariable Long gameSeq) {
+		log.info("client message from game all chatting......................... {}", chatMessage);
+
+		chatMessage.setTime(LocalDateTime.now());
 
 		//Kafka Producer send
 		StringBuilder kafkaTopicName = new StringBuilder(100);
-		kafkaTopicName.append("chat.").append(chatRoomType).append(".game.").append(gameId);	//chat.all.game.1
+		kafkaTopicName.append("chat.all.game.").append(gameSeq);
+		kafkaProducer.send(kafkaTopicName.toString(), chatMessage);
+	}
+
+	@MessageMapping("/chat.message.team.{teamSeq}.game.{gameSeq}")
+	public void messageOfTeamChat(@RequestBody ChatMessage chatMessage,
+							@DestinationVariable Long teamSeq, @DestinationVariable Long gameSeq) {
+		log.info("client message from team chatting......................... {}", chatMessage);
+
+		chatMessage.setTime(LocalDateTime.now());
+
+		StringBuilder kafkaTopicName = new StringBuilder(100);
+		kafkaTopicName.append("chat.team").append(teamSeq).append(".game.").append(gameSeq);
 		kafkaProducer.send(kafkaTopicName.toString(), chatMessage);
 	}
 }

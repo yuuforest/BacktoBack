@@ -29,6 +29,7 @@ public class KafkaProducerConfig {
 		Map<String, Object> configurations = new HashMap<>();
 		//브로커 주소 설정 : 카프카 주소 + 포트
 		configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		// configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "k8a708.p.ssafy.io:9092");
 		//key Serializer
 		configurations.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
 		//value Serializer

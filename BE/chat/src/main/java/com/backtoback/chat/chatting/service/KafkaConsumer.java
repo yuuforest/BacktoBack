@@ -21,30 +21,60 @@ public class KafkaConsumer {
 
 	private final SimpMessagingTemplate template;
 
+	/**
+	 * 경기 내 전체 채팅 Consumer
+	 * @param chatMessage
+	 * @throws JsonProcessingException
+	 */
 	@KafkaListener(topicPattern = "chat.all.game.*")
 	public void consumeAllChat(ChatMessage chatMessage) throws JsonProcessingException {
-		log.info("Consumed ChatMessage.........................{}", chatMessage.getMessage());
+		log.info("Consumed ChatMessage.........................{}", chatMessage.toString());
 
 		Map<String, String> msg = new HashMap<>();
-		msg.put("chatRoomId", chatMessage.getChatRoomId().toString());
-		msg.put("chatRoomType", chatMessage.getChatRoomType().toString());
-		msg.put("memberId", chatMessage.getMemberId().toString());
+		msg.put("gameSeq", chatMessage.getGameSeq().toString());
+		msg.put("memberId", chatMessage.getMemberSeq().toString());
+		msg.put("memberTeamSeq", chatMessage.getMemberTeamSeq().toString());
+		msg.put("nickname", chatMessage.getNickname());
 		msg.put("message", chatMessage.getMessage());
-		// msg.put("time", chatMessage.getTime().toString());
+		msg.put("time", chatMessage.getTime().toString());
 
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
 		destination.append("/topic")
 					.append("/chat.message.all.")
-					.append(chatMessage.getChatRoomId().toString());	//실제로는 gameId가 들어가야한다.
+					.append(chatMessage.getGameSeq());
 
 		//STOMP Websocket으로 메세지 날려주기
 		template.convertAndSend(String.valueOf(destination), mapper.writeValueAsString(msg));
 	}
 
-	/*
-	* team chatting consumer 만들기
-	* */
+	/**
+	 * 경기 내 마이팀 채팅 Consumer
+	 * @param chatMessage
+	 * @throws JsonProcessingException
+	 */
+	@KafkaListener(topicPattern = "chat.team.*")
+	public void consumeTeamChat(ChatMessage chatMessage) throws JsonProcessingException {
+		log.info("Consumed ChatMessage.........................{}", chatMessage.toString());
 
+		Map<String, String> msg = new HashMap<>();
+		msg.put("gameSeq", chatMessage.getGameSeq().toString());
+		msg.put("memberId", chatMessage.getMemberSeq().toString());
+		msg.put("memberTeamSeq", chatMessage.getMemberTeamSeq().toString());
+		msg.put("nickname", chatMessage.getNickname());
+		msg.put("message", chatMessage.getMessage());
+		msg.put("time", chatMessage.getTime().toString());
+
+		ObjectMapper mapper = new ObjectMapper();
+		StringBuilder destination = new StringBuilder(50);
+
+		destination.append("/topic")
+					.append("/chat.message.team.")
+					.append(chatMessage.getMemberTeamSeq())
+					.append(".game.")
+					.append(chatMessage.getGameSeq());
+
+		template.convertAndSend(String.valueOf(destination), mapper.writeValueAsString(msg));
+	}
 }

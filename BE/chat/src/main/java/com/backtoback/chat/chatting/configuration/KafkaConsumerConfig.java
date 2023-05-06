@@ -36,14 +36,11 @@ public class KafkaConsumerConfig {
 		deserializer.setUseTypeMapperForKey(true);
 
 		Map<String, Object> config = new HashMap<>();
-		//브로커 주소 설정 : 카프카 주소 + 포트
-		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-		//key Deserializer
-		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);
-		//value Deserializer
-		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
+		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");	//브로커 주소 설정 : 카프카 주소 + 포트
+		// config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "k8a708.p.ssafy.io:9092");	//브로커 주소 설정 : 카프카 주소 + 포트
+		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);	//key Deserializer
+		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);	//value Deserializer
 		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
-		// config.put("group.id", "{kafka-group-id}");
 		config.put(ConsumerConfig.GROUP_ID_CONFIG, "kafka-chat-group");
 
 		return new DefaultKafkaConsumerFactory<>(config, new LongDeserializer(), deserializer);

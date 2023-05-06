@@ -8,20 +8,19 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class ChatMessage {
 
-	private Long chatRoomId;
-	private ChatRoomType chatRoomType;
-	private Long memberId;
+	private Long gameSeq;
+	private Long memberSeq;
+	private Long memberTeamSeq;
+	private String nickname;
 	private String message;
 
-	// @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	// private LocalDateTime time;
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	private LocalDateTime time;
 
 }

@@ -13,6 +13,13 @@ eureka:
 spring:
   application:
     name: apigateway
+  cloud:
+    gateway:
+      routes:
+        - id: chat
+          uri: http://localhost:8087/
+          predicates:
+            - Path=/chat/**
 #  cloud:
 #    gateway:
 #      routes:
