@@ -6,11 +6,13 @@ import com.backtoback.business.game.dto.GameResponseDto;
 import com.backtoback.business.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class GameServiceImpl implements GameService{
 
