@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -19,6 +20,9 @@ import com.backtoback.chat.chatting.dto.request.ChatMessage;
 @EnableKafka
 public class KafkaProducerConfig {
 
+	@Value("${spring.kafka.bootstrap-servers}")
+	private String bootstrapServers;
+
 	@Bean
 	public ProducerFactory<Long, ChatMessage> producerFactory(){
 		return new DefaultKafkaProducerFactory<>(kafkaProducerConfiguration());
@@ -28,8 +32,7 @@ public class KafkaProducerConfig {
 	public Map<String, Object> kafkaProducerConfiguration(){
 		Map<String, Object> configurations = new HashMap<>();
 		//브로커 주소 설정 : 카프카 주소 + 포트
-		configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-		// configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "k8a708.p.ssafy.io:9092");
+		configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		//key Serializer
 		configurations.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
 		//value Serializer

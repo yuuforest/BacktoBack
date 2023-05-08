@@ -79,6 +79,11 @@ spring:
   mvc:
     log-request-details: true # request의 parameter 값 등을 log에서 못 보는 설정 해제
 
+  kafka:
+    bootstrap-servers: localhost:9092 #k8a708.p.ssafy.io:9092
+    consumer:
+      group-id: kafka-chat-group
+
 #  servlet:
 #    multipart:
 #      maxFileSize: 10MB
