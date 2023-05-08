@@ -1,8 +1,9 @@
-package com.backtoback.point.entity;
+package com.backtoback.point.pointlog.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.backtoback.point.member.domain.Member;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;

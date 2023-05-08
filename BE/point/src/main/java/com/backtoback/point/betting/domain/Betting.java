@@ -13,9 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.backtoback.point.entity.Game;
-import com.backtoback.point.entity.Member;
-import com.backtoback.point.entity.Team;
+import com.backtoback.point.game.domain.Game;
+import com.backtoback.point.member.domain.Member;
+import com.backtoback.point.team.domain.Team;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

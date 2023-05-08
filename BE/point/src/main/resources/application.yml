@@ -3,8 +3,8 @@ server:
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
       defaultZone: http://localhost:8761/eureka
 
@@ -65,6 +65,29 @@ spring:
 
   mvc:
     log-request-details: true # request의 parameter 값 등을 log에서 못 보는 설정 해제
+
+  redis:
+    host: localhost
+    port: 6379
+
+  # kafka
+#  cloud:
+#    function:
+#      definition: process;
+#
+#    stream:
+#      default-binder: kafka
+#
+#      bindings:
+#        process-in-0:
+#          destination: temporary-topic         # 추후 ChatLog 쪽과 이름 통일해야 함
+#          group:  temporary # 컨슈머 그룹        # 추후 ChatLog 쪽과 이름 통일해야 함
+#          content-type: application/json
+#
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+
 
 logging.level:
   #  org.apache: trace

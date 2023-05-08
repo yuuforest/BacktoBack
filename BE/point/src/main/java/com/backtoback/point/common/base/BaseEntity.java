@@ -1,4 +1,4 @@
-package com.backtoback.point.base;
+package com.backtoback.point.common.base;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
