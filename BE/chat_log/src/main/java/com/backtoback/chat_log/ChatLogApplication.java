@@ -1,34 +1,18 @@
 package com.backtoback.chat_log;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.binder.PollableMessageSource;
-import org.springframework.cloud.stream.binder.PollableSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
-import com.backtoback.chat_log.chat_log.dto.request.ChatMessage;
-import com.backtoback.chat_log.chat_log.dto.request.ChatRoom;
+import com.backtoback.chat_log.chat_log.dto.request.GameConditionDto;
+import com.backtoback.chat_log.chat_log.kafka.MessagePollScheduler;
+import com.backtoback.chat_log.entity.GameActiveType;
 
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @Slf4j
@@ -36,10 +20,6 @@ import reactor.core.publisher.Mono;
 @EnableAsync
 // @EnableDiscoveryClient
 public class ChatLogApplication {
-
-	// public static void main(String[] args) {
-	// 	SpringApplication.run(ChatLogApplication.class, "--spring.cloud.stream.pollable-source=chat-room-1");
-	// }
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChatLogApplication.class, args);
@@ -54,10 +34,40 @@ public class ChatLogApplication {
 	// 	};
 	// }
 
+	/*
+	게임 시작,끝 Event 받는 Consumer
+	 */
+	@Bean
+	public Consumer<GameConditionDto> getGameCondition(MessagePollScheduler messagePollScheduler) {
+		return gameConditionDto -> {
+			log.info(gameConditionDto.toString());
+
+			Long gameSeq = gameConditionDto.getGameSeq();
+			GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
+
+			// ScheduledFuture<?> scheduledFuture = null; //null 처리 필요
+
+			if (gameActiveType == GameActiveType.IN_GAME) { //경기 시작
+				log.info("경기 시작");
+				messagePollScheduler.startTask();
+			} else if (gameActiveType == GameActiveType.AFTER_GAME) { //경기 끝
+				log.info("경기 끝");
+				messagePollScheduler.cancelTask();
+			}
+		};
+	}
+
 	// @Bean
-	// public Consumer<ChatMessage> process() {
-	// 	return chatMessage -> {
-	// 		log.info("##### message for process : {}", chatMessage.toString());
+	// public Consumer<String> process() {
+	// 	return msg -> {
+	// 		log.info(msg);
+	// 	};
+	// }
+
+	// @Bean
+	// public Consumer<ChatMessageDto> pollableInput() {
+	// 	return msg -> {
+	// 		// log.info(msg.toString());
 	// 	};
 	// }
 
@@ -76,13 +86,13 @@ public class ChatLogApplication {
 	// }
 
 	// @Bean
-	// public ApplicationRunner poller(PollableMessageSource destIn) {
+	// public ApplicationRunner pollableInput2(PollableMessageSource destIn) {
 	// 	return args -> {
 	// 		log.info("여기진입");
 	// 		while (true) {
 	// 			try {
 	// 				if (!destIn.poll(m -> {
-	// 					String newPayload = (new String((byte[]) m.getPayload())).toUpperCase();
+	// 					String newPayload = (new String((byte[])m.getPayload())).toUpperCase();
 	// 					System.out.println("PAYLOAD: " + newPayload);
 	// 					log.info("poll 중 - {}", newPayload);
 	//
@@ -90,7 +100,7 @@ public class ChatLogApplication {
 	// 					log.info("Thread Sleep...........");
 	// 					boolean result = destIn.poll(m -> {
 	// 						log.info(m.toString());
-	// 						String newPayload = (new String((byte[]) m.getPayload())).toUpperCase();
+	// 						String newPayload = (new String((byte[])m.getPayload())).toUpperCase();
 	// 						System.out.println("PAYLOAD: " + newPayload);
 	// 						log.info("poll 중 - {}", newPayload);
 	// 					});
@@ -98,8 +108,7 @@ public class ChatLogApplication {
 	// 					log.info(String.valueOf(result));
 	// 					Thread.sleep(5000);
 	// 				}
-	// 			}
-	// 			catch (Exception e) {
+	// 			} catch (Exception e) {
 	// 				e.printStackTrace();
 	// 			}
 	// 		}
@@ -154,7 +163,7 @@ public class ChatLogApplication {
 	//
 	// boolean result = pollableSource.poll(received -> {
 	// 	Map<String, Foo> payload = (Map<String, Foo>) received.getPayload();
-    //         ...
+	//         ...
 	//
 	// }, new ParameterizedTypeReference<Map<String, Foo>>() {});
 
