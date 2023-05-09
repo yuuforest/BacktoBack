@@ -45,11 +45,21 @@ spring:
     time-zone: Asia/Seoul
   mvc:
     log-request-details: true # request의 parameter 값 등을 log에서 못 보는 설정 해제
-
-#  servlet:
-#    multipart:
-#      maxFileSize: 10MB
-#      max-request-size: 10MB
+  redis:
+    host: localhost
+    port: 6379
+  cloud:
+    function:
+      definition: consumer;producer
+    stream:
+      bindings:
+        producer-out-0:
+          destination: game-event
+        consumer-in-0:
+          destination: game-event
+      kafka:
+        binder:
+          brokers: localhost:9092
 
 logging.level:
   #  org.apache: trace
@@ -63,3 +73,6 @@ logging.level:
           security: trace
       web: trace
       http: trace
+
+sock:
+  url: ws://localhost:8888/kurento
