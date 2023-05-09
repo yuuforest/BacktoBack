@@ -24,6 +24,7 @@ public class FeignServiceImpl implements FeignService{
 
 	@Override
 	public List<Long> getTodayGameSeq() {
+		log.info("feign client 호출!!!!!!!");
 		return feignClient.getTodayGameSeq();
 	}
 

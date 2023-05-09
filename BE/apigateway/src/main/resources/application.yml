@@ -22,3 +22,7 @@ spring:
           uri: http://localhost:8087/
           predicates:
             - Path=/ws-chat/**
+        - id: business
+          uri: http://localhost:8086/
+          predicates:
+            - Path=/business/**

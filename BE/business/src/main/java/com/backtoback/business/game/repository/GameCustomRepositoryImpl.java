@@ -32,6 +32,17 @@ public class GameCustomRepositoryImpl implements GameCustomRepository {
                 .fetch();
     }
 
+    @Override
+    public List<Game> getAllYesterdayGame() {
 
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDateTime startOfDay = LocalDateTime.of(yesterday, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(yesterday, LocalTime.MAX);
+
+        return jpaQueryFactory
+            .selectFrom(game)
+            .where(game.gameDatetime.between(startOfDay, endOfDay))
+            .fetch();
+    }
 
 }

@@ -32,7 +32,7 @@ public class GameScheduler {
   @Scheduled(cron = "0 0/2 * * * *")
   public void dateChange(){
     log.info("dateChange");
-    videoServiceClient.makeRoom();
+    // videoServiceClient.makeRoom();
 //    bettingServiceClient.makeRoom();
   }
 

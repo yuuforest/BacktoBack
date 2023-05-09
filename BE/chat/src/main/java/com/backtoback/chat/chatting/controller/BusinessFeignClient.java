@@ -15,9 +15,9 @@ public interface BusinessFeignClient {
 	@RequestMapping(method = RequestMethod.GET, value = "/teams/game/{gameSeq}")
 	GameTeamSeqRes getGameTeamSeq(@PathVariable("gameSeq") Long gameSeq);
 
-	@RequestMapping(method = RequestMethod.GET, value = "games/today")
+	@RequestMapping(method = RequestMethod.GET, value = "/games/today")
 	List<Long> getTodayGameSeq();
 
-	@RequestMapping(method = RequestMethod.GET, value = "games/yesterday")
+	@RequestMapping(method = RequestMethod.GET, value = "/games/yesterday")
 	List<Long> getYesterdayGameSeq();
 }
