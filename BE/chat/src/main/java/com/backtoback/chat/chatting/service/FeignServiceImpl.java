@@ -1,5 +1,7 @@
 package com.backtoback.chat.chatting.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.backtoback.chat.chatting.controller.BusinessFeignClient;
@@ -18,5 +20,15 @@ public class FeignServiceImpl implements FeignService{
 	@Override
 	public GameTeamSeqRes getGameTeamSeq(Long gameSeq) {
 		return feignClient.getGameTeamSeq(gameSeq);
+	}
+
+	@Override
+	public List<Long> getTodayGameSeq() {
+		return feignClient.getTodayGameSeq();
+	}
+
+	@Override
+	public List<Long> getYesterdayGameSeq() {
+		return feignClient.getYesterdayGameSeq();
 	}
 }
