@@ -53,8 +53,8 @@ public class BettingServiceImpl implements BettingService{
         // [Redis] 각 팀의 베팅수 0 저장
         for(Game game : games) {
 
-            homeKey = "game:" + game.getGameSeq() + ":team:" + game.getHomeTeam().getTeamSeq();
-            awayKey = "game:" + game.getGameSeq() + ":team:" + game.getAwayTeam().getTeamSeq();
+            homeKey = "betting:game:" + game.getGameSeq() + ":team:" + game.getHomeTeam().getTeamSeq();
+            awayKey = "betting:game:" + game.getGameSeq() + ":team:" + game.getAwayTeam().getTeamSeq();
 
             // [Redis] 각 팀의 베팅수 0 저장
             valueOperations.set(homeKey + ":count", 0);
@@ -118,7 +118,7 @@ public class BettingServiceImpl implements BettingService{
 
         ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
 
-        String key = "game:" + bettingInfoReq.getGameSeq() + ":team:" + bettingInfoReq.getTeamSeq();
+        String key = "betting:game:" + bettingInfoReq.getGameSeq() + ":team:" + bettingInfoReq.getTeamSeq();
 
         Integer count = valueOperations.get(key + ":count");
         Integer point = valueOperations.get(key + ":point");
@@ -149,7 +149,7 @@ public class BettingServiceImpl implements BettingService{
         Long awaySeq = game.getAwayTeam().getTeamSeq();
 
         // [Redis Key]
-        String redisKey = "game:" + gameSeq + ":team:";
+        String redisKey = "betting:game:" + gameSeq + ":team:";
 
         // [베팅률]
         Long homePercent = calculateHomeRate(homeSeq, awaySeq, redisKey);
