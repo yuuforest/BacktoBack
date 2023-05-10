@@ -89,6 +89,25 @@ spring:
 #      maxFileSize: 10MB
 #      max-request-size: 10MB
 
+chat:
+  kafka:
+    topics:
+      - chat.all.game.1
+      - chat.all.game.2
+      - chat.all.game.3
+      - chat.all.game.4
+      - chat.all.game.5
+      - chat.team.1
+      - chat.team.2
+      - chat.team.3
+      - chat.team.4
+      - chat.team.5
+      - chat.team.6
+      - chat.team.7
+      - chat.team.8
+      - chat.team.9
+      - chat.team.10
+
 
 logging.level:
   #  org.apache: trace
