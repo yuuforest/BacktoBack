@@ -72,7 +72,7 @@ spring:
           destination: game-event
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: k8a708.p.ssafy.io:9092
 
 
 #  servlet:

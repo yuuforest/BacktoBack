@@ -53,22 +53,19 @@ public class KafkaTopicServiceImpl implements KafkaTopicService{
 		log.info("adminClient............................................:{}", adminClient);
 		log.info("topinNameList..........................................:{}", topicNameList);
 
-		DeleteTopicsResult deleteTopicsResult = adminClient.deleteTopics(topicNameList);
-		log.info("토픽 삭제 완료............................................");
-
-		// try{
-		// 	//토픽 삭제가 완료되길 기다림 ... deleteTopics가 비동기여서 필요하다.
-		// 	log.info("try.....................................................");
-		// 	DeleteTopicsResult deleteTopicsResult = adminClient.deleteTopics(topicNameList);
-		// 	log.info("next....................................................");
-		// 	log.info("adminClient..............................................:{}", adminClient);
-		// 	deleteTopicsResult.all().get();
-		// 	log.info("토픽 삭제 완료............................................");
-		// 	log.info("토픽 리스트...............................................: {}", topicNameList);
-		// } catch (InterruptedException | ExecutionException e){
-		// 	//토픽 삭제 중 에러 처리
-		// 	e.printStackTrace();
-		// }
+		try{
+			//토픽 삭제가 완료되길 기다림 ... deleteTopics가 비동기여서 필요하다.
+			log.info("try.....................................................");
+			DeleteTopicsResult deleteTopicsResult = adminClient.deleteTopics(topicNameList);
+			log.info("next....................................................");
+			log.info("adminClient..............................................:{}", adminClient);
+			deleteTopicsResult.all().get();
+			log.info("토픽 삭제 완료............................................");
+			log.info("토픽 리스트...............................................: {}", topicNameList);
+		} catch (InterruptedException | ExecutionException e){
+			//토픽 삭제 중 에러 처리
+			e.printStackTrace();
+		}
 		adminClient.close();
 	}
 }

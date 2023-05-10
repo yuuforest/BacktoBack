@@ -28,28 +28,28 @@ public class KafkaTopicScheduler {
 	//화~일 아침 7시 토픽 생성
 	// @Scheduled(cron="0 0 7 * * 2-7")
 	// @Scheduled(initialDelay = 10000, fixedDelay = 10000000)
-	@Scheduled(cron = "0 29 17 * * *")
-	public void createTopic(){
+	@Scheduled(cron = "0 16 10 * * *")
+	public void createTopic() {
 		log.info("[CREATE SCHEDULER START].........................................................");
 
 		List<String> topicList = new ArrayList<>();
 
 		log.info("list는 생성됨..................................");
-		System.out.println(feignService+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(feignService + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 		List<Long> gameSeqList = feignService.getTodayGameSeq();
 
 		log.info("[CREATE TOPIC] gameSeqList............................................: {}", gameSeqList);
 
-		if(gameSeqList != null && gameSeqList.size() != 0){
+		if (gameSeqList != null && gameSeqList.size() != 0) {
 			//전체 채팅 토픽 생성
-			for(Long gameSeq : gameSeqList){
+			for (Long gameSeq : gameSeqList) {
 				String newTopicName = allChatPrefix + gameSeq;
 				topicList.add(newTopicName);
 			}
 
 			//팀 채팅 토픽 생성 : gameSeq에 따른 어떤 team이 참여하는 지 알아야 함.
-			for(Long gameSeq : gameSeqList){
+			for (Long gameSeq : gameSeqList) {
 				GameTeamSeqRes teams = feignService.getGameTeamSeq(gameSeq);
 				String topic1 = teamChatPrefix + teams.getHomeSeq() + teamChatPostfix + gameSeq;
 				String topic2 = teamChatPrefix + teams.getAwaySeq() + teamChatPostfix + gameSeq;
@@ -63,12 +63,13 @@ public class KafkaTopicScheduler {
 
 	//월, 수~일 새벽 2시 토픽 삭제
 	// @Scheduled(cron="0 0 2 * * 1,3-7")
-	@Scheduled(cron = "0 38 17 * * *")
-	public void deleteTopic(){
+	@Scheduled(cron = "0 15 10 * * *")
+	public void deleteTopic() {
 		log.info("[DELETE SCHEDULER START].........................................................");
 
 		List<String> topicList = new ArrayList<>();
-		List<Long> gameSeqList = feignService.getYesterdayGameSeq();
+		// List<Long> gameSeqList = feignService.getYesterdayGameSeq();
+		List<Long> gameSeqList = feignService.getTodayGameSeq();
 
 		log.info("[DELETE TOPIC] gameSeqList............................................: {}", gameSeqList);
 
@@ -88,6 +89,8 @@ public class KafkaTopicScheduler {
 			}
 
 			kafkaTopicService.deleteTopic(topicList);
+
 		}
 	}
 }
+
