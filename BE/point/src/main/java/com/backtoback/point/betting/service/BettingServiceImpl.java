@@ -2,6 +2,7 @@ package com.backtoback.point.betting.service;
 
 import com.backtoback.point.betting.domain.Betting;
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
+import com.backtoback.point.betting.dto.response.BettingInfoRes;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.dto.request.KafkaReq;
 import com.backtoback.point.betting.repository.BettingRepository;
@@ -76,6 +77,21 @@ public class BettingServiceImpl implements BettingService{
             redisTemplate.expire(homeKey + ":point", 24, TimeUnit.HOURS);
             redisTemplate.expire(awayKey + ":point", 24, TimeUnit.HOURS);
         }
+    }
+
+    @Override
+    public BettingInfoRes getBettingInfo(Long memberSeq, Long gameSeq) {
+
+        Member member = memberService.getMember(memberSeq);
+        Game game = gameService.getGame(gameSeq);
+
+        Betting betting = bettingRepository.findByMemberAndGame(member, game).orElseThrow(() ->
+                new EntityNotFoundException("해당하는 베팅 정보가 존재하지 않습니다. ", ENTITY_NOT_FOUND));
+
+        return BettingInfoRes.builder()
+                .teamSeq(betting.getTeam().getTeamSeq())
+                .bettingPoint(betting.getBettingPoint())
+                .build();
     }
 
     // [베팅 시작] //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,6 +174,11 @@ public class BettingServiceImpl implements BettingService{
         // [예상 배당금]
         Long divdends = calculateDivdends(getBettingByMemberGame(memberSeq, gameSeq), homeSeq, awaySeq, redisKey);
 
+        System.out.println("### anticipateBettingResult ##################################################################");
+        System.out.println("HomePercent : " + homePercent);
+        System.out.println("AwayPercent : " + awayPercent);
+        System.out.println("Divdends : " + divdends);
+
         return BettingResultRes.builder()
                 .homeSeq(homeSeq)
                 .homePercent(homePercent)
@@ -175,9 +196,9 @@ public class BettingServiceImpl implements BettingService{
         Integer homeCount = valueOperations.get(key + homeSeq + ":count");
         Integer awayCount = valueOperations.get(key + awaySeq + ":count");
 
-//        System.out.println("### calculateHomeRate ######################################################################");
-//        System.out.println("HOMECOUNT : " + homeCount);
-//        System.out.println("AWAYCOUNT : " + awayCount);
+        System.out.println("### calculateHomeRate ######################################################################");
+        System.out.println("HOMECOUNT : " + homeCount);
+        System.out.println("AWAYCOUNT : " + awayCount);
 
         if(homeCount == null || awayCount == null) throw new RedisNotFoundException(
                 "해당하는 key 정보가 Redis에 존재하지 않습니다.", REDIS_NOT_FOUND);
@@ -196,9 +217,9 @@ public class BettingServiceImpl implements BettingService{
         if(homePoint == null || awayPoint == null) throw new RedisNotFoundException(
                 "해당하는 key 정보가 Redis에 존재하지 않습니다.", REDIS_NOT_FOUND);
 
-//        System.out.println("### calculateHomeRate ######################################################################");
-//        System.out.println("HOMEPOINT : " + homePoint);
-//        System.out.println("AWAYPOINT : " + awayPoint);
+        System.out.println("### calculateHomeRate ######################################################################");
+        System.out.println("HOMEPOINT : " + homePoint);
+        System.out.println("AWAYPOINT : " + awayPoint);
 
         Long bettingSeq = betting.getTeam().getTeamSeq();
         Integer bettingPoint = betting.getBettingPoint();
