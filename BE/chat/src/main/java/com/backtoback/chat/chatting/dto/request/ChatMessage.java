@@ -23,4 +23,6 @@ public class ChatMessage {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime time;
 
+	private Integer topicNumber;
+
 }

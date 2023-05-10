@@ -32,6 +32,8 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private GameActiveType gameActiveType;
 
+    @Column(name="topic_number")
+    private Integer topicNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "home_seq", nullable = false)

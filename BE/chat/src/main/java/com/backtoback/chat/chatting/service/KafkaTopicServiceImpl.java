@@ -35,8 +35,7 @@ public class KafkaTopicServiceImpl implements KafkaTopicService{
 		try{
 			//토픽 생성이 완료되길 기다림 ... createTopics가 비동기여서 필요하다.
 			createTopicsResult.all().get();
-			log.debug("토픽 생성 완료............................................");
-			log.debug("토픽 리스트...............................................: {}", newTopicList);
+			log.info("토픽 생성 완료............................................");
 		} catch(InterruptedException | ExecutionException e) {
 			//토픽 생성 중 에러 처리
 			e.printStackTrace();
@@ -46,22 +45,13 @@ public class KafkaTopicServiceImpl implements KafkaTopicService{
 
 	@Override
 	public void deleteTopic(List<String> topicNameList) {
-		log.info("delete topic 함수 들어옴!!!!!!!!!!!!!!!!!!!!");
-
 		AdminClient adminClient = AdminClient.create(kafkaAdmin.getConfigurationProperties());
-
-		log.info("adminClient............................................:{}", adminClient);
-		log.info("topinNameList..........................................:{}", topicNameList);
 
 		try{
 			//토픽 삭제가 완료되길 기다림 ... deleteTopics가 비동기여서 필요하다.
-			log.info("try.....................................................");
 			DeleteTopicsResult deleteTopicsResult = adminClient.deleteTopics(topicNameList);
-			log.info("next....................................................");
-			log.info("adminClient..............................................:{}", adminClient);
 			deleteTopicsResult.all().get();
 			log.info("토픽 삭제 완료............................................");
-			log.info("토픽 리스트...............................................: {}", topicNameList);
 		} catch (InterruptedException | ExecutionException e){
 			//토픽 삭제 중 에러 처리
 			e.printStackTrace();
