@@ -2,7 +2,9 @@ package com.backtoback.business.game.service;
 
 
 import com.backtoback.business.game.domain.Game;
+import com.backtoback.business.game.domain.GameActiveType;
 import com.backtoback.business.game.dto.GameResponseDto;
+import com.backtoback.business.game.dto.GameRoomResponseDto;
 import com.backtoback.business.game.dto.GameTeamSeqResponseDto;
 import com.backtoback.business.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +62,15 @@ public class GameServiceImpl implements GameService{
 
         return gameSeqList;
 
+    }
+
+    public GameRoomResponseDto getGameInformation(Long gameSeq) {
+        GameRoomResponseDto gameInformation = gameRepository.getGameInformation(gameSeq);
+        if(gameInformation.getGameActiveType().equals(GameActiveType.IN_GAME)){
+            gameInformation.setIsActive(true);
+        } else{
+            gameInformation.setIsActive(false);
+        }
+        return gameInformation;
     }
 }
