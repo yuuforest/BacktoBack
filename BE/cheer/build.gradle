@@ -53,6 +53,9 @@ dependencies {
 	//Querydsl
 	implementation 'com.querydsl:querydsl-jpa:5.0.0'
 	implementation 'com.querydsl:querydsl-apt:5.0.0'
+
+	//Websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 dependencyManagement {
