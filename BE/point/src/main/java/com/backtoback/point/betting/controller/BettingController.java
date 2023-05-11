@@ -2,6 +2,7 @@ package com.backtoback.point.betting.controller;
 
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.dto.request.KafkaReq;
+import com.backtoback.point.betting.dto.response.BettingInfoRes;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.service.BettingService;
 import io.swagger.annotations.Api;
@@ -19,23 +20,28 @@ public class BettingController {
 
     private final BettingService bettingService;
 
-    /**
-     * 스트리밍 방 생성
-     */
     @PostMapping("betting/start")
     @ApiOperation(value = "베팅을 위한 환경 설정", notes = "베팅을 시작하기 위해, Redis에 환경 설정")
     public ResponseEntity<?> readyToStartBetting(){
         bettingService.readyToStartBetting();
         return ResponseEntity.status(200).body("Success");  // 변경 가능성 있음
-    }
+    } // OK
+
+    @GetMapping("member/{memberSeq}/betting/info")
+    @ApiOperation(value = "유저의 베팅 정보 조회", notes = "해당 경기에 대한 유저의 베팅 정보 조회")
+    public ResponseEntity<BettingInfoRes> getBettingInfo(@PathVariable("memberSeq") Long memberSeq,
+                                                         @RequestParam("gameID") Long gameSeq) {
+        BettingInfoRes bettingInfo = bettingService.getBettingInfo(memberSeq, gameSeq);
+        return ResponseEntity.status(200).body(bettingInfo);
+    } // OK
 
     @PostMapping("member/{memberSeq}/betting")
-    @ApiOperation(value = "베팅", notes = "회원 각자의 베팅 시작")
+    @ApiOperation(value = "베팅", notes = "회원 각자 베팅")
     public ResponseEntity<?> startBetting(@PathVariable("memberSeq") Long memberSeq,
                                           @RequestBody BettingInfoReq bettingInfoReq) {
         bettingService.startBetting(memberSeq, bettingInfoReq);
         return ResponseEntity.status(200).body("Success");
-    }
+    } // OK
 
     @GetMapping("member/{memberSeq}/betting")
     @ApiOperation(value = "베팅 예상 결과 전달", notes = "각 팀의 베팅률과 회원의 예상 배당금 전달")
@@ -43,7 +49,7 @@ public class BettingController {
                                                                      @RequestParam("gameID") Long gameSeq){
         BettingResultRes response = bettingService.anticipateBettingResult(memberSeq, gameSeq);
         return ResponseEntity.status(200).body(response);
-    }
+    } // OK
 
     @PostMapping("betting/result")
     @ApiOperation(value = "베팅 결과 반영해서 처리", notes = "이거 사라질 예정 왜냐면 kafka로 할거니까")
