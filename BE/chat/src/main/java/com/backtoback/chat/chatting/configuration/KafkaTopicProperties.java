@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 public class KafkaTopicProperties {
 
-	private List<String> topics;
+	private final List<String> topics = new ArrayList<>();
+
 }
 

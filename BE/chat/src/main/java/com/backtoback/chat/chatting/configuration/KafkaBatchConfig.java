@@ -17,7 +17,6 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.kafka.KafkaItemReader;
 import org.springframework.batch.item.kafka.builder.KafkaItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -39,15 +38,15 @@ public class KafkaBatchConfig {
 	private final KafkaConsumerConfig kafkaConsumerConfig;
 	private final KafkaTopicProperties kafkaTopicProperties;
 
-	List<String> topics = kafkaTopicProperties.getTopics();
-
 	/**
 	 * [Job 생성]
 	 */
 	@Bean
 	public Job chatLogJob(List<Step> steps) {
+		log.info("[Job Start]...........................................................");
 		SimpleJobBuilder job = jobBuilderFactory.get("chatLogJob").start(steps.get(0));
 		for(int i = 1, stepSize = steps.size(); i < stepSize; i++){
+			log.info("job Number.....................................................: {}", i);
 			job.next(steps.get(i));
 		}
 		return job.build();
@@ -81,6 +80,9 @@ public class KafkaBatchConfig {
 	 */
 	@Bean
 	public List<KafkaItemReader<Long, ChatMessage>> itemReaders() {
+
+		List<String> topics = kafkaTopicProperties.getTopics();
+
 		log.info("[Item Reader Start]...........................................................");
 		List<KafkaItemReader<Long, ChatMessage>> readers = new ArrayList<>();
 
@@ -91,6 +93,7 @@ public class KafkaBatchConfig {
 		props.putAll(consumerProps);
 
 		for(String topic : topics){
+			log.info("Topic......................................................:{}", topic);
 			KafkaItemReader<Long, ChatMessage> reader = new KafkaItemReaderBuilder<Long, ChatMessage>()
 				.name("reader_" + topic)
 				.saveState(true)
