@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8085
 
 jwt:
   access-expired-time: 3600000
@@ -11,7 +11,7 @@ jwt:
 
 spring:
   application:
-    name: member
+    name: auth
 
   data:
     redis:
@@ -58,6 +58,7 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
+
 
 
 
