@@ -1,4 +1,4 @@
-package com.backtoback.cheer.config;
+package com.backtoback.cheer.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;

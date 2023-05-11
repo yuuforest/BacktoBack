@@ -1,4 +1,4 @@
-package com.backtoback.cheer.config;
+package com.backtoback.cheer.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
