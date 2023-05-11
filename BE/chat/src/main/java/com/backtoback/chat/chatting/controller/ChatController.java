@@ -22,9 +22,9 @@ public class ChatController {
 
 	@GetMapping(value = "/teams")		//클라이언트에서 api 호출하는 주소
 	public GameTeamSeqRes getGameTeamSeq(@RequestParam Long gameSeq){
-		// return feignService.getGameTeamSeq(gameSeq);
-		GameTeamSeqRes dummy = new GameTeamSeqRes(1l, 2l);
-		return dummy;
+		return feignService.getGameTeamSeq(gameSeq);
+		// GameTeamSeqRes dummy = new GameTeamSeqRes(1l, 2l);
+		// return dummy;
 	}
 
 }

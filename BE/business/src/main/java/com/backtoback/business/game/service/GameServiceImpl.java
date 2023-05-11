@@ -2,7 +2,10 @@ package com.backtoback.business.game.service;
 
 
 import com.backtoback.business.game.domain.Game;
+import com.backtoback.business.game.domain.GameActiveType;
 import com.backtoback.business.game.dto.GameResponseDto;
+import com.backtoback.business.game.dto.GameRoomResponseDto;
+import com.backtoback.business.game.dto.GameTeamSeqResponseDto;
 import com.backtoback.business.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,5 +30,47 @@ public class GameServiceImpl implements GameService{
        }
 
        return gameRequestDtoList;
+    }
+
+    public GameTeamSeqResponseDto getGameTeamSeq(Long gameSeq) {
+        Game findGame = gameRepository.findByGameSeq(gameSeq);
+        GameTeamSeqResponseDto gameTeamSeqResponseDto = GameTeamSeqResponseDto.builder()
+                                                            .homeSeq(findGame.getHomeTeam().getTeamSeq())
+                                                            .awaySeq(findGame.getAwayTeam().getTeamSeq())
+                                                            .build();
+        return gameTeamSeqResponseDto;
+    }
+
+    public List<Long> getTodayGameSeq() {
+        List<Game> gameList = gameRepository.getAllTodayGame();
+        List<Long> gameSeqList = new ArrayList<>();
+
+        for(Game game : gameList){
+            gameSeqList.add(game.getGameSeq());
+        }
+
+        return gameSeqList;
+    }
+
+    public List<Long> getYesterdayGameSeq() {
+        List<Game> gameList = gameRepository.getAllYesterdayGame();
+        List<Long> gameSeqList = new ArrayList<>();
+
+        for(Game game : gameList){
+            gameSeqList.add(game.getGameSeq());
+        }
+
+        return gameSeqList;
+
+    }
+
+    public GameRoomResponseDto getGameInformation(Long gameSeq) {
+        GameRoomResponseDto gameInformation = gameRepository.getGameInformation(gameSeq);
+        if(gameInformation.getGameActiveType().equals(GameActiveType.IN_GAME)){
+            gameInformation.setIsActive(true);
+        } else{
+            gameInformation.setIsActive(false);
+        }
+        return gameInformation;
     }
 }

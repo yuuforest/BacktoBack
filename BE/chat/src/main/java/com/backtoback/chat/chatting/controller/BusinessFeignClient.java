@@ -1,5 +1,7 @@
 package com.backtoback.chat.chatting.controller;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,4 +14,10 @@ import com.backtoback.chat.chatting.dto.response.GameTeamSeqRes;
 public interface BusinessFeignClient {
 	@RequestMapping(method = RequestMethod.GET, value = "/teams/game/{gameSeq}")
 	GameTeamSeqRes getGameTeamSeq(@PathVariable("gameSeq") Long gameSeq);
+
+	@RequestMapping(method = RequestMethod.GET, value = "/games/today")
+	List<Long> getTodayGameSeq();
+
+	@RequestMapping(method = RequestMethod.GET, value = "/games/yesterday")
+	List<Long> getYesterdayGameSeq();
 }
