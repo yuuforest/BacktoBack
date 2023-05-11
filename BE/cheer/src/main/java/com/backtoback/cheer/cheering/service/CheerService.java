@@ -6,4 +6,6 @@ public interface CheerService {
 
     void readyToStartCheer();
     CheeringInfoRes getCheeringInfo(Long gameSeq);
+    CheeringInfoRes startCheering(Long gameSeq, Long teamSeq);
+
 }
