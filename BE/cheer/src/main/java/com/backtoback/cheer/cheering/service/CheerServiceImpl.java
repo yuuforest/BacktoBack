@@ -1,5 +1,6 @@
 package com.backtoback.cheer.cheering.service;
 
+import com.backtoback.cheer.cheering.dto.response.CheeringInfoRes;
 import com.backtoback.cheer.game.domain.Game;
 import com.backtoback.cheer.game.service.GameService;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,24 @@ public class CheerServiceImpl implements CheerService{
             redisTemplate.expire(homeKey + ":count", 24, TimeUnit.HOURS);
             redisTemplate.expire(awayKey + ":count", 24, TimeUnit.HOURS);
         }
+    }
+
+    @Override
+    public CheeringInfoRes getCheeringInfo(Long gameSeq) {
+
+        ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
+
+        Game game = gameService.getGame(gameSeq);
+
+        String homeKey = "cheer:game:" + game.getGameSeq() + ":team:" + game.getHomeTeam().getTeamSeq();
+        String awayKey = "cheer:game:" + game.getGameSeq() + ":team:" + game.getAwayTeam().getTeamSeq();
+
+        Integer homeCount = valueOperations.get(homeKey + ":count");
+        Integer awayCount = valueOperations.get(awayKey + ":count");
+
+        return CheeringInfoRes.builder()
+                .homeCount(homeCount)
+                .awayCount(awayCount)
+                .build();
     }
 }
