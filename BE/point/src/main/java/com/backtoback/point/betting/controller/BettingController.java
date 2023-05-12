@@ -1,7 +1,6 @@
 package com.backtoback.point.betting.controller;
 
 import com.backtoback.point.betting.dto.request.BettingInfoReq;
-import com.backtoback.point.betting.dto.request.KafkaReq;
 import com.backtoback.point.betting.dto.response.BettingInfoRes;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.service.BettingService;
@@ -51,10 +50,10 @@ public class BettingController {
         return ResponseEntity.status(200).body(response);
     } // OK
 
-    @PostMapping("betting/result")
-    @ApiOperation(value = "베팅 결과 반영해서 처리", notes = "이거 사라질 예정 왜냐면 kafka로 할거니까")
-    public ResponseEntity<?> getBettingResult (@RequestBody KafkaReq kafkaReq){
-        bettingService.getBettingResult(kafkaReq);
-        return ResponseEntity.status(200).body("Success");
-    }
+//    @PostMapping("betting/result")
+//    @ApiOperation(value = "베팅 결과 반영해서 처리", notes = "이거 사라질 예정 왜냐면 kafka로 할거니까")
+//    public ResponseEntity<?> getBettingResult (@RequestBody KafkaReq kafkaReq){
+//        bettingService.getBettingResult(kafkaReq);
+//        return ResponseEntity.status(200).body("Success");
+//    }
 }
