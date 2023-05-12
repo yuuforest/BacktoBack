@@ -10,6 +10,9 @@ public class ChatMessageJsonDeserializer extends JsonDeserializer<ChatMessage>{
 
 	public ChatMessageJsonDeserializer(){
 		super(ChatMessage.class);
+		this.setRemoveTypeHeaders(false);
+		this.addTrustedPackages("*");
+		this.setUseTypeMapperForKey(true);
 	}
 
 	// @Bean

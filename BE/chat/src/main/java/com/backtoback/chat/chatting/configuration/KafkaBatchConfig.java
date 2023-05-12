@@ -1,12 +1,18 @@
 package com.backtoback.chat.chatting.configuration;
 
+import static org.springframework.batch.item.kafka.KafkaItemReader.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.common.serialization.LongDeserializer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -17,12 +23,14 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.kafka.KafkaItemReader;
 import org.springframework.batch.item.kafka.builder.KafkaItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.ConsumerFactory;
 
 import com.backtoback.chat.chatting.domain.ChatLog;
 import com.backtoback.chat.chatting.dto.request.ChatMessage;
+import com.backtoback.chat.chatting.service.ChatMessageJsonDeserializer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +45,12 @@ public class KafkaBatchConfig {
 	private final StepBuilderFactory stepBuilderFactory;
 	private final KafkaConsumerConfig kafkaConsumerConfig;
 	private final KafkaTopicProperties kafkaTopicProperties;
+
+	@Value("${spring.kafka.bootstrap-servers}")
+	private String bootstrapServers;
+
+	@Value("${spring.kafka.consumer.group-id}")
+	private String groupId;
 
 	/**
 	 * [Job 생성]
@@ -56,7 +70,7 @@ public class KafkaBatchConfig {
 	 * [Step 구성]
 	 */
 	@Bean
-	public List<Step> steps(List<KafkaItemReader<Long, ChatMessage>> itemReaders,
+	public List<Step> steps(List<KafkaItemReader<String, ChatMessage>> itemReaders,
 							ItemProcessor<ChatMessage, ChatLog> itemProcessor,
 							JpaItemWriter<ChatLog> itemWriter) {
 		List<Step> steps = new ArrayList<>();
@@ -64,7 +78,7 @@ public class KafkaBatchConfig {
 		for(int i = 0, itemSize = itemReaders.size(); i < itemSize; i++){
 			log.info("Item No................................................: {}", i);
 			Step step = stepBuilderFactory.get("step" + (i + 1))
-				.<ChatMessage, ChatLog>chunk(10)
+				.<ChatMessage, ChatLog>chunk(4)
 				.reader(itemReaders.get(i))
 				.processor(itemProcessor)
 				.writer(itemWriter)
@@ -79,27 +93,31 @@ public class KafkaBatchConfig {
 	 * [Item Reader] Read Kafka Topics' Data
 	 */
 	@Bean
-	public List<KafkaItemReader<Long, ChatMessage>> itemReaders() {
+	public List<KafkaItemReader<String, ChatMessage>> itemReaders() {
 
 		List<String> topics = kafkaTopicProperties.getTopics();
 
 		log.info("[Item Reader Start]...........................................................");
-		List<KafkaItemReader<Long, ChatMessage>> readers = new ArrayList<>();
+		List<KafkaItemReader<String, ChatMessage>> readers = new ArrayList<>();
 
 		//Consumer config
-		ConsumerFactory<Long, ChatMessage> consumerFactory = kafkaConsumerConfig.consumerFactory();
+		ConsumerFactory<String, ChatMessage> consumerFactory = kafkaConsumerConfig.consumerFactory();
 		Map<String, Object> consumerProps = consumerFactory.getConfigurationProperties();
 		Properties props = new Properties();
 		props.putAll(consumerProps);
 
+		System.out.println("###########################Consumer Config###############################");
+		log.info("{}", props);
+
 		for(String topic : topics){
 			log.info("Topic......................................................:{}", topic);
-			KafkaItemReader<Long, ChatMessage> reader = new KafkaItemReaderBuilder<Long, ChatMessage>()
+			KafkaItemReader<String, ChatMessage> reader = new KafkaItemReaderBuilder<String, ChatMessage>()
 				.name("reader_" + topic)
 				.saveState(true)
 				.topic(topic)
 				.partitions(0)
 				.consumerProperties(props)
+				.partitionOffsets(new HashMap<>())
 				.build();
 
 			readers.add(reader);
@@ -112,8 +130,9 @@ public class KafkaBatchConfig {
 	 */
 	@Bean
 	public ItemProcessor<ChatMessage, ChatLog> itemProcessor(){
-		log.info("[Item Processor Start]...........................................................");
 		return chatMessage -> {
+			log.info("[Item Processor Start]...........................................................");
+
 			ChatLog chatLog = ChatLog.builder()
 				.gameSeq(chatMessage.getGameSeq())
 				.memberSeq(chatMessage.getMemberSeq())

@@ -24,7 +24,7 @@ public class KafkaTopicScheduler {
 
 	//화~일 아침 7시 토픽 생성
 	// @Scheduled(cron="0 0 7 * * 2-7")
-	@Scheduled(cron = "0 16 10 * * *")
+	@Scheduled(cron = "0 9 17 * * *")
 	public void createTopic() {
 		log.info("[CREATE SCHEDULER START].........................................................");
 
@@ -45,7 +45,7 @@ public class KafkaTopicScheduler {
 
 	//월, 수~일 새벽 2시 토픽 삭제
 	// @Scheduled(cron="0 0 2 * * 1,3-7")
-	@Scheduled(cron = "0 15 10 * * *")
+	@Scheduled(cron = "0 15 17 * * *")
 	public void deleteTopic() {
 		log.info("[DELETE SCHEDULER START].........................................................");
 

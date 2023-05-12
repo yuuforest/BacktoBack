@@ -13,10 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class KafkaProducer {
 
-	private final KafkaTemplate<Long, ChatMessage> kafkaTemplate;
+	// private final KafkaTemplate<Long, ChatMessage> kafkaTemplate;
+	private final KafkaTemplate<String, ChatMessage> kafkaTemplate;
 
 	public void send(String topic, ChatMessage chatMessage){
 		log.info("Producer!!!!! topic.........................{}", topic);
-		kafkaTemplate.send(topic, chatMessage.getGameSeq(), chatMessage);	//topic, key, value : topic에 메시지 보내준다.
+		// kafkaTemplate.send(topic, chatMessage.getGameSeq(), chatMessage);	//topic, key, value : topic에 메시지 보내준다.
+		kafkaTemplate.send(topic, chatMessage.getGameSeq().toString(), chatMessage);	//topic, key, value : topic에 메시지 보내준다.
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.LongDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,14 +31,14 @@ public class KafkaConsumerConfig {
 	private String groupId;
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<Long, ChatMessage> kafkaListenerContainerFactory(){
-		ConcurrentKafkaListenerContainerFactory<Long, ChatMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	public ConcurrentKafkaListenerContainerFactory<String, ChatMessage> kafkaListenerContainerFactory(){
+		ConcurrentKafkaListenerContainerFactory<String, ChatMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 	}
 
 	@Bean
-	public ConsumerFactory<Long, ChatMessage> consumerFactory(){
+	public ConsumerFactory<String, ChatMessage> consumerFactory(){
 		//ChatMessage 객체를 Kafka에서 해독할 수 있도록 해줌
 		// JsonDeserializer<ChatMessage> deserializer = new JsonDeserializer<>(ChatMessage.class);
 		// deserializer.setRemoveTypeHeaders(false);
@@ -48,13 +49,15 @@ public class KafkaConsumerConfig {
 
 		Map<String, Object> config = new HashMap<>();
 		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);	//브로커 주소 설정 : 카프카 주소 + 포트
-		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);	//key Deserializer
+		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);	//key Deserializer
 		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ChatMessageJsonDeserializer.class);	//value Deserializer
 		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		config.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 		config.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 100);
 
-		return new DefaultKafkaConsumerFactory<>(config, new LongDeserializer(), new ChatMessageJsonDeserializer());
+		return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new ChatMessageJsonDeserializer());
 	}
+
+
 
 }
