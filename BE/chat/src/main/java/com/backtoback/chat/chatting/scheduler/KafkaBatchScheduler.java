@@ -18,7 +18,7 @@ public class KafkaBatchScheduler {
 	private final JobLauncher jobLauncher;
 	private final Job chatLogJob;
 
-	@Scheduled(cron="0 32 17 * * *")
+	@Scheduled(cron="0 16 1 * * *")
 	public void runChatLogBatchJob(){
 		try{
 			//JobParameters for indentifying job

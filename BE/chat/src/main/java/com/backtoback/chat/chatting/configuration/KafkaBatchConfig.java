@@ -11,8 +11,7 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.TopicPartition;
-import org.apache.kafka.common.serialization.LongDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -26,7 +25,6 @@ import org.springframework.batch.item.kafka.builder.KafkaItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.ConsumerFactory;
 
 import com.backtoback.chat.chatting.domain.ChatLog;
 import com.backtoback.chat.chatting.dto.request.ChatMessage;
@@ -48,9 +46,6 @@ public class KafkaBatchConfig {
 
 	@Value("${spring.kafka.bootstrap-servers}")
 	private String bootstrapServers;
-
-	@Value("${spring.kafka.consumer.group-id}")
-	private String groupId;
 
 	/**
 	 * [Job 생성]
@@ -101,10 +96,15 @@ public class KafkaBatchConfig {
 		List<KafkaItemReader<String, ChatMessage>> readers = new ArrayList<>();
 
 		//Consumer config
-		ConsumerFactory<String, ChatMessage> consumerFactory = kafkaConsumerConfig.consumerFactory();
-		Map<String, Object> consumerProps = consumerFactory.getConfigurationProperties();
+		Map<String, Object> config = new HashMap<>();
+		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ChatMessageJsonDeserializer.class);
+		config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		config.put(ConsumerConfig.GROUP_ID_CONFIG, "kafka-chat-batch-group");
+
 		Properties props = new Properties();
-		props.putAll(consumerProps);
+		props.putAll(config);
 
 		System.out.println("###########################Consumer Config###############################");
 		log.info("{}", props);
