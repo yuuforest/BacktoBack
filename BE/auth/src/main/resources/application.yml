@@ -48,7 +48,7 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
 
 eureka:
 #  instance:
@@ -58,7 +58,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
-
 
 
 
