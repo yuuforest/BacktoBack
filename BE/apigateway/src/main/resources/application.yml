@@ -23,6 +23,7 @@ spring:
     password: ssafy
   main:
     allow-bean-definition-overriding: true
+    web-application-type: reactive
   application:
     name: apigateway
   cloud:
@@ -41,13 +42,21 @@ spring:
           predicates:
             - Path=/business/**
         - id: member
-          uri: http://localhost:8081/
+          uri: http://localhost:8082/
           predicates:
             - Path=/member/login
             - Method=POST
 
         - id: member
-          uri: http://localhost:8081/
+          uri: http://localhost:8082/
           predicates:
             - Path=/member/signup
             - Method=POST
+
+        - id: auth
+          uri: http://localhost:8085
+          predicates:
+            - Path=/auth/reissue
+            - Method=GET
+          filters:
+            - AuthorizationHeaderFilter

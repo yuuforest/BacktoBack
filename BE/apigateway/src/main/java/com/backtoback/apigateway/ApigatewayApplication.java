@@ -1,8 +1,6 @@
 package com.backtoback.apigateway;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
-import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -18,13 +16,10 @@ public class ApigatewayApplication {
 	}
 
 	@Bean
-	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity security) {
-		return security.csrf().disable().build();
-	}
+	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 
-	@Bean
-	public HttpTraceRepository httpTraceRepository() {
-		return new InMemoryHttpTraceRepository();
+		return http.csrf()
+			.disable()
+			.build();
 	}
-
 }
