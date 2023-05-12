@@ -1,4 +1,4 @@
-package com.backtoback.member.token;
+package com.backtoback.auth.token;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.backtoback.member.domain.Member;
-import com.backtoback.member.dto.response.MemberResp;
+import com.backtoback.auth.domain.Member;
+import com.backtoback.auth.dto.response.MemberResp;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -112,6 +112,25 @@ public class JwtTokenProvider {
     }
 
 
+
+    // 토큰 정보를 검증하는 메서드
+    public boolean validateToken(String token) {
+        log.info(token);
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.info("Invalid JWT Token", e);
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT Token", e);
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT Token", e);
+        } catch (IllegalArgumentException e) {
+            log.info("JWT claims string is empty.", e);
+        }
+        return false;
+    }
+
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
@@ -121,4 +140,19 @@ public class JwtTokenProvider {
     }
 
 
+    public String resolveToken(HttpServletRequest request){
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TYPE)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+
+    //액세스 토큰의 만료기한을 얻는 함수
+    public Long getExpiration(String accessToken){
+        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        Long now = new Date().getTime();
+        return (expiration.getTime() - now);
+    }
 }
