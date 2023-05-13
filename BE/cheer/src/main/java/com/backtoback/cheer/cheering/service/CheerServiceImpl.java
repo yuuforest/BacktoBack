@@ -41,12 +41,12 @@ public class CheerServiceImpl implements CheerService{
             awayKey = "cheer:game:" + game.getGameSeq() + ":team:" + game.getAwayTeam().getTeamSeq();
 
             // [Redis] 각 팀의 응원수 0 저장
-            valueOperations.set(homeKey + ":count", 35);
-            valueOperations.set(awayKey + ":count", 50);
+            valueOperations.set(homeKey + ":count", 0);
+            valueOperations.set(awayKey + ":count", 0);
 
-            System.out.println("### readyToStartBetting ##############################################################");
-            System.out.println(homeKey + ":count = " + valueOperations.get(homeKey + ":count"));
-            System.out.println(awayKey + ":count = " + valueOperations.get(awayKey + ":count"));
+//            System.out.println("### readyToStartBetting ##############################################################");
+//            System.out.println(homeKey + ":count = " + valueOperations.get(homeKey + ":count"));
+//            System.out.println(awayKey + ":count = " + valueOperations.get(awayKey + ":count"));
 
             // [Redis] 만료기한
             redisTemplate.expire(homeKey + ":count", 24, TimeUnit.HOURS);
@@ -70,9 +70,9 @@ public class CheerServiceImpl implements CheerService{
         if(homeCount == null || awayCount == null) throw new RedisNotFoundException(
                 "해당하는 key 정보가 Redis에 존재하지 않습니다.", REDIS_NOT_FOUND);
 
-        System.out.println("### readyToStartBetting ##############################################################");
-        System.out.println(homeKey + ":count = " + homeCount);
-        System.out.println(awayKey + ":count = " + awayCount);
+//        System.out.println("### readyToStartBetting ##############################################################");
+//        System.out.println(homeKey + ":count = " + homeCount);
+//        System.out.println(awayKey + ":count = " + awayCount);
 
         return CheeringInfoRes.builder()
                 .homeCount(homeCount)
