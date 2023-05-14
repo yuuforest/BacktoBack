@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -19,7 +19,8 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.builder.SimpleJobBuilder;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.database.JpaItemWriter;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.kafka.KafkaItemReader;
 import org.springframework.batch.item.kafka.builder.KafkaItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,11 +42,12 @@ public class KafkaBatchConfig {
 
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
-	private final KafkaConsumerConfig kafkaConsumerConfig;
 	private final KafkaTopicProperties kafkaTopicProperties;
+	private final DataSource dataSource;
 
 	@Value("${spring.kafka.bootstrap-servers}")
 	private String bootstrapServers;
+
 
 	/**
 	 * [Job 생성]
@@ -55,7 +57,6 @@ public class KafkaBatchConfig {
 		log.info("[Job Start]...........................................................");
 		SimpleJobBuilder job = jobBuilderFactory.get("chatLogJob").start(steps.get(0));
 		for(int i = 1, stepSize = steps.size(); i < stepSize; i++){
-			log.info("job Number.....................................................: {}", i);
 			job.next(steps.get(i));
 		}
 		return job.build();
@@ -67,13 +68,14 @@ public class KafkaBatchConfig {
 	@Bean
 	public List<Step> steps(List<KafkaItemReader<String, ChatMessage>> itemReaders,
 							ItemProcessor<ChatMessage, ChatLog> itemProcessor,
-							JpaItemWriter<ChatLog> itemWriter) {
+							/*JpaItemWriter<ChatLog> itemWriter*/
+							ItemWriter<ChatLog> itemWriter) {
+		log.info("[Step Start]...........................................................");
 		List<Step> steps = new ArrayList<>();
 
 		for(int i = 0, itemSize = itemReaders.size(); i < itemSize; i++){
-			log.info("Item No................................................: {}", i);
 			Step step = stepBuilderFactory.get("step" + (i + 1))
-				.<ChatMessage, ChatLog>chunk(4)
+				.<ChatMessage, ChatLog>chunk(100)
 				.reader(itemReaders.get(i))
 				.processor(itemProcessor)
 				.writer(itemWriter)
@@ -130,9 +132,9 @@ public class KafkaBatchConfig {
 	 */
 	@Bean
 	public ItemProcessor<ChatMessage, ChatLog> itemProcessor(){
+		log.info("[Item Processor Start]...........................................................");
 		return chatMessage -> {
-			log.info("[Item Processor Start]...........................................................");
-
+			log.info("ChatMessage ------------------> ChatLog");
 			ChatLog chatLog = ChatLog.builder()
 				.gameSeq(chatMessage.getGameSeq())
 				.memberSeq(chatMessage.getMemberSeq())
@@ -148,11 +150,13 @@ public class KafkaBatchConfig {
 	 * [Item Writer] Save Data
 	 */
 	@Bean
-	public JpaItemWriter<ChatLog> itemWriter(EntityManagerFactory entityManagerFactory){
-		log.info("[Item Writer Start]...........................................................");
-		JpaItemWriter<ChatLog> writer = new JpaItemWriter<>();
-		writer.setEntityManagerFactory(entityManagerFactory);
-		return writer;
+	public ItemWriter<ChatLog> itemWriter(){
+		return new JdbcBatchItemWriterBuilder<ChatLog>()
+			.dataSource(dataSource)
+			.sql("insert into chatlogs(chatlog_seq, game_seq, member_seq, nickname, message, time) "
+				+ "values (:chatLogSeq, :gameSeq, :memberSeq, :nickname, :message, :time)")
+			.beanMapped()
+			.build();
 	}
 
 }

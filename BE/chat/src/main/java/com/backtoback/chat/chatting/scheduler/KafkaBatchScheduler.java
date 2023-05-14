@@ -18,13 +18,14 @@ public class KafkaBatchScheduler {
 	private final JobLauncher jobLauncher;
 	private final Job chatLogJob;
 
-	@Scheduled(cron="0 16 1 * * *")
+	// @Scheduled(cron="0 0 0 * * *")		//MON-SUN 00:00 AM
 	public void runChatLogBatchJob(){
 		try{
 			//JobParameters for indentifying job
 			JobParameters jobParameters = new JobParametersBuilder()
 					.addLong("time", System.currentTimeMillis())
 					.toJobParameters();
+			log.info("############################# Chat Batch Job Run #############################");
 			jobLauncher.run(chatLogJob, jobParameters);
 		} catch(Exception e){
 			e.printStackTrace();

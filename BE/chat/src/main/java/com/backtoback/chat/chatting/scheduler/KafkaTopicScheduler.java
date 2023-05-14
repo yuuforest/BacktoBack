@@ -22,9 +22,7 @@ public class KafkaTopicScheduler {
 	private final String allChatPrefix = "chat.all.game.";
 	private final String teamChatPrefix = "chat.team.";
 
-	//화~일 아침 7시 토픽 생성
-	// @Scheduled(cron="0 0 7 * * 2-7")
-	@Scheduled(cron = "0 9 17 * * *")
+	// @Scheduled(cron="0 0 6 * * *")		//MON-SUN 06:00 AM
 	public void createTopic() {
 		log.info("[CREATE SCHEDULER START].........................................................");
 
@@ -43,9 +41,7 @@ public class KafkaTopicScheduler {
 		kafkaTopicService.createTopic(topicList, 1, 1);
 	}
 
-	//월, 수~일 새벽 2시 토픽 삭제
-	// @Scheduled(cron="0 0 2 * * 1,3-7")
-	@Scheduled(cron = "0 15 17 * * *")
+	// @Scheduled(cron="0 0 5 * * *")		//MON-SUN 05:00 AM
 	public void deleteTopic() {
 		log.info("[DELETE SCHEDULER START].........................................................");
 
