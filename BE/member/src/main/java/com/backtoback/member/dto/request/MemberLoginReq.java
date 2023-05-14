@@ -3,6 +3,7 @@ package com.backtoback.member.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class MemberLoginReq {
 
     @NotEmpty(message = "아이디를 입력 하세요.")

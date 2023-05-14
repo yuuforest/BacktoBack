@@ -9,6 +9,7 @@ import com.backtoback.member.service.MemberService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Api(value = "회원관리", tags = "member")
@@ -28,6 +30,16 @@ public class MemberController {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final CookieProvider cookieProvider;
     private final JwtTokenProvider jwtTokenProvider;
+
+    @GetMapping("/member")
+    public ResponseEntity<?> select(HttpServletRequest request){
+        return ResponseEntity.ok(memberService.member(request));
+    }
+
+    @PutMapping("/member")
+    public ResponseEntity<?> update(HttpServletRequest request){
+        return ResponseEntity.ok(memberService.member(request));
+    }
 
     @PostMapping("/signup")
     @ApiOperation(value="회원가입", notes = "회원가")
@@ -49,14 +61,5 @@ public class MemberController {
                 .body(memberResp);
     }
 
-    @GetMapping("/mypage")
-    public ResponseEntity<MemberResp> mypage(){
-        return null;
-    }
-
-    @PostMapping("/mypage")
-    public ResponseEntity<?> changeInfo(){
-        return null;
-    }
 
     }

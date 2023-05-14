@@ -1,5 +1,6 @@
 package com.backtoback.member.service;
 
+import com.backtoback.member.dto.response.InfoResp;
 import com.backtoback.member.token.JwtTokenProvider;
 import com.backtoback.member.common.CookieProvider;
 import com.backtoback.member.domain.Member;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.TimeUnit;
 
@@ -82,6 +84,13 @@ public class MemberServiceImpl implements MemberService{
         response.addCookie(cookie);
 
         return tokenInfo;
+    }
+
+    @Override
+    public InfoResp member(HttpServletRequest request) {
+        String accessToken = jwtTokenProvider.resolveToken(request);
+ 		Member member = memberRepository.findById(Long.valueOf(jwtTokenProvider.getAuthentication(accessToken).getName())).orElse(null);
+        return InfoResp.fromEntity(member);
     }
 
     @Override
