@@ -1,6 +1,5 @@
 package com.backtoback.member.domain;
 
-import com.backtoback.team.domain.Team;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
@@ -10,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,9 +47,9 @@ public class Member implements UserDetails {
     @ColumnDefault(value = "0")
     private Integer bettingWin;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "team_seq")
-//    private Team team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_seq")
+    private Team team;
 
     @Column(nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
@@ -65,7 +63,7 @@ public class Member implements UserDetails {
         this.memberPassword = memberPassword;
         this.nickname = nickname;
         this.privilege = privilege;
-//        this.team = team;
+        this.team = team;
     }
 
 

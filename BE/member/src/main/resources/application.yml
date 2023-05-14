@@ -48,7 +48,7 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
 eureka:
 #  instance:

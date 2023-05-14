@@ -1,6 +1,6 @@
-package com.backtoback.team.repository;
+package com.backtoback.member.repository;
 
-import com.backtoback.team.domain.Team;
+import com.backtoback.member.domain.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
