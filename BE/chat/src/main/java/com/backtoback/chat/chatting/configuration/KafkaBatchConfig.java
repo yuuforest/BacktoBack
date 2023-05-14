@@ -68,7 +68,6 @@ public class KafkaBatchConfig {
 	@Bean
 	public List<Step> steps(List<KafkaItemReader<String, ChatMessage>> itemReaders,
 							ItemProcessor<ChatMessage, ChatLog> itemProcessor,
-							/*JpaItemWriter<ChatLog> itemWriter*/
 							ItemWriter<ChatLog> itemWriter) {
 		log.info("[Step Start]...........................................................");
 		List<Step> steps = new ArrayList<>();
