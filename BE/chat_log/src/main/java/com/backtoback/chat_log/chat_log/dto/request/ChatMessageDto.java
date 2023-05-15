@@ -1,60 +1,55 @@
 package com.backtoback.chat_log.chat_log.dto.request;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 // @RequiredArgsConstructor
 @NoArgsConstructor
-public class ChatMessage implements Serializable {
+public class ChatMessageDto implements Serializable {
 
 	String message;
 
 	@Builder
-	public ChatMessage(String message) {
+	public ChatMessageDto(String message) {
 		this.message = message;
 	}
 
-	@Override
-	public String toString() {
-		return "ChatMessage{" +
-			"message='" + message + '\'' +
-			'}';
-	}
-
-	public static ChatMessage from(Message message) {
-		ChatMessage dto = new ChatMessage();
+	public static ChatMessageDto from(Message message) {
+		ChatMessageDto dto = new ChatMessageDto();
 		GenericMessage convertMessage = (GenericMessage)message;
 		BeanUtils.copyProperties(convertMessage.getPayload(), dto);
 		return dto;
 	}
 
-	public static ChatMessage from(byte[] messagePayload) {
+	public static ChatMessageDto from(byte[] messagePayload) {
 		// 역직렬화
 		ObjectMapper objectMapper = new ObjectMapper();
+		ChatMessageDto chatMessageDto;
 		try {
-			ChatMessage chatMessage = objectMapper.readValue(messagePayload, ChatMessage.class);
-			// System.out.println(myClassDto);
-			return chatMessage;
+			chatMessageDto = objectMapper.readValue(messagePayload, ChatMessageDto.class);
+			return chatMessageDto;
 		} catch (Exception e) {
 			e.printStackTrace();
+
+			return ChatMessageDto.builder().message("No message").build(); //null safety
 		}
-		return null;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("ChatMessage{message='%s'}", message);
 	}
 
 }
