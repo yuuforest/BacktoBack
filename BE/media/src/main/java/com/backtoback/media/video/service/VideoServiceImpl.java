@@ -4,32 +4,51 @@ import com.backtoback.media.game.domain.Game;
 import com.backtoback.media.game.domain.GameActiveType;
 import com.backtoback.media.game.repository.GameRepository;
 import com.backtoback.media.video.domain.Participant;
+import com.backtoback.media.video.domain.Record;
 import com.backtoback.media.video.domain.VideoRoom;
+import com.backtoback.media.video.dto.HighLightMessageDto;
+import com.backtoback.media.video.dto.HighLightPosition;
 import com.backtoback.media.video.dto.MessageDto;
+import com.backtoback.media.video.feignclient.FlaskServiceClient;
+import com.backtoback.media.video.repository.HighLightRepository;
 import com.backtoback.media.video.repository.ParticipantRepository;
+import com.backtoback.media.video.repository.RecordRepository;
 import com.backtoback.media.video.repository.VideoRoomRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.kurento.client.*;
+import org.kurento.client.EventListener;
 import org.kurento.jsonrpc.JsonUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class VideoServiceImpl implements VideoService {
+
+  private final FlaskServiceClient flaskServiceClient;
 
   private final Gson gson = new GsonBuilder().create();
 
@@ -43,9 +62,13 @@ public class VideoServiceImpl implements VideoService {
 
   private final ParticipantRepository participantRepository;
 
+  private final HighLightRepository highLightRepository;
+
+  private final RecordRepository recordRepository;
+
   private final StreamBridge streamBridge;
 
-  private final String VIDEO_URL = "https://raw.githubusercontent.com/Kurento/test-files/main/video/format/sintel.webm";
+  private final MpegService mpegService;
 
   // 방 접속
   @Override
@@ -57,8 +80,8 @@ public class VideoServiceImpl implements VideoService {
     VideoRoom videoRoom = videoRoomRepository.findById(gameId).orElseThrow();
     MediaPipeline mediaPipeline = kurento.getById(videoRoom.getMediaPipelineId(), MediaPipeline.class);
     PlayerEndpoint playerEndpoint = kurento.getById(videoRoom.getPlayerEndpointId(), PlayerEndpoint.class);
-    WebRtcEndpoint webRtcEndpoint = new WebRtcEndpoint.Builder(mediaPipeline).build();
 
+    WebRtcEndpoint webRtcEndpoint = new WebRtcEndpoint.Builder(mediaPipeline).build();
     Participant participant = participantRepository.findById(sessionId).orElseThrow();
     participant.setWebRtcEndpointId(webRtcEndpoint.getId());
 
@@ -103,7 +126,6 @@ public class VideoServiceImpl implements VideoService {
 
   }
 
-
   //경기 시작
   @Override
   public void startTodayGame() {
@@ -129,27 +151,40 @@ public class VideoServiceImpl implements VideoService {
   public void startVideo(Long gameSeq) {
     VideoRoom videoRoom = videoRoomRepository.findById(gameSeq.toString()).orElseThrow();
     PlayerEndpoint playerEndpoint = kurento.getById(videoRoom.getPlayerEndpointId(), PlayerEndpoint.class);
+    RecorderEndpoint recorderEndpoint = kurento.getById(videoRoom.getRecordEndpointId(),RecorderEndpoint.class);
+    recorderEndpoint.record();
     playerEndpoint.play();
+
   }
 
   // 자정 지난 시점에 경기 생성
   @Override
   public void makeAllVideoRoom() {
     List<Game> gameList = gameRepository.getAllTodayGame();
-
     for (Game game : gameList) {
-      makeVideoRoom(game.getGameSeq(), VIDEO_URL);
+      makeVideoRoom(game.getGameSeq(), game.getGameUrl());
     }
   }
 
   //비디오 방 만들기
   public void makeVideoRoom(Long gameSeq, String videoUrl) {
+//    final String RECORDER_FILE_PATH = "/tmp/" + UUID.randomUUID().toString() +".webm";
+    final String RECORDER_FILE_PATH = "/record/" + UUID.randomUUID().toString() +".webm";
     VideoRoom videoRoom = new VideoRoom();
     MediaPipeline mediaPipeline = kurento.createMediaPipeline();
     PlayerEndpoint playerEndpoint = new PlayerEndpoint.Builder(mediaPipeline, videoUrl).build();
+    MediaProfileSpecType profile = MediaProfileSpecType.WEBM;
+    RecorderEndpoint recorderEndpoint = new RecorderEndpoint.Builder(mediaPipeline,"file://"+RECORDER_FILE_PATH).withMediaProfile(profile).build();
+    playerEndpoint.connect(recorderEndpoint);
+    Record record = new Record();
+    record.setId(gameSeq.toString());
+    record.setRecordPath(RECORDER_FILE_PATH);
+    recordRepository.save(record);
+
     videoRoom.setId(gameSeq.toString());
     videoRoom.setMediaPipelineId(mediaPipeline.getId());
     videoRoom.setPlayerEndpointId(playerEndpoint.getId());
+    videoRoom.setRecordEndpointId(recorderEndpoint.getId());
     videoRoomRepository.save(videoRoom);
 
     playerEndpoint.addErrorListener(new EventListener<ErrorEvent>() {
@@ -176,22 +211,104 @@ public class VideoServiceImpl implements VideoService {
     log.info("비디오 room 삭제");
     VideoRoom videoRoom = videoRoomRepository.findById(gameSeq.toString()).orElseThrow();
     MediaPipeline mediaPipeline = kurento.getById(videoRoom.getMediaPipelineId(), MediaPipeline.class);
+    RecorderEndpoint recorderEndpoint = kurento.getById(videoRoom.getRecordEndpointId(),RecorderEndpoint.class);
+    recorderEndpoint.stop();
     mediaPipeline.release();
     deleteParticipants(gameSeq);
     videoRoomRepository.deleteById(gameSeq.toString());
+
   }
 
-  //방에 있는 참여자 Redis 제거
+  public void deleteFile(String filePath) {
+    try {
+      Path path = Paths.get(filePath);
+      Files.deleteIfExists(path);
+      log.info("파일이 성공적으로 삭제되었습니다.");
+    } catch (IOException e) {
+      log.info("파일 삭제 중 오류가 발생하였습니다: " + e.getMessage());
+      throw new RuntimeException();
+    }
+  }
+
+  @Override
+  public void makeHighLight(HighLightMessageDto highLightMessageDto) throws IOException, InterruptedException {
+    log.info("make highlight");
+    List<HighLightPosition> highLightPositionList = highLightMessageDto.getHighLightPositionList();
+    List<CompletableFuture<Void>> completableFutureList = new ArrayList<>();
+
+    for(HighLightPosition highLightPosition:highLightPositionList){
+      CompletableFuture<Void> future = mpegService.createHighLight(highLightMessageDto.getGameSeq(),highLightPosition.getStart(),highLightPosition.getFinish());
+      completableFutureList.add(future);
+    }
+
+    try {
+      for(CompletableFuture<Void> completableFuture:completableFutureList){
+          completableFuture.get();
+      }
+    } catch (ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+
+  }
+
+  @Override
+  public void deleteHighLight(Long gameSeq){
+    log.info("delete record");
+    Record record = recordRepository.findById(gameSeq.toString()).orElseThrow();
+    deleteFile(record.getRecordPath());
+    recordRepository.deleteById(gameSeq.toString());
+
+    highLightRepository.findAll().forEach(highLight -> {
+      log.info("delete highlight");
+      if(highLight.getGameSeq().equals(gameSeq.toString())){
+        deleteFile(highLight.getHighLightPath());
+        highLightRepository.deleteById(gameSeq.toString());
+      }
+    });
+  }
+
+  @Override
+  public void sendHighLight(Long gameSeq){
+      log.info("send highlight");
+      List<MultipartFile> multipartFileList = new ArrayList<>();
+
+      highLightRepository.findAll().forEach((highLight)->{
+        if(highLight.getGameSeq().equals(gameSeq.toString())){
+            log.info("FILE 추가!!!!!!" + highLight.getHighLightPath());
+            File file = new File(highLight.getHighLightPath());
+          try {
+            MultipartFile multipartFile = convertToMultipartFile(file);
+            multipartFileList.add(multipartFile);
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        }
+      });
+
+      flaskServiceClient.uploadFiles(multipartFileList,gameSeq);
+  }
+
+  public MultipartFile convertToMultipartFile(File file) throws IOException {
+    DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length() , file.getParentFile());
+
+    InputStream input = new FileInputStream(file);
+    OutputStream os = fileItem.getOutputStream();
+    IOUtils.copy(input, os);
+
+    MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+    return multipartFile;
+  }
+
   public void deleteParticipants(Long gameSeq) {
-    VideoRoom videoRoom = videoRoomRepository.findById(gameSeq.toString()).orElseThrow();
+
     participantRepository.findAll().forEach((participant -> {
       if (participant.getGameSeq().equals(gameSeq.toString())) {
         participantRepository.deleteById(participant.getId());
       }
     }));
+
   }
 
-  //webrtc 후보자 찾아주기 => IP,PORT 찾기
   @Override
   public void onIceCandidate(StompHeaderAccessor stompHeaderAccessor, JsonObject jsonObject) throws Exception {
     String sessionId = stompHeaderAccessor.getSessionId();
@@ -200,7 +317,6 @@ public class VideoServiceImpl implements VideoService {
     Participant participant;
     Optional<Participant> participantOptional = participantRepository.findById(sessionId);
 
-    //동기화
     while (!participantOptional.isPresent() || participantOptional.get().getWebRtcEndpointId() == null) {
       try {
         Thread.sleep(1000);
@@ -221,10 +337,10 @@ public class VideoServiceImpl implements VideoService {
 
   }
 
-  //stompMessage 보내주기
+
   public synchronized void sendStompMessage(String gameId, String userId, String message) {
+    log.info("send stomp message");
     simpMessagingTemplate.convertAndSendToUser(userId, "/sub/" + gameId, message);
   }
-
 
 }

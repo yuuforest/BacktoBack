@@ -33,6 +33,8 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private GameActiveType gameActiveType;
 
+    @Column(name= "game_url", length=200)
+    private String gameUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "home_seq", nullable = false)

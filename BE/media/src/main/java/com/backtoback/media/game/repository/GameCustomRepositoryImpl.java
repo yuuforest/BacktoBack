@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -22,10 +22,11 @@ public class GameCustomRepositoryImpl implements GameCustomRepository {
 
     @Override
     public List<Game> getAllTodayGame() {
-        LocalDate today = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId seoulZone = ZoneId.of("Asia/Seoul");
 
-        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
+        LocalDateTime startOfDay = LocalDateTime.of(now.toLocalDate(), LocalTime.MIN).atZone(seoulZone).toLocalDateTime();
+        LocalDateTime endOfDay = LocalDateTime.of(now.toLocalDate(), LocalTime.MAX).atZone(seoulZone).toLocalDateTime();
 
 
         return jpaQueryFactory
