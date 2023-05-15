@@ -22,21 +22,21 @@ public class CheerController {
 
     private final CheerService cheerService;
 
-    @PostMapping("cheer/start")
+    @PostMapping("start")
     @ApiOperation(value = "응원을 위한 환경 설정", notes = "응원을 시작하기 위해, Redis에 환경 설정")
     public ResponseEntity<?> readyToStartCheer(){
         cheerService.readyToStartCheer();
         return ResponseEntity.status(200).body("Success");
     } // OK
 
-    @GetMapping("game/{gameSeq}/cheer")
+    @GetMapping("game/{gameSeq}")
     @ApiOperation(value = "경기에 대한 현재 응원 점수", notes = "경기에 입장하면서, 이전까지의 각 팀 응원수 조회")
     public ResponseEntity<CheeringInfoRes> getCheeringInfo(@PathVariable("gameSeq") Long gameSeq){
         CheeringInfoRes cheeringInfo = cheerService.getCheeringInfo(gameSeq);
         return ResponseEntity.status(200).body(cheeringInfo);
     } // OK
 
-    @MessageMapping("game/{gameSeq}/team/{teamSeq}/cheer")
+    @MessageMapping("game/{gameSeq}/team/{teamSeq}")
     public void SendCheering(@DestinationVariable("gameSeq") Long gameSeq,
                              @DestinationVariable("teamSeq") Long teamSeq) {
         CheeringInfoRes cheeringInfo = cheerService.startCheering(gameSeq, teamSeq);
