@@ -78,9 +78,8 @@ public class BettingServiceImpl implements BettingService{
     @Override
     public BettingInfoRes getBettingInfo(Long memberSeq, Long gameSeq) {
 
-        Betting betting = bettingRepository.getByMemberSeqAndGameSeq(memberSeq, gameSeq);
-
-        if(betting == null) throw new EntityNotFoundException("해당하는 베팅 정보가 존재하지 않습니다. ", ENTITY_NOT_FOUND);
+        Betting betting = bettingRepository.findByMemberMemberSeqAndGameGameSeq(memberSeq, gameSeq)
+                .orElseThrow(() -> new EntityNotFoundException("해당하는 베팅 정보가 존재하지 않습니다. ", ENTITY_NOT_FOUND));
 
         return BettingInfoRes.builder()
                 .teamSeq(betting.getTeam().getTeamSeq())
@@ -92,8 +91,6 @@ public class BettingServiceImpl implements BettingService{
 
     @Override
     public void startBetting(Long memberSeq, BettingInfoReq bettingInfoReq) {
-
-        /** 이것도 feign Client로 변경했으면 좋겠다아ㅏㅏㅏ **/
 
         Member member = memberService.getMember(memberSeq);
         // 베팅 가능한 포인트인지 확인
@@ -168,7 +165,10 @@ public class BettingServiceImpl implements BettingService{
         long awayPercent = 100 - homePercent;
 
         // [예상 배당금]
-        Long divdends = calculateDivdends(getBettingByMemberGame(memberSeq, gameSeq), homeSeq, awaySeq, redisKey);
+        Betting betting = bettingRepository.findByMemberMemberSeqAndGameGameSeq(memberSeq, gameSeq)
+                .orElseThrow(() -> new EntityNotFoundException("해당하는 베팅 정보가 존재하지 않습니다. ", ENTITY_NOT_FOUND));
+
+        Long divdends = calculateDivdends(betting, homeSeq, awaySeq, redisKey);
 
 //        System.out.println("### anticipateBettingResult ##################################################################");
 //        System.out.println("HomePercent : " + homePercent);
@@ -245,7 +245,7 @@ public class BettingServiceImpl implements BettingService{
 //        System.out.println("[GameSeq] " + kafkaRes.getGameSeq() + " [winSeq] "  + winSeq);
 
         // 해당 경기에 베팅한 유저 목록 조회
-        List<Betting> bettings = getBettingByGame(gameSeq);
+        List<Betting> bettings = bettingRepository.findByGameGameSeq(gameSeq);
 
         Long homeSeq = game.getHomeTeamSeq();
         Long awaySeq = game.getAwayTeamSeq();
@@ -261,20 +261,6 @@ public class BettingServiceImpl implements BettingService{
             pointLogService.createPlusPointLog(betting.getMember().getMemberSeq(), resultPoint);
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public Betting getBettingByMemberGame(Long memberSeq, Long gameSeq) {
-        Betting betting = bettingRepository.getByMemberSeqAndGameSeq(memberSeq, gameSeq);
-        if(betting == null) throw new EntityNotFoundException("해당하는 베팅 ID가 존재하지 않습니다.", ENTITY_NOT_FOUND);
-        return betting;
-    }
-
-    public List<Betting> getBettingByGame(Long gameSeq) {
-        return bettingRepository.getByGameSeq(gameSeq);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public Game getGame(Long gameSeq) {
