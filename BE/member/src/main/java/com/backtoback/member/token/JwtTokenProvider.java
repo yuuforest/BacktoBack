@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.backtoback.member.domain.Member;
-import com.backtoback.member.dto.response.MemberResp;
+import com.backtoback.member.dto.response.TokenResp;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
-    public MemberResp generateToken(Authentication authentication, Member member, boolean isChangeRT, String rt) {
+    public TokenResp generateToken(Authentication authentication, Member member, boolean isChangeRT, String rt) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -83,7 +83,7 @@ public class JwtTokenProvider {
                     .compact();
         }
 
-        return MemberResp.builder()
+        return TokenResp.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
