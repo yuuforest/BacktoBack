@@ -1,32 +1,17 @@
 package com.backtoback.auth.domain;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.backtoback.team.domain.Team;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -62,9 +47,9 @@ public class Member implements UserDetails {
     @ColumnDefault(value = "0")
     private Integer bettingWin;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "team_seq")
-//    private Team team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_seq")
+    private Team team;
 
     @Column(nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
@@ -73,12 +58,11 @@ public class Member implements UserDetails {
 
 
     @Builder
-    public Member(String memberPassword, Team team, String memberId, String nickname, Set<String> privilege){
+    public Member(Team team, String memberId, String nickname, Set<String> privilege){
         this.memberId = memberId;
-        this.memberPassword = memberPassword;
         this.nickname = nickname;
         this.privilege = privilege;
-//        this.team = team;
+        this.team = team;
     }
 
 
@@ -120,9 +104,6 @@ public class Member implements UserDetails {
     }
 
 
-//    @OneToOne
-//    @JoinColumn(name = "team_seq", nullable = false)
-//    private Team my_team_seq;
 
 
 

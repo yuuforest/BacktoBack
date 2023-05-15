@@ -1,7 +1,6 @@
 package com.backtoback.member.service;
 
 import com.backtoback.member.domain.Member;
-import com.backtoback.member.dto.request.MemberLoginReq;
 import com.backtoback.member.dto.request.MemberSignUpReq;
 import com.backtoback.member.dto.request.MemberUpdateReq;
 import com.backtoback.member.dto.response.MemberResp;
@@ -13,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface MemberService {
     void singUp(MemberSignUpReq request);
-    TokenResp login(MemberLoginReq request, HttpServletResponse response);
 
-    MemberResp member(HttpServletRequest request);
+    MemberResp member(Long memberSeq);
 
     void update(MemberUpdateReq request);
 
