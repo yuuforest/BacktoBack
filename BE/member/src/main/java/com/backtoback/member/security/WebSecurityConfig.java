@@ -3,18 +3,23 @@ package com.backtoback.member.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class WebSecurityConfig {
+
+    private final CorsFilter corsFilter;
 
 
     @Bean
@@ -23,10 +28,14 @@ public class WebSecurityConfig {
                 .cors().and()
                 .httpBasic().disable()
                 .csrf().disable()
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/*").permitAll();
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/*").permitAll()
+            .antMatchers("api/**/**").permitAll();
 
 
         return http.build();
