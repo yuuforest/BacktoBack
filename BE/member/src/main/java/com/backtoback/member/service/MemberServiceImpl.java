@@ -1,12 +1,13 @@
 package com.backtoback.member.service;
 
-import com.backtoback.member.dto.response.InfoResp;
+import com.backtoback.member.dto.request.MemberUpdateReq;
+import com.backtoback.member.dto.response.MemberResp;
+import com.backtoback.member.dto.response.TokenResp;
 import com.backtoback.member.token.JwtTokenProvider;
 import com.backtoback.member.common.CookieProvider;
 import com.backtoback.member.domain.Member;
 import com.backtoback.member.dto.request.MemberLoginReq;
 import com.backtoback.member.dto.request.MemberSignUpReq;
-import com.backtoback.member.dto.response.MemberResp;
 import com.backtoback.member.exception.DuplicateMemberException;
 import com.backtoback.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +52,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberResp login(MemberLoginReq request, HttpServletResponse response) {
+    public TokenResp login(MemberLoginReq request, HttpServletResponse response) {
         Member member = memberRepository.findByMemberId(request.getMemberId()).orElseThrow(null);
         log.info(member.getMemberId());
 
@@ -67,7 +68,7 @@ public class MemberServiceImpl implements MemberService{
         log.info("============ access authentication ==============");
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        MemberResp tokenInfo = jwtTokenProvider.generateToken(authentication, member, true, "");
+        TokenResp tokenInfo = jwtTokenProvider.generateToken(authentication, member, true, "");
         log.info("============ access token ==============");
 
         String refreshToken = tokenInfo.getRefreshToken();
@@ -87,11 +88,17 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public InfoResp member(HttpServletRequest request) {
+    public MemberResp member(HttpServletRequest request) {
         String accessToken = jwtTokenProvider.resolveToken(request);
  		Member member = memberRepository.findById(Long.valueOf(jwtTokenProvider.getAuthentication(accessToken).getName())).orElse(null);
-        return InfoResp.fromEntity(member);
+        return MemberResp.fromEntity(member);
     }
+
+    @Override
+    public void update(MemberUpdateReq request) {
+
+    }
+
 
     @Override
     public void isExistId(String memberId) {
