@@ -1,7 +1,7 @@
 server:
   port: 8086
   servlet:
-    context-path: /business
+    context-path: /api/business
     encoding:
       charset: utf-8
       enabled: true
