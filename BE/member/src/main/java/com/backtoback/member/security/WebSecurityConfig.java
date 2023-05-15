@@ -19,8 +19,6 @@ import org.springframework.web.filter.CorsFilter;
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-    private final CorsFilter corsFilter;
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -28,14 +26,8 @@ public class WebSecurityConfig {
                 .cors().and()
                 .httpBasic().disable()
                 .csrf().disable()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .authorizeHttpRequests()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/*").permitAll()
-            .antMatchers("api/**/**").permitAll();
+                .antMatchers("api/**/**").permitAll();
 
 
         return http.build();

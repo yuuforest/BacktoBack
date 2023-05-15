@@ -1,7 +1,11 @@
 package com.backtoback.auth.service;
 
-import java.util.concurrent.TimeUnit;
-
+import com.backtoback.auth.domain.Member;
+import com.backtoback.auth.dto.response.TokenResp;
+import com.backtoback.auth.repository.MemberRepository;
+import com.backtoback.auth.token.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,13 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.backtoback.auth.domain.Member;
-import com.backtoback.auth.dto.response.MemberResp;
-import com.backtoback.auth.repository.MemberRepository;
-import com.backtoback.auth.token.JwtTokenProvider;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService{
 
 	@Override
 	@Transactional
-	public MemberResp refreshJwtToken(String accessToken, String refreshToken) {
+	public TokenResp refreshJwtToken(String accessToken, String refreshToken) {
 		Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 
 		if(!jwtTokenProvider.validateToken(refreshToken)){
@@ -48,7 +46,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService{
 
 		authentication = getAuthentication(member.getMemberId());
 
-		MemberResp tokenInfo = jwtTokenProvider.generateToken(authentication, member, true, refreshToken);
+		TokenResp tokenInfo = jwtTokenProvider.generateToken(authentication, member, true, refreshToken);
 		stringRedisTemplate.opsForValue()
 			.set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 

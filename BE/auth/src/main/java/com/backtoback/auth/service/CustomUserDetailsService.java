@@ -1,15 +1,13 @@
 package com.backtoback.auth.service;
 
+import com.backtoback.auth.domain.Member;
+import com.backtoback.auth.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.backtoback.auth.domain.Member;
-import com.backtoback.auth.repository.MemberRepository;
-
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

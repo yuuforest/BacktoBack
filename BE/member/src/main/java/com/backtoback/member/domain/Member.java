@@ -58,9 +58,8 @@ public class Member implements UserDetails {
 
 
     @Builder
-    public Member(String memberPassword, Team team, String memberId, String nickname, Set<String> privilege){
+    public Member( Team team, String memberId, String nickname, Set<String> privilege){
         this.memberId = memberId;
-        this.memberPassword = memberPassword;
         this.nickname = nickname;
         this.privilege = privilege;
         this.team = team;
@@ -103,13 +102,5 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
-
-//    @OneToOne
-//    @JoinColumn(name = "team_seq", nullable = false)
-//    private Team my_team_seq;
-
-
-
 
 }

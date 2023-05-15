@@ -30,10 +30,11 @@ public class WebSecurityConfig {
                 .cors().and()
                 .httpBasic().disable()
                 .csrf().disable()
+                .logout().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("api/auth/login").permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, stringRedisTemplate), UsernamePasswordAuthenticationFilter.class);
 

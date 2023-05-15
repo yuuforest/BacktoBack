@@ -1,11 +1,7 @@
 package com.backtoback.member.controller;
 
-import com.backtoback.member.dto.response.TokenResp;
-import com.backtoback.member.token.JwtTokenProvider;
-import com.backtoback.member.common.CookieProvider;
-import com.backtoback.member.dto.request.MemberLoginReq;
 import com.backtoback.member.dto.request.MemberSignUpReq;
-import com.backtoback.member.dto.response.MemberResp;
+import com.backtoback.member.dto.request.MemberUpdateReq;
 import com.backtoback.member.service.MemberService;
 
 import io.swagger.annotations.Api;
@@ -25,42 +21,30 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("api/member")
+@RequestMapping("/")
 public class MemberController {
     private final MemberService memberService;
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    private final CookieProvider cookieProvider;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping("/member")
-    public ResponseEntity<?> select(HttpServletRequest request){
-        return ResponseEntity.ok(memberService.member(request));
+    @GetMapping("/member/{memberSeq}")
+    public ResponseEntity<?> select(@PathVariable("memberSeq") Long memberSeq){
+        return ResponseEntity.ok(memberService.member(memberSeq));
     }
 
-    @PutMapping("/member")
-    public ResponseEntity<?> update(HttpServletRequest request){
-        return ResponseEntity.ok(memberService.member(request));
-    }
+//    @PutMapping("/member")
+//    public ResponseEntity<?> update(HttpServletRequest request){
+//        return ResponseEntity.ok(memberService.update(MemberUpdateReq));
+//    }
 
     @PostMapping("/signup")
     @ApiOperation(value="회원가입", notes = "회원가입")
-    public ResponseEntity<MemberLoginReq> signUp(@Validated @RequestBody MemberSignUpReq request) {
+    public ResponseEntity<?> signUp(@Validated @RequestBody MemberSignUpReq request) {
         memberService.singUp(request);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
 
-    @PostMapping("/login")
-    @ApiOperation(value="로그인", notes = "로그인")
-    public ResponseEntity<TokenResp> login(@Validated @RequestBody MemberLoginReq request, HttpServletResponse response){
-        TokenResp memberResp = memberService.login(request, response);
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .header(memberResp.getAccessToken())
-                .body(memberResp);
-    }
 
 
     }

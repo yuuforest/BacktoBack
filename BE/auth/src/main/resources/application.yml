@@ -1,5 +1,7 @@
 server:
   port: 8085
+  servlet:
+    context-path: /api/auth
 
 jwt:
   access-expired-time: 3600000
