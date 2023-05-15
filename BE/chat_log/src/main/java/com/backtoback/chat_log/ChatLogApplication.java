@@ -1,16 +1,11 @@
 package com.backtoback.chat_log;
 
-import java.util.function.Consumer;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-import com.backtoback.chat_log.chat_log.dto.request.GameConditionDto;
-import com.backtoback.chat_log.chat_log.kafka.MessagePollScheduler;
-import com.backtoback.chat_log.entity.GameActiveType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @EnableScheduling
 @EnableAsync
+@EnableFeignClients
+@EnableKafka
 // @EnableDiscoveryClient
 public class ChatLogApplication {
 
@@ -37,25 +34,25 @@ public class ChatLogApplication {
 	/*
 	게임 시작,끝 Event 받는 Consumer
 	 */
-	@Bean
-	public Consumer<GameConditionDto> getGameCondition(MessagePollScheduler messagePollScheduler) {
-		return gameConditionDto -> {
-			log.info(gameConditionDto.toString());
-
-			Long gameSeq = gameConditionDto.getGameSeq();
-			GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
-
-			// ScheduledFuture<?> scheduledFuture = null; //null 처리 필요
-
-			if (gameActiveType == GameActiveType.IN_GAME) { //경기 시작
-				log.info("경기 시작");
-				messagePollScheduler.startTask();
-			} else if (gameActiveType == GameActiveType.AFTER_GAME) { //경기 끝
-				log.info("경기 끝");
-				messagePollScheduler.cancelTask();
-			}
-		};
-	}
+	// @Bean
+	// public Consumer<GameConditionDto> getGameCondition(MessagePollScheduler messagePollScheduler) {
+	// 	return gameConditionDto -> {
+	// 		log.info(gameConditionDto.toString());
+	//
+	// 		Long gameSeq = gameConditionDto.getGameSeq();
+	// 		GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
+	//
+	// 		// ScheduledFuture<?> scheduledFuture = null; //null 처리 필요
+	//
+	// 		if (gameActiveType == GameActiveType.IN_GAME) { //경기 시작
+	// 			log.info("경기 시작");
+	// 			messagePollScheduler.startTask();
+	// 		} else if (gameActiveType == GameActiveType.AFTER_GAME) { //경기 끝
+	// 			log.info("경기 끝");
+	// 			messagePollScheduler.cancelTask();
+	// 		}
+	// 	};
+	// }
 
 	// @Bean
 	// public Consumer<String> process() {

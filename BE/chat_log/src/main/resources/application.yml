@@ -23,79 +23,130 @@ spring:
   application:
     name: chat_log
 
+  integration:
+    poller:
+      fixed-delay: 5000
+      maxMessagesPerPoll: 10000
+      initialDelay: 5000
+
   cloud:
     function:
       definition: getGameCondition; #process;
-
-
+      #      routing-expression:
+      #
     stream:
-      pollable-source: pollableInput
-
+      #      pollable-source:
+      #        chat-all-game-1;
+      #
+      #      #        chat.team.1;
+      #      #        chat.team.2;
+      #
       default-binder: kafka
 
       bindings:
-        pollableInput-in-0:
-          destination: chat-room-1
-          group: pollable-group
-          consumer:
-
-            partitioned: false
-        #            batch-mode: true
-
-
+        #        chat-all-game-1-in-0:
+        #          destination: chat.all.game.1 #,chat.all.game.2
+        #          #        chat.team.1-in-0:
+        #          #        chat.team.2-in-0:
+        #          #          destination:  # ${destination.name}
+        #          group: game1
+        #          consumer:
+        #            partitioned: false
+        #          content-type: application/json
+        #        #            batch-mode: true
+        #
+        #
         getGameCondition-in-0:
           destination: game-condition
-          group: group1 # 컨슈머 그룹
-          content-type: application/json
-          #          consumer:
-          #            batch-mode: true #한꺼번에 가져오기
-          #            partitioned: false
-          #            instance-count: 1
-
-          #        process-in-0:
-          #          destination: test
-          #          group: group2 # 컨슈머 그룹
-          #          content-type: application/json
+          group: game-group1 # 컨슈머 그룹
+          content-type: application/json;type=com.backtoback.chat_log.chat_log.dto.request.GameConditionDto
+          consumer:
+            #            batch-mode: true #한꺼번에 가져오기
+            partitioned: false
 
 
-          #        process-out-0:
-          #          destination: topic2
-          #          producer:
-          #            auto-startup: false
-          #            poller:
-          #              fixedDelay: 0
-
-
-      #        pollableInput-in-0: #name of our custom channel
-      #          group: pollable-group #kafka consumer group
-      #          destination: chat-room-1 #setting kafka topic to read from
-
-
+        #            instance-count: 1
+        #
+        #          #        process-in-0:
+        #          #          destination: test
+        #          #          group: group2 # 컨슈머 그룹
+        #          #          content-type: application/json
+        #
+        #
+        #          #        process-out-0:
+        #          #          destination: topic2
+        #          #          producer:
+        #          #            auto-startup: false
+        #          #            poller:
+        #          #              fixedDelay: 0
+        #
+        #
+        #      #        pollableInput-in-0: #name of our custom channel
+        #      #          group: pollable-group #kafka consumer group
+        #      #          destination: chat-room-1 #setting kafka topic to read from
+        #
+        #
       kafka:
-        binder:
-          auto-create-topics: false # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
-          brokers: localhost:9092
-
-
-          #          replication-factor: 1
-
-          consumer-properties:
-            max:
-              poll:
-                records: 10000
-
-            fetch.max.wait.ms: 5000
-
-            auto.offset.reset: latest
-
-
-
         #        bindings:
+        #          pollableInput-in-0:
+        #            consumer:
+        #              destination-is-pattern: true
+        #
+        binder:
+          auto-create-topics: true # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
+          brokers: localhost:9092
+  #
+  #          #          replication-factor: 1
+  #
+  #          consumer-properties:
+  #            max:
+  #              poll:
+  #                records: 10000
+  #
+  #            fetch.max.wait.ms: 5000
+  #
+  #            auto.offset.reset: latest
 
-        #          process-out-0:
-        #            producer:
-        #              configuration:
-        #                value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
+  #        bindings:
+
+  #          process-out-0:
+  #            producer:
+  #              configuration:
+  #                value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  #      dynamic-destinations:
+
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+    #    consumer:
+    #      auto-offset-reset: latest
+    #      max-poll-records: 100000
+    #      bootstrap-servers: localhost:9092
+    #      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+    #      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+    #      enable-auto-commit: true
+    #      properties:
+    #        spring:
+    #          deserializer:
+    #            key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+    #            value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+    #          json:
+    #            value:
+    #              default:
+    #                type: com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto
+    #            trusted:
+    #              packages: com.backtoback.chat_log.chat_log.dto
+
+    listener:
+      type: batch
+      idle-between-polls: 5000
+      ack-mode: batch
+      poll-timeout: 1
+      idleEventInterval: 0
 
 
 
@@ -156,6 +207,7 @@ spring:
   mvc:
     log-request-details: true # request의 parameter 값 등을 log에서 못 보는 설정 해제
 
+
 #  servlet:
 #    multipart:
 #      maxFileSize: 10MB
@@ -172,7 +224,10 @@ logging.level:
       #      beans: trace
       cloud.stream: trace
       cloud.stream.binder: trace
+      cloud.stream.binding: trace
       messaging: trace
+
+      kafka: trace
 
       security: trace
 
