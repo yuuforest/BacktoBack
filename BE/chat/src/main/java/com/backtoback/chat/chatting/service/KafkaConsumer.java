@@ -42,7 +42,7 @@ public class KafkaConsumer {
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
-		destination.append("/topic")
+		destination.append("/api/chat/topic")
 					.append("/chat.message.all.")
 					.append(chatMessage.getTopicNumber());
 
@@ -71,7 +71,7 @@ public class KafkaConsumer {
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
-		destination.append("/topic")
+		destination.append("/api/chat/topic")
 					.append("/chat.message.team.")
 					.append(chatMessage.getMemberTeamSeq());
 
