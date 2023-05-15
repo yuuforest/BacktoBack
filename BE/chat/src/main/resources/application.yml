@@ -2,7 +2,7 @@ server:
   port: 8087
 
   servlet:
-    context-path: /
+    context-path: /api/chat
     encoding:
       charset: utf-8
       enabled: true
@@ -24,25 +24,10 @@ spring:
     name: chat
 
   datasource:
-    # develop 브랜치 용
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3305/backtoback?useUnicode=true&characterEncoding=utf-8
     username: root
     password: ssafy
-
-    # ssafy 노트북 local 용
-    #        driver-class-name: org.mariadb.jdbc.Driver
-    #        url: jdbc:mariadb://localhost:3306/bundler?useUnicode=true&characterEncoding=utf-8
-    #        username: root
-    #        password: ssafy
-
-    # 효진 노트북 local 용
-    #    url: jdbc:mysql://localhost:3306/bundler?useUnicode=true&characterEncoding=utf-8
-    #    username: ssafy
-    #    password: ssafy
-    #    driver-class-name: com.mysql.cj.jdbc.Driver
-
-    #추가
     hikari:
       pool-name: jpa-hikari-pool
       maximum-pool-size: 5
@@ -83,6 +68,11 @@ spring:
     bootstrap-servers: k8a708.p.ssafy.io:9092
     consumer:
       group-id: kafka-chat-group
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
 
 #  servlet:
 #    multipart:
@@ -115,12 +105,11 @@ logging.level:
   org.hibernate.type: trace
   org:
     springframework:
-
       security: trace
-
       boot:
         autoconfigure:
           security: trace
       web: trace
-
       http: trace
+      batch: trace
+      jdbc.core.JdbcTemplate: debug

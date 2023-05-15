@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ public class KafkaProducerConfig {
 	private String bootstrapServers;
 
 	@Bean
-	public ProducerFactory<Long, ChatMessage> producerFactory(){
+	public ProducerFactory<String, ChatMessage> producerFactory(){
 		return new DefaultKafkaProducerFactory<>(kafkaProducerConfiguration());
 	}
 
@@ -34,14 +35,14 @@ public class KafkaProducerConfig {
 		//브로커 주소 설정 : 카프카 주소 + 포트
 		configurations.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		//key Serializer
-		configurations.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
+		configurations.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		//value Serializer
 		configurations.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 		return configurations;
 	}
 
 	@Bean
-	public KafkaTemplate<Long, ChatMessage> kafkaTemplate(){
+	public KafkaTemplate<String, ChatMessage> kafkaTemplate(){
 		return new KafkaTemplate<>(producerFactory());
 	}
 
