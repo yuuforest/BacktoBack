@@ -29,7 +29,7 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
 	 */
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/api/chat/topic");	//한 명이 메시지를 발행했을 때 해당 토픽을 구독하고 있는 n명에게 메시지 뿌림
+		registry.enableSimpleBroker("/topic");	//한 명이 메시지를 발행했을 때 해당 토픽을 구독하고 있는 n명에게 메시지 뿌림
 		registry.setApplicationDestinationPrefixes("/api/chat/kafka");
 	}
 }

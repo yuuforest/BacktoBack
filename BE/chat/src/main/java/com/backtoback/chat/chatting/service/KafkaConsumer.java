@@ -26,7 +26,7 @@ public class KafkaConsumer {
 	 * @param chatMessage
 	 * @throws JsonProcessingException
 	 */
-	@KafkaListener(topicPattern = "chat.all.game.*")
+	@KafkaListener(topicPattern = "chat.all.game.*", groupId = "kafka-chat-group")
 	public void consumeAllChat(ChatMessage chatMessage) throws JsonProcessingException {
 		log.info("Consumed ChatMessage.........................{}", chatMessage.toString());
 
@@ -42,7 +42,7 @@ public class KafkaConsumer {
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
-		destination.append("/api/chat/topic")
+		destination.append("/topic")
 					.append("/chat.message.all.")
 					.append(chatMessage.getTopicNumber());
 
@@ -55,7 +55,7 @@ public class KafkaConsumer {
 	 * @param chatMessage
 	 * @throws JsonProcessingException
 	 */
-	@KafkaListener(topicPattern = "chat.team.*")
+	@KafkaListener(topicPattern = "chat.team.*", groupId = "kafka-chat-group")
 	public void consumeTeamChat(ChatMessage chatMessage) throws JsonProcessingException {
 		log.info("Consumed ChatMessage.........................{}", chatMessage.toString());
 
@@ -71,7 +71,7 @@ public class KafkaConsumer {
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
-		destination.append("/api/chat/topic")
+		destination.append("/topic")
 					.append("/chat.message.team.")
 					.append(chatMessage.getMemberTeamSeq());
 
