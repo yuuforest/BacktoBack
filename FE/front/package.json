@@ -12,6 +12,8 @@
     "immutable": "^4.3.0",
     "micromatch": "^4.0.5",
     "node-sass": "^8.0.0",
+    "primeflex": "^3.3.0",
+    "primeicons": "^6.0.1",
     "primereact": "^9.4.0",
     "prop-types": "^15.8.1",
     "proxy": "^2.1.0",
