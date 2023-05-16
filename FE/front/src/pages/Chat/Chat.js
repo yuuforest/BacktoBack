@@ -7,16 +7,18 @@ import ChatList from "./components/ChatList";
 import { SelectButton } from "primereact/selectbutton";
 import "./styles/Chat.css";
 
-function Chat() {
+function Chat(props) {
   const [allMessages, setAllMessages] = useState([]); //전체 채팅 메시지들을 담을 배열
   const [teamMessages, setTeamMessages] = useState([]);
   const [sendTopic, setSendTopic] = useState("");
   const [receiveTopic, setReceiveTopic] = useState("");
   const [homeSeq, setHomeSeq] = useState(null);
   const [awaySeq, setAwaySeq] = useState(null);
+  // const [memberTeamSeq, setMemberTeamSeq] = useState(null);
   const [teamChatShow, setTeamChatShow] = useState(false);
   const clientRef = useRef(null);
   const wsConnectionUrl = "http://localhost:8000/api/chat/ws-chat";
+
   // const { gameSeq } = useParams();
   const gameSeq = 1; //추후수정필요
 
@@ -26,6 +28,10 @@ function Chat() {
   const [chatType, setChatType] = useState(options[0]);
 
   const memberTeamSeq = 1; //추후 수정 필요
+  // setMemberTeamSeq(props.memberTeamSeq);
+  // setHomeSeq(props.homeSeq);
+  // setAwaySeq(props.awaySeq);
+  // setTopicNumber(props.topicNumber);
 
   //axios 통신 : axiosInstance.get() 형태로 변경해야함.
   const fetchTeams = async () => {
