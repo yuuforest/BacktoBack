@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,18 +22,18 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class GameScheduler {
 
-  private final VideoServiceClient videoServiceClient;
+	private final VideoServiceClient videoServiceClient;
 
   private final PointServiceClient pointServiceClient;
 
-  private final StreamBridge streamBridge;
+	private final StreamBridge streamBridge;
 
-  @Async
-  @Scheduled(cron = "0 0/2 * * * *")
-  public void dateChange(){
-    log.info("dateChange");
-    // videoServiceClient.makeRoom();
-//    bettingServiceClient.makeRoom();
-  }
+	@Async
+	@Scheduled(cron = "0 0/2 * * * *")
+	public void dateChange() {
+		log.info("dateChange");
+		// videoServiceClient.makeRoom();
+		//    bettingServiceClient.makeRoom();
+	}
 
 }

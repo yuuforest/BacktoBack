@@ -6,14 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
-
 @Getter
 @Setter
 @Builder
-@ApiModel(value="게임")
+@ApiModel(value = "게임")
 public class GameResponseDto {
 
-  @ApiModelProperty(value="게임 시퀀스")
-  private Long gameSeq;
+	@ApiModelProperty(value = "게임 시퀀스")
+	private Long gameSeq;
+
 }
