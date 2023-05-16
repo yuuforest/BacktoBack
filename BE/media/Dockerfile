@@ -11,4 +11,6 @@ COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
 
+RUN apt-get update && apt-get install -y ffmpeg
+
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
