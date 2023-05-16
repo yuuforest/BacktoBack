@@ -19,7 +19,7 @@ import java.util.Collections;
 @ApiModel("MemberSignUpReq")
 public class MemberSignUpReq {
     @NotEmpty(message = "아이디는 필수 입력값입니다.")
-//    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "이메일 형식에 맞지 않습니다.")
+   @Pattern(regexp = "^[A-Za-z0-9._%+-]{6,12}$", message = "아이디 형식에 맞지 않습니다.(6-12자)")
     @ApiModelProperty(name = "memberId")
     private String  memberId;
     @NotEmpty(message = "비밀번호는 필수 입력값입니다.")
@@ -37,6 +37,7 @@ public class MemberSignUpReq {
         return Member
                 .builder()
                 .memberId(memberId)
+                .memberPassword(memberPassword)
                 .nickname(nickname)
                 .team(team)
                 .privilege(Collections.singleton(MemberPrivilege.GENERAL.name())).build();

@@ -1,9 +1,7 @@
 package com.backtoback.auth.controller;
 
 import com.backtoback.auth.common.CookieProvider;
-import com.backtoback.auth.dto.request.MemberLoginReq;
 import com.backtoback.auth.dto.response.TokenResp;
-import com.backtoback.auth.service.AuthService;
 import com.backtoback.auth.service.RefreshTokenService;
 import com.backtoback.auth.token.JwtTokenProvider;
 import io.swagger.annotations.ApiOperation;

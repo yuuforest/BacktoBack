@@ -1,7 +1,6 @@
 package com.backtoback.member.controller;
 
 import com.backtoback.member.dto.request.MemberSignUpReq;
-import com.backtoback.member.dto.request.MemberUpdateReq;
 import com.backtoback.member.service.MemberService;
 
 import io.swagger.annotations.Api;
@@ -26,6 +25,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/member/{memberSeq}")
+    @ApiOperation(value="회원정보 조회", notes = "회원정보 조회")
     public ResponseEntity<?> select(@PathVariable("memberSeq") Long memberSeq){
         return ResponseEntity.ok(memberService.member(memberSeq));
     }
@@ -44,7 +44,15 @@ public class MemberController {
                 .build();
     }
 
+    @GetMapping("/exist/{memberId}")
+    @ApiOperation(value="아이디 중복 확인", notes = "아이디 중복 확인")
+    public ResponseEntity<?> exist(@PathVariable("memberId") String memberId){
+        memberService.isExistId(memberId);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .build();
 
+    }
 
 
     }

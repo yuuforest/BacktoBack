@@ -1,6 +1,5 @@
 package com.backtoback.member.service;
 
-import com.backtoback.member.dto.request.MemberUpdateReq;
 import com.backtoback.member.dto.response.MemberResp;
 import com.backtoback.member.dto.response.TokenResp;
 import com.backtoback.member.domain.Member;
@@ -88,10 +87,10 @@ public class MemberServiceImpl implements MemberService{
         return MemberResp.fromEntity(member);
     }
 
-    @Override
-    public void update(MemberUpdateReq request) {
-
-    }
+    // @Override
+    // public void update(MemberUpdateReq request) {
+    //
+    // }
 
 
     @Override

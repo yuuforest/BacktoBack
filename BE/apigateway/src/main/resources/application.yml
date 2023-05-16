@@ -21,13 +21,14 @@ spring:
     host: localhost
     port: 6379
     password: ssafy
-  main:
-    allow-bean-definition-overriding: true
-    web-application-type: reactive
   application:
     name: apigateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
       routes:
         - id: chat
           uri: http://localhost:8087/
@@ -41,17 +42,11 @@ spring:
           uri: http://localhost:8086/
           predicates:
             - Path=/business/**
-        - id: member
-          uri: http://localhost:8082/
-          predicates:
-            - Path=/member/login
-            - Method=POST
 
         - id: member
           uri: http://localhost:8082/
           predicates:
-            - Path=/member/signup
-            - Method=POST
+            - Path=/api/member/**
 
         - id: auth
           uri: http://localhost:8085
