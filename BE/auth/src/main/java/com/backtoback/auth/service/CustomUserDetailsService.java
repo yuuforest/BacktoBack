@@ -1,7 +1,7 @@
-package com.backtoback.member.service;
+package com.backtoback.auth.service;
 
-import com.backtoback.member.domain.Member;
-import com.backtoback.member.repository.MemberRepository;
+import com.backtoback.auth.domain.Member;
+import com.backtoback.auth.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

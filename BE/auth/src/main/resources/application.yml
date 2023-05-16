@@ -1,7 +1,7 @@
 server:
-  port: 8082
+  port: 8085
   servlet:
-    context-path: /api/member
+    context-path: /api/auth
 
 jwt:
   access-expired-time: 3600000
@@ -13,7 +13,7 @@ jwt:
 
 spring:
   application:
-    name: member
+    name: auth
 
   data:
     redis:
@@ -50,7 +50,7 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 eureka:
 #  instance:
@@ -59,7 +59,7 @@ eureka:
     register-with-eureka: false
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 
 

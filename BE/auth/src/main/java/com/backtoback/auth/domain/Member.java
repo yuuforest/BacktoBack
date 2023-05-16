@@ -1,4 +1,4 @@
-package com.backtoback.member.domain;
+package com.backtoback.auth.domain;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -58,10 +58,9 @@ public class Member implements UserDetails {
 
 
     @Builder
-    public Member( Team team, String memberId, String memberPassword, String nickname, Set<String> privilege){
+    public Member(Team team, String memberId, String nickname, Set<String> privilege){
         this.memberId = memberId;
         this.nickname = nickname;
-        this.memberPassword = memberPassword;
         this.privilege = privilege;
         this.team = team;
     }
@@ -103,5 +102,10 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+
+
+
+
 
 }
