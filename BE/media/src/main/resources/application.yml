@@ -31,9 +31,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
+      ddl-auto: create
     generate-ddl: true
     properties:
       hibernate:
