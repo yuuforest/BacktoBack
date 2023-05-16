@@ -17,11 +17,11 @@ spring:
         - id: chat
           uri: http://localhost:8087/
           predicates:
-            - Path=/chat/**
+            - Path=/api/chat/**
         - id: chat_sockjs_route
           uri: http://localhost:8087/
           predicates:
-            - Path=/ws-chat/**
+            - Path=/api/chat/ws-chat/**
         - id: business
           uri: http://localhost:8086/
           predicates:
