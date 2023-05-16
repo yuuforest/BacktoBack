@@ -1,7 +1,7 @@
 package com.backtoback.business.gamemanager.scheduler;
 
 
-import com.backtoback.business.gamemanager.feignclient.BettingServiceClient;
+import com.backtoback.business.gamemanager.feignclient.PointServiceClient;
 import com.backtoback.business.gamemanager.feignclient.VideoServiceClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +22,18 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class GameScheduler {
 
-  private final VideoServiceClient videoServiceClient;
+	private final VideoServiceClient videoServiceClient;
 
-//  private final BettingServiceClient bettingServiceClient;
+  private final PointServiceClient pointServiceClient;
 
-  private final StreamBridge streamBridge;
+	private final StreamBridge streamBridge;
 
-  @Async
-  @Scheduled(cron = "0 0/2 * * * *")
-  public void dateChange(){
-    log.info("dateChange");
-    videoServiceClient.makeRoom();
-//    bettingServiceClient.makeRoom();
-  }
+	@Async
+	@Scheduled(cron = "0 0/2 * * * *")
+	public void dateChange() {
+		log.info("dateChange");
+		// videoServiceClient.makeRoom();
+		//    bettingServiceClient.makeRoom();
+	}
 
 }

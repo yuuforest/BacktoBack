@@ -24,28 +24,28 @@ public class StompKafkaController {
 
 	private final KafkaProducer kafkaProducer;
 
-	@MessageMapping("/chat.message.all.{gameSeq}")
+	@MessageMapping("/chat.message.all.{topicNumber}")
 	public void messageOfAllChat(@RequestBody ChatMessage chatMessage,
-						@DestinationVariable Long gameSeq) {
+						@DestinationVariable Long topicNumber) {
 		log.info("client message from game all chatting......................... {}", chatMessage);
 
 		chatMessage.setTime(LocalDateTime.now());
 
 		//Kafka Producer send
 		StringBuilder kafkaTopicName = new StringBuilder(100);
-		kafkaTopicName.append("chat.all.game.").append(gameSeq);
+		kafkaTopicName.append("chat.all.game.").append(topicNumber);
 		kafkaProducer.send(kafkaTopicName.toString(), chatMessage);
 	}
 
-	@MessageMapping("/chat.message.team.{teamSeq}.game.{gameSeq}")
+	@MessageMapping("/chat.message.team.{teamSeq}")
 	public void messageOfTeamChat(@RequestBody ChatMessage chatMessage,
-							@DestinationVariable Long teamSeq, @DestinationVariable Long gameSeq) {
+							@DestinationVariable Long teamSeq) {
 		log.info("client message from team chatting......................... {}", chatMessage);
 
 		chatMessage.setTime(LocalDateTime.now());
 
 		StringBuilder kafkaTopicName = new StringBuilder(100);
-		kafkaTopicName.append("chat.team").append(teamSeq).append(".game.").append(gameSeq);
+		kafkaTopicName.append("chat.team.").append(teamSeq);
 		kafkaProducer.send(kafkaTopicName.toString(), chatMessage);
 	}
 }

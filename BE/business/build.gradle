@@ -1,4 +1,4 @@
-plugins {
+ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.11'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
@@ -19,9 +19,13 @@ ext {
 }
 repositories {
     mavenCentral()
+    maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
 }
 
 dependencies {
+
+    //eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // Swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'

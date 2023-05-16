@@ -26,7 +26,7 @@ public class KafkaConsumer {
 	 * @param chatMessage
 	 * @throws JsonProcessingException
 	 */
-	@KafkaListener(topicPattern = "chat.all.game.*")
+	@KafkaListener(topicPattern = "chat.all.game.*", groupId = "kafka-chat-group")
 	public void consumeAllChat(ChatMessage chatMessage) throws JsonProcessingException {
 		log.info("Consumed ChatMessage.........................{}", chatMessage.toString());
 
@@ -37,13 +37,14 @@ public class KafkaConsumer {
 		msg.put("nickname", chatMessage.getNickname());
 		msg.put("message", chatMessage.getMessage());
 		msg.put("time", chatMessage.getTime().toString());
+		msg.put("topicNumber", chatMessage.getTopicNumber().toString());
 
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
 		destination.append("/topic")
 					.append("/chat.message.all.")
-					.append(chatMessage.getGameSeq());
+					.append(chatMessage.getTopicNumber());
 
 		//STOMP Websocket으로 메세지 날려주기
 		template.convertAndSend(String.valueOf(destination), mapper.writeValueAsString(msg));
@@ -54,7 +55,7 @@ public class KafkaConsumer {
 	 * @param chatMessage
 	 * @throws JsonProcessingException
 	 */
-	@KafkaListener(topicPattern = "chat.team.*")
+	@KafkaListener(topicPattern = "chat.team.*", groupId = "kafka-chat-group")
 	public void consumeTeamChat(ChatMessage chatMessage) throws JsonProcessingException {
 		log.info("Consumed ChatMessage.........................{}", chatMessage.toString());
 
@@ -65,15 +66,14 @@ public class KafkaConsumer {
 		msg.put("nickname", chatMessage.getNickname());
 		msg.put("message", chatMessage.getMessage());
 		msg.put("time", chatMessage.getTime().toString());
+		msg.put("topicNumber", chatMessage.getTopicNumber().toString());
 
 		ObjectMapper mapper = new ObjectMapper();
 		StringBuilder destination = new StringBuilder(50);
 
 		destination.append("/topic")
 					.append("/chat.message.team.")
-					.append(chatMessage.getMemberTeamSeq())
-					.append(".game.")
-					.append(chatMessage.getGameSeq());
+					.append(chatMessage.getMemberTeamSeq());
 
 		template.convertAndSend(String.valueOf(destination), mapper.writeValueAsString(msg));
 	}

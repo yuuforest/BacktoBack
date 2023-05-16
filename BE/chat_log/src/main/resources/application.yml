@@ -19,7 +19,6 @@ logging:
     org:
       jsoup: trace
 
-
 spring:
   application:
     name: chat_log
@@ -94,7 +93,7 @@ spring:
         #              destination-is-pattern: true
         #
         binder:
-          auto-create-topics: true # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
+          auto-create-topics: false # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
           brokers: localhost:9092
   #
   #          #          replication-factor: 1
@@ -187,9 +186,9 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update # create, update, none
-    #      naming:
-    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
+      ddl-auto: none # create, update, none
+      naming:
+    #    physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     #    show-sql: true
     generate-ddl: true
     properties:
@@ -207,7 +206,6 @@ spring:
 
   mvc:
     log-request-details: true # request의 parameter 값 등을 log에서 못 보는 설정 해제
-
 
 #  servlet:
 #    multipart:

@@ -18,6 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 // @EnableDiscoveryClient
 public class ChatLogApplication {
 
+	// public static void main(String[] args) {
+	// 	SpringApplication.run(ChatLogApplication.class, "--spring.cloud.stream.pollable-source=chat-room-1");
+	// }
+
 	public static void main(String[] args) {
 		SpringApplication.run(ChatLogApplication.class, args);
 	}

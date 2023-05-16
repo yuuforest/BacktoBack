@@ -16,21 +16,15 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Value("${sock.url}")
   private String kurentoUrl;
+
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
-    registry.addEndpoint("/video").setAllowedOrigins("http://localhost:3000").withSockJS();
+    registry.addEndpoint("/video").setAllowedOrigins("http://localhost:3000","http://k8a708.p.ssafy.io","http://k8a7081.p.ssafy.io:3000").withSockJS();
   }
 
   @Bean
   public KurentoClient kurentoClient() {
     return KurentoClient.create(kurentoUrl);
-  }
-
-  @Bean
-  public ServletServerContainerFactoryBean createServletServerContainerFactoryBean() {
-    ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-    container.setMaxTextMessageBufferSize(32768);
-    return container;
   }
 
   @Override
@@ -39,4 +33,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     registry.enableSimpleBroker("/sub","/user");
     registry.setUserDestinationPrefix("/user");
   }
+
 }
