@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import TheLayout from "./container";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
+import PhotocardHome from "./pages/Photocard/PhotocardHome";
+import PhotocardDetail from "./pages/Photocard/PhotocardDetail";
 
 function App() {
   return (
@@ -26,8 +28,10 @@ function App() {
     <Routes>
       <Route path="*" element={<TheLayout />} />
       <Route path="*" element={<Navigate to="/" />} />
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/join" element={<SignUp />}></Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/join" element={<SignUp />} />
+      <Route path="/photocard/home" element={<PhotocardHome />} />
+      <Route path="/photocard/detail/:gameid" element={<PhotocardDetail />} />
     </Routes>
   );
 }
