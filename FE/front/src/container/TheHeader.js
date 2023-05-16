@@ -14,7 +14,7 @@ const TheHeader = () => {
       <Link className="menu-item" to="/live">
         라이브시청
       </Link>
-      <Link className="menu-item" to="/photocard">
+      <Link className="menu-item" to="/photocard/home">
         포토카드
       </Link>
       <div>

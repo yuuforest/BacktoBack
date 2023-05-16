@@ -1,9 +1,10 @@
-import Logo from "../../../images/logo.svg";
+import Logo from "../../images/logo.svg";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import React, { useState } from "react";
 import { Dropdown } from "primereact/dropdown";
-import "../styles/Signup.css";
+import "./Signup.css";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -22,7 +23,9 @@ const SignUp = () => {
   return (
     <div className="sign-in-container">
       <div className="logo">
-        <img alt="logo" src={Logo} style={{ height: "3rem" }}></img>
+        <Link to="/">
+          <img alt="logo" src={Logo} style={{ height: "3rem" }}></img>
+        </Link>
       </div>
       <div className="flex align-items-center justify-content-center">
         <div className="surface-card p-4 shadow-2 border-round lg:w-4">
