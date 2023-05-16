@@ -34,3 +34,12 @@ spring:
           uri: http://localhost:8086/
           predicates:
             - Path=/business/**
+
+        - id: point
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/api/point/**
+        - id: cheer
+          uri: http://localhost:8089/
+          predicates:
+            - Path=/api/cheer/**
