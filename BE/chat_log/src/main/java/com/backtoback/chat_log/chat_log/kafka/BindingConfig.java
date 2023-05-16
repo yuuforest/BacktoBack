@@ -5,8 +5,10 @@ import java.util.function.Consumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.backtoback.chat_log.chat_log.domain.GameActiveType;
 import com.backtoback.chat_log.chat_log.dto.request.GameConditionDto;
-import com.backtoback.chat_log.entity.GameActiveType;
+import com.backtoback.chat_log.chat_log.dto.response.GameTeamSeqResponseDto;
+import com.backtoback.chat_log.chat_log.service.BusinessService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,41 @@ import lombok.extern.slf4j.Slf4j;
 public class BindingConfig {
 
 	private final CustomKafkaListener customKafkaListener;
+	private final BusinessService businessService;
+
+	@Bean
+	// @Async
+	public Consumer<GameConditionDto> getGameCondition() {
+		return gameConditionDto -> {
+			log.info(gameConditionDto.toString());
+
+			Long gameSeq = gameConditionDto.getGameSeq();
+			GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
+
+			String containerId = customKafkaListener.getContainerId(gameSeq);
+
+			if (gameActiveType == GameActiveType.IN_GAME) { //경기 시작
+				this.startContainer(containerId, gameSeq);
+			} else if (gameActiveType == GameActiveType.AFTER_GAME) { //경기 끝
+				this.stopContainer(containerId);
+			}
+		};
+	}
+
+	private void startContainer(String containerId, Long gameSeq) {
+		log.info("경기 시작");
+		GameTeamSeqResponseDto gameTeamSeqResponseDto = businessService.getHomeTeamSeqAndAwayTeamSeq(gameSeq);
+
+		String homeTopicName = customKafkaListener.getChatTeamTopicName(gameTeamSeqResponseDto.getHomeSeq());
+		String awayTopicName = customKafkaListener.getChatTeamTopicName(gameTeamSeqResponseDto.getAwaySeq());
+
+		customKafkaListener.startContainer(containerId, homeTopicName, awayTopicName);
+	}
+
+	private void stopContainer(String containerId) {
+		log.info("경기 끝");
+		customKafkaListener.stopContainer(containerId);
+	}
 
 	// @Bean
 	// public NewDestinationBindingCallback<KafkaConsumerProperties> dynamicConfigurer() {
@@ -48,24 +85,6 @@ public class BindingConfig {
 	// 	};
 	// }
 
-	@Bean
-	// @Async
-	public Consumer<GameConditionDto> getGameCondition() {
-		return gameConditionDto -> {
-			log.info(gameConditionDto.toString());
-
-			Long gameSeq = gameConditionDto.getGameSeq();
-			GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
-
-			// this.setDestination(gameSeq);
-			log.info("gameSeq: {}", gameSeq);
-			log.info("gameActiveType: {}", gameActiveType);
-
-			this.manageContainer(gameActiveType);
-		};
-	}
-
-
 	/*
 	내가 개발한,, 방법
 	 */
@@ -91,15 +110,5 @@ public class BindingConfig {
 	// 		messagePollScheduler.cancelTask();
 	// 	}
 	// }
-
-	private void manageContainer(GameActiveType gameActiveType) {
-		if (gameActiveType == GameActiveType.IN_GAME) { //경기 시작
-			log.info("경기 시작");
-			customKafkaListener.start();
-		} else if (gameActiveType == GameActiveType.AFTER_GAME) { //경기 끝
-			log.info("경기 끝");
-			customKafkaListener.stop();
-		}
-	}
 
 }

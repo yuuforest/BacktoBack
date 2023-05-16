@@ -11,6 +11,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
@@ -29,8 +30,12 @@ public class KafkaConfig {
 		factory.setConsumerFactory(consumerFactory());
 		factory.setConcurrency(1);
 		// factory.setMessageConverter(new JsonMessageConverter());
-		factory.getContainerProperties().setPollTimeout(5000);
+		factory.setAutoStartup(false);
 		factory.setBatchListener(true);
+		factory.getContainerProperties().setPollTimeout(1);
+		factory.getContainerProperties().setIdleBetweenPolls(5000);
+		factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.BATCH);
+
 		return factory;
 	}
 

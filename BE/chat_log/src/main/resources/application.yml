@@ -19,6 +19,7 @@ logging:
     org:
       jsoup: trace
 
+
 spring:
   application:
     name: chat_log
@@ -187,8 +188,8 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update # create, update, none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
+    #      naming:
+    #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
     #    show-sql: true
     generate-ddl: true
     properties:
@@ -215,6 +216,7 @@ spring:
 
 
 logging.level:
+  project.user.UserClient: DEBUG
   #  org.apache: trace
   org.hibernate.SQL: debug
   org.hibernate.type: trace
@@ -225,9 +227,9 @@ logging.level:
       cloud.stream: trace
       cloud.stream.binder: trace
       cloud.stream.binding: trace
-      messaging: trace
+      #      messaging: trace
 
-      kafka: trace
+      kafka: info
 
       security: trace
 
