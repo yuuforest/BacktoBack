@@ -22,6 +22,14 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: auth
+          uri: http://auth:8085
+          predicates:
+            - Path=/api/auth/**
+        - id: business
+          uri: http://business:8086/
+          predicates:
+            - Path=/api/business/**
         - id: chat
           uri: http://localhost:8087/
           predicates:
