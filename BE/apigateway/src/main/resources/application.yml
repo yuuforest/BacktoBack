@@ -1,20 +1,16 @@
 server:
   port: 8000
-
+  servlet:
+    context-path: /api
+    encoding:
+      charset: utf-8
+      enabled: true
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
-
-jwt:
-  access-expired-time: 3600000
-  refresh-expired-time: 604800000
-  refresh-token-name: refresh-token
-  access-token-name: access-token
-  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHN
-
+      defaultZone: http://eureka:8761/eureka
 
 spring:
   application:
@@ -31,23 +27,26 @@ spring:
           predicates:
             - Path=/api/business/**
         - id: chat
-          uri: http://localhost:8087/
+          uri: http://chat:8087/
           predicates:
-            - Path=/chat/**
-        - id: chat_sockjs_route
-          uri: http://localhost:8087/
+            - Path=/api/chat/**
+        - id: chat_log
+          uri: http://chat_log:8088/
           predicates:
-            - Path=/ws-chat/**
-        - id: business
-          uri: http://localhost:8086/
-          predicates:
-            - Path=/business/**
-
-        - id: point
-          uri: http://localhost:8084/
-          predicates:
-            - Path=/api/point/**
+            - Path=/api/chat-log/**
         - id: cheer
-          uri: http://localhost:8089/
+          uri: http://cheer:8089/
           predicates:
             - Path=/api/cheer/**
+        - id: media
+          uri: http://k8a7081.p.ssafy.io:8091/
+          predicates:
+            - Path=/api/media/**
+        - id: member
+          uri: http://member:8082/
+          predicates:
+            - Path=/api/member/**
+        - id: point
+          uri: http://point:8084/
+          predicates:
+            - Path=/api/point/**
