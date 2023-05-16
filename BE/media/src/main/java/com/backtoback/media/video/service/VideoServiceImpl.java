@@ -254,9 +254,14 @@ public class VideoServiceImpl implements VideoService {
   @Override
   public void deleteHighLight(Long gameSeq){
     log.info("delete record");
-    Record record = recordRepository.findById(gameSeq.toString()).orElseThrow();
-    deleteFile(record.getRecordPath());
-    recordRepository.deleteById(gameSeq.toString());
+
+    Optional<Record> optionalRecord = recordRepository.findById(gameSeq.toString());
+
+    if(optionalRecord.isPresent()){
+      Record record = optionalRecord.get();
+      deleteFile(record.getRecordPath());
+      recordRepository.deleteById(gameSeq.toString());
+    }
 
     highLightRepository.findAll().forEach(highLight -> {
       log.info("delete highlight");
