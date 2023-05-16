@@ -26,103 +26,13 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-pender": "^2.0.12",
     "sass-loader": "^13.2.2",
-    "web-vitals": "^3.3.1",
-    "ws": "^8.13.0"
+    "web-vitals": "^3.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": "airbnb",
-    "plugins": [
-      "import",
-      "react",
-      "jsx-a11y",
-      "json"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2016,
-      "sourceType": "module"
-    },
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true
-    },
-    "rules": {
-      "quotes": [
-        "error",
-        "double",
-        {
-          "avoidEscape": true
-        }
-      ],
-      "indent": [
-        "error",
-        2
-      ],
-      "react/prefer-stateless-function": "off",
-      "react/jsx-one-expression-per-line": "off",
-      "react/jsx-filename-extension": [
-        "warn",
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ],
-      "no-underscore-dangle": [
-        "warn",
-        {
-          "allow": [
-            "_id"
-          ]
-        }
-      ],
-      "max-len": [
-        "error",
-        {
-          "code": 120,
-          "tabWidth": 2,
-          "ignoreUrls": true
-        }
-      ],
-      "linebreak-style": "off",
-      "eslint linebreak-style": [
-        "off",
-        "error",
-        "windows"
-      ],
-      "no-unused-vars": "warn",
-      "react/jsx-props-no-spreading": "warn",
-      "react/destructuring-assignment": "warn",
-      "react/prop-types": "warn",
-      "import/no-unresolved": "off",
-      "import/named": "error",
-      "import/namespace": "error",
-      "import/default": "error",
-      "import/export": "error",
-      "import/order": [
-        "warn",
-        {
-          "groups": [
-            "builtin",
-            "external",
-            "parent",
-            "sibling",
-            "index"
-          ],
-          "alphabetize": {
-            "order": "asc"
-          }
-        }
-      ]
-    }
   },
   "browserslist": {
     "production": [
@@ -135,15 +45,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-eslint": "^10.1.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-import-resolver-webpack": "^0.13.2",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.32.2"
   }
 }

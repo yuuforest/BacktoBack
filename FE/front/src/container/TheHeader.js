@@ -4,9 +4,15 @@ import React, { useState } from "react";
 
 //   // NavbarText,
 // } from "react-bootstrap";
-import {
-  Navbar, Nav, NavDropdown, Form, FormControl, Button, Container,
-} from "react-bootstrap";
+// import {
+//   Navbar,
+//   Nav,
+//   NavDropdown,
+//   Form,
+//   FormControl,
+//   Button,
+//   Container,
+// } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { CTLogo } from "../components";
 import { UserArea } from "./components";
@@ -17,6 +23,7 @@ const TheHeader = () => {
   const toggleNavbar = () => setCollapsed(!collapsed);
 
   return (
+    <div></div>
     // <header className="sticky-top mb-3">
     //   <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
     //     <Container>

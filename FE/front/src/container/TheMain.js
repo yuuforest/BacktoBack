@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import routes, { defaultRedirect } from "../routes";
 
 const TheMain = () => (
+  <div></div>
   // <main className="flex-shrink-0">
   //   <div className="container mt-4">
   //     {/* <h1 className="mt-5">Welcome to 소소한 할인</h1> */}
@@ -19,7 +20,6 @@ const TheMain = () => (
   //     </Switch>
   //   </div>
   // </main>
-
 );
 
 export default TheMain;

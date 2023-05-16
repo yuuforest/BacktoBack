@@ -1,13 +1,6 @@
-import logo from './logo.svg';
 import React from "react";
-import {
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Routes, Route, Redirect, Navigate } from "react-router-dom";
 import TheLayout from "./container";
-import CouponRecog from "./pages/CouponRecog";
-import './App.css';
 
 function App() {
   return (
@@ -28,14 +21,10 @@ function App() {
     //   </header>
     // </div>
 
-    <Switch>
-      <Route exact path="/couponRecog" component={CouponRecog} />
-
-      <Route path="/" component={TheLayout} />
-
-      {/* <Redirect to="/login" /> */}
-      <Redirect to="/" />
-    </Switch> 
+    <Routes>
+      <Route path="/" element={<TheLayout />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 
