@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(name = "BusinessFeign", url="http://localhost:8086/business", configuration = FeignConfig.class)
+//@FeignClient(name = "BusinessFeign", url="http://localhost:8086/business", configuration = FeignConfig.class)
+@FeignClient(name = "BusinessFeign", url="http://k8a708.p.ssafy.io/api/business", configuration = FeignConfig.class)
 public interface BusinessFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/betting/game/info")
