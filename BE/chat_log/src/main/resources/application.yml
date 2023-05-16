@@ -2,17 +2,18 @@ server:
   port: 8088
 
   servlet:
-    context-path: /
+    context-path: /api/chat-log
     encoding:
       charset: utf-8
       enabled: true
 
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka
+eureka:
+  client:
+    register-with-eureka: true # true
+    fetch-registry: true   #true
+    service-url:
+      #      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 logging:
   level:
@@ -21,13 +22,20 @@ logging:
 
 spring:
   application:
-    name: chat_log
+    name: chat-log
+
+  profiles:
+    default: local # 기본 환경을 local로
 
   integration:
     poller:
       fixed-delay: 5000
       maxMessagesPerPoll: 10000
       initialDelay: 5000
+
+  redis:
+    host: localhost
+    port: 6379
 
   cloud:
     function:
@@ -57,7 +65,7 @@ spring:
         #
         #
         getGameCondition-in-0:
-          destination: game-condition
+          destination: game-event
           group: game-group1 # 컨슈머 그룹
           content-type: application/json;type=com.backtoback.chat_log.chat_log.dto.request.GameConditionDto
           consumer:
@@ -94,7 +102,7 @@ spring:
         #
         binder:
           auto-create-topics: false # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
-          brokers: localhost:9092
+          brokers: localhost:9092 # k8a708.p.ssafy.io:9092
   #
   #          #          replication-factor: 1
   #
@@ -120,7 +128,7 @@ spring:
 
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:9092 #k8a708.p.ssafy.io:9092
 
     #    consumer:
     #      auto-offset-reset: latest
@@ -165,10 +173,10 @@ spring:
     #    password: ssafy
 
     # 효진 노트북 local 용
-    url: jdbc:mysql://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
-    username: ssafy
-    password: ssafy
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
+    #    username: ssafy
+    #    password: ssafy
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
 
     #추가
     hikari:
