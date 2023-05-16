@@ -14,19 +14,20 @@ function Cheer(props) {
 
   // ============================================================================================================================
 
-  const cheerURL = "http://localhost:8089/api/cheer";
+  // const cheerURL = "http://localhost:8089/api/cheer";
+  const connectionUrl = 'http://localhost:8000/api/cheer';
 
   const $websocket = useRef(null);
 
-  const [homeCount, setHomeCount] = useState(30);
-  const [awayCount, setAwayCount] = useState(50);
+  const [homeCount, setHomeCount] = useState(0);
+  const [awayCount, setAwayCount] = useState(0);
 
   // axios =======================================================================================================================
 
   const getCheerInfo = async () => {
     try {
       // 각 팀의 현재 응원수 조회
-      const response = await axios.get(cheerURL + "/game/" + props.gameSeq);
+      const response = await axios.get(connectionUrl + '/game/' + props.gameSeq);
       setHomeCount(response.data.homeCount);
       setAwayCount(response.data.awayCount);
     } catch (error) {
@@ -63,7 +64,7 @@ function Cheer(props) {
   return (
     <div>
       <SockJsClient
-        url="http://localhost:8089/api/cheer/ws"
+        url="http://localhost:8000/api/cheer/ws"
         topics={["/topics/game/" + props.gameSeq]}
         onMessage={(response) => {
           // console.log ("I can WebSocket! Yeah!");
