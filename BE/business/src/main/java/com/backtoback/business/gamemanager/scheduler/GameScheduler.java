@@ -1,5 +1,10 @@
 package com.backtoback.business.gamemanager.scheduler;
 
+
+import com.backtoback.business.gamemanager.feignclient.PointServiceClient;
+import com.backtoback.business.gamemanager.feignclient.VideoServiceClient;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
@@ -7,10 +12,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.backtoback.business.gamemanager.feignclient.VideoServiceClient;
+import javax.annotation.PostConstruct;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class GameScheduler {
 
 	private final VideoServiceClient videoServiceClient;
 
-	//  private final BettingServiceClient bettingServiceClient;
+  private final PointServiceClient pointServiceClient;
 
 	private final StreamBridge streamBridge;
 

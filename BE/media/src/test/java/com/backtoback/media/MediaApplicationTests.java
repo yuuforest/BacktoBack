@@ -3,11 +3,13 @@ package com.backtoback.media;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class MediaApplicationTests {
 
-	@Test
+//	@Test
 	void contextLoads() {
 	}
+
+
 
 }

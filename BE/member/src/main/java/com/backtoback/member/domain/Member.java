@@ -1,6 +1,5 @@
 package com.backtoback.member.domain;
 
-import com.backtoback.team.domain.Team;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
@@ -10,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,8 +18,8 @@ import java.util.stream.Collectors;
 @DynamicInsert
 @SuperBuilder(toBuilder = true)
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "members")
+@NoArgsConstructor()
+@Table(name = "MEMBERS")
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Identity로 하면 디비엔진에 따라 오토 인크리먼트가 안먹는다.
@@ -49,9 +47,9 @@ public class Member implements UserDetails {
     @ColumnDefault(value = "0")
     private Integer bettingWin;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "team_seq")
-//    private Team team;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_seq")
+    private Team team;
 
     @Column(nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
@@ -60,12 +58,12 @@ public class Member implements UserDetails {
 
 
     @Builder
-    public Member(String memberPassword, Team team, String memberId, String nickname, Set<String> privilege){
+    public Member( Team team, String memberId, String memberPassword, String nickname, Set<String> privilege){
         this.memberId = memberId;
-        this.memberPassword = memberPassword;
         this.nickname = nickname;
+        this.memberPassword = memberPassword;
         this.privilege = privilege;
-//        this.team = team;
+        this.team = team;
     }
 
 
@@ -105,13 +103,5 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
-
-//    @OneToOne
-//    @JoinColumn(name = "team_seq", nullable = false)
-//    private Team my_team_seq;
-
-
-
 
 }

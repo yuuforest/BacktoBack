@@ -23,5 +23,7 @@ public class VideoRoom implements Serializable {
 
     private String playerEndpointId;
 
+    private String recordEndpointId;
+
 
 }

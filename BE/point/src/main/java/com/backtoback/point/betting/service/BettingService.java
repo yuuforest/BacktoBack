@@ -6,7 +6,9 @@ import com.backtoback.point.betting.dto.request.BettingInfoReq;
 import com.backtoback.point.betting.dto.response.BettingInfoRes;
 import com.backtoback.point.betting.dto.response.BettingResultRes;
 import com.backtoback.point.betting.dto.request.KafkaReq;
+import com.backtoback.point.game.domain.Game;
 import com.backtoback.point.member.domain.Member;
+import com.backtoback.point.team.domain.Team;
 
 public interface BettingService {
 
@@ -26,4 +28,8 @@ public interface BettingService {
 
     // [베팅 결과]
     void getBettingResult(KafkaReq kafkaRes);
+
+    // [Feign Client]
+    Game getGame(Long gameSeq);
+    Team getTeam(Long teamSeq);
 }

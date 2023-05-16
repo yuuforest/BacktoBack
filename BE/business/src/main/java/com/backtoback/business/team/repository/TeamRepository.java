@@ -8,4 +8,5 @@ import com.backtoback.business.team.domain.Team;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
+	Team findByTeamSeq(Long teamSeq);
 }

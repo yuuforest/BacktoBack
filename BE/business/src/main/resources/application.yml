@@ -1,17 +1,17 @@
 server:
   port: 8086
   servlet:
-    context-path: /business
+    context-path: /api/business
     encoding:
       charset: utf-8
       enabled: true
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: true # true
+    fetch-registry: true   #true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 logging:
   level:
@@ -38,9 +38,6 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
-    #    show-sql: true
     generate-ddl: true
     properties:
       hibernate:
