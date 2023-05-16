@@ -17,4 +17,5 @@ public class VideoRestController {
   public void makeRoom(){
     videoService.makeAllVideoRoom();
   }
+
 }

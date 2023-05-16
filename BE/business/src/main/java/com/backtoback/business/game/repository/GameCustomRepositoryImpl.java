@@ -7,16 +7,16 @@ import com.backtoback.business.team.domain.QTeam;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 
 import static com.backtoback.business.game.domain.QGame.game;
 import static com.backtoback.business.team.domain.QTeam.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class GameCustomRepositoryImpl implements GameCustomRepository {
@@ -25,9 +25,16 @@ public class GameCustomRepositoryImpl implements GameCustomRepository {
 
     @Override
     public List<Game> getAllTodayGame() {
-        LocalDate today = LocalDate.now();
-        LocalDateTime startOfDay = LocalDateTime.of(today, LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(today, LocalTime.MAX);
+        ZoneId seoulZone = ZoneId.of("Asia/Seoul");
+        ZonedDateTime seoulTime = ZonedDateTime.now(seoulZone);
+        LocalDateTime now = seoulTime.toLocalDateTime();
+
+        LocalDateTime startOfDay = LocalDateTime.of(now.toLocalDate(), LocalTime.MIN).atZone(seoulZone).toLocalDateTime();
+        LocalDateTime endOfDay = LocalDateTime.of(now.toLocalDate(), LocalTime.MAX).atZone(seoulZone).toLocalDateTime();
+
+        log.info(now+":now");
+        log.info(startOfDay + ":startOfDay");
+        log.info(endOfDay + ":endOfDay");
 
         return jpaQueryFactory
                 .selectFrom(game)
