@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import TheLayout from "./container";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
+import GameList from "./container/GameList";
 import PhotocardHome from "./pages/Photocard/PhotocardHome";
 import PhotocardDetail from "./pages/Photocard/PhotocardDetail";
 
@@ -28,6 +29,7 @@ function App() {
     <Routes>
       <Route path="*" element={<TheLayout />} />
       <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/" element={<GameList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/join" element={<SignUp />} />
       <Route path="/photocard/home" element={<PhotocardHome />} />

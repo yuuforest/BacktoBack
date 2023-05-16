@@ -5,7 +5,7 @@ import axios from "axios";
 
 import TheHeader from "./TheHeader";
 import TheFooter from "./TheFooter";
-import MainGames from "../pages/gamelist/MainGames";
+import MainGames from "../pages/GameList/MainGames";
 import styles from "../container/styles/GameList.module.css";
 import stupid from "../images/stupid.gif";
 
