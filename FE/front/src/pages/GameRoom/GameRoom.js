@@ -31,6 +31,12 @@ const GameRoom = () => {
       <div class="col-5 right">
         <div className="chat">
           <Chat />
+          {/* <Chat {...{
+            homeSeq: 1,
+            awaySeq: 2,
+            memberTeamSeq: 1,
+            topicNumber: 1,
+          }}/> */}
         </div>
       </div>
     </div>

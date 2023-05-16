@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import TheLayout from "./container";
+import Login from "./pages/Login";
+import SignUp from "./pages/Signup";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
     <Routes>
       <Route path="*" element={<TheLayout />} />
       <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/join" element={<SignUp />}></Route>
     </Routes>
   );
 }
