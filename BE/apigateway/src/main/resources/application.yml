@@ -37,18 +37,6 @@ spring:
         - id: cheer
           uri: http://cheer:8089/
           predicates:
-<<<<<<< HEAD
-            - Path=/business/**
-
-        - id: point
-          uri: http://localhost:8084/
-          predicates:
-            - Path=/api/point/**
-        - id: cheer
-          uri: http://localhost:8089/
-          predicates:
-            - Path=/api/cheer/**
-=======
             - Path=/api/cheer/**
         - id: media
           uri: http://k8a7081.p.ssafy.io:8091/
@@ -62,4 +50,3 @@ spring:
           uri: http://point:8084/
           predicates:
             - Path=/api/point/**
->>>>>>> f40f8678e2940caa9e0d1d10e862e6e29e70c515
