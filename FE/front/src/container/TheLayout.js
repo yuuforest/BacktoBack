@@ -2,6 +2,7 @@ import React from "react";
 import TheFooter from "./TheFooter";
 import TheHeader from "./TheHeader";
 import TheMain from "./TheMain";
+import GameRoom from "../pages/GameRoom";
 
 const TheLayout = () => (
   <div className="body-wrapper d-flex flex-column h-100">

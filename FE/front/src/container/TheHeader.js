@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "primeicons/primeicons.css";
-
 import "./styles/TheHeader.css";
 import Logo from "../images/logo.svg";
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const TheHeader = () => {
   return (

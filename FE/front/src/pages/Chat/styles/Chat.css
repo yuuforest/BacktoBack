@@ -1,0 +1,68 @@
+/*ChatContainer*/
+.chat-box {
+  display: inline-block;
+}
+
+.chat-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.type-select-button .p-button {
+  width: 200px;
+}
+
+/*ChatList*/
+.chat-list-box {
+  width: 550px;
+  margin-bottom: 30px;
+}
+
+.scrollable-content {
+  width: 500px;
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+  /* 스크롤바를 안 보이게 */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-list-content {
+  border: 1px solid #f8f8f8;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+}
+
+.chat-nickname {
+  font-size: 12px;
+}
+
+.chat-message {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.not-my-team {
+  display: flex;
+  justify-content: center;
+}
+
+/*ChatInput*/
+#chat-input {
+  width: 450px;
+  margin-right: 10px;
+}
+
+#chat-button {
+  margin-left: 10px;
+}

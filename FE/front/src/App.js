@@ -22,7 +22,7 @@ function App() {
     // </div>
 
     <Routes>
-      <Route path="/" element={<TheLayout />} />
+      <Route path="*" element={<TheLayout />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
