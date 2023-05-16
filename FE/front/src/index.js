@@ -11,7 +11,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "/node_modules/primeflex/primeflex.css";
 // import "./styles/custom.scss";
-import store from "./store";
+import { store } from "store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

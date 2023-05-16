@@ -1,6 +1,7 @@
 import Betting from "../Betting";
 import Cheer from "../Cheer";
 import Chat from "../Chat";
+import Video from "components/Video";
 import "./GameRoom.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -49,11 +50,11 @@ const GameRoom = () => {
           className="streaming"
           style={{ height: "530px", border: "1px solid black" }}
           //style해제하고 스트리밍 컴포넌트 넣으면 됩니다.
-        ></div>
+        >
+          <Video {...{ gameSeq }} />
+        </div>
         <div className="cheer">
-          <Cheer
-            {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }}
-          />
+          <Cheer {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }} />
         </div>
         <div>
           <h2>{gameState}</h2>
