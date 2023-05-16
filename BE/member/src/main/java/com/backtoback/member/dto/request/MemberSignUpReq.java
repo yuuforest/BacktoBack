@@ -38,6 +38,7 @@ public class MemberSignUpReq {
                 .builder()
                 .memberId(memberId)
                 .nickname(nickname)
+                .memberPassword(memberPassword)
                 .team(team)
                 .privilege(Collections.singleton(MemberPrivilege.GENERAL.name())).build();
     }
