@@ -9,16 +9,17 @@ import lombok.Setter;
 @Builder
 public class GameTeamSeqResponseDto {
 
+	private Integer topicNumber;
 	private Long homeSeq;
-
 	private Long awaySeq;
 
 	@Override
 	public String toString() {
 		return "GameTeamSeqResponseDto{" +
-			"homeSeq=" + homeSeq +
+			"topicNumber=" + topicNumber +
+			", homeSeq=" + homeSeq +
 			", awaySeq=" + awaySeq +
 			'}';
 	}
-
+	
 }

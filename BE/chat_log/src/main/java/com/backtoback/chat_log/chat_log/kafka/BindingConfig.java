@@ -30,22 +30,27 @@ public class BindingConfig {
 			Long gameSeq = gameConditionDto.getGameSeq();
 			GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
 
-			String containerId = customKafkaListener.getContainerId(gameSeq);
+			GameTeamSeqResponseDto gameTeamSeqResponseDto = businessService.getGameTeamSeqAndTopicNumber(gameSeq);
+
+			String containerId = customKafkaListener.getContainerId(gameTeamSeqResponseDto.getTopicNumber());
 
 			if (gameActiveType == GameActiveType.IN_GAME) { //경기 시작
-				this.startContainer(containerId, gameSeq);
+				this.startContainer(
+					containerId,
+					gameTeamSeqResponseDto.getHomeSeq(),
+					gameTeamSeqResponseDto.getAwaySeq()
+				);
 			} else if (gameActiveType == GameActiveType.AFTER_GAME) { //경기 끝
 				this.stopContainer(containerId);
 			}
 		};
 	}
 
-	private void startContainer(String containerId, Long gameSeq) {
+	private void startContainer(String containerId, Long homeSeq, Long awaySeq) {
 		log.info("경기 시작");
-		GameTeamSeqResponseDto gameTeamSeqResponseDto = businessService.getHomeTeamSeqAndAwayTeamSeq(gameSeq);
 
-		String homeTopicName = customKafkaListener.getChatTeamTopicName(gameTeamSeqResponseDto.getHomeSeq());
-		String awayTopicName = customKafkaListener.getChatTeamTopicName(gameTeamSeqResponseDto.getAwaySeq());
+		String homeTopicName = customKafkaListener.getChatTeamTopicName(homeSeq);
+		String awayTopicName = customKafkaListener.getChatTeamTopicName(awaySeq);
 
 		customKafkaListener.startContainer(containerId, homeTopicName, awayTopicName);
 	}

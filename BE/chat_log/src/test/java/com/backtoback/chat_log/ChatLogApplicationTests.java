@@ -15,7 +15,7 @@ class ChatLogApplicationTests {
 
 	@Test
 	void contextLoads() {
-		GameTeamSeqResponseDto responseDto = businessService.getHomeTeamSeqAndAwayTeamSeq(1L);
+		GameTeamSeqResponseDto responseDto = businessService.getGameTeamSeqAndTopicNumber(1L);
 		System.out.println(responseDto);
 	}
 

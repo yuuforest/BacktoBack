@@ -64,8 +64,8 @@ public class CustomKafkaListener {
 	// 	}
 	// }
 
-	public String getContainerId(Long gameSeq) {
-		return CHAT_ALL_GAME_TOPIC_PREFIX + gameSeq;
+	public String getContainerId(Integer topicNumber) {
+		return CHAT_ALL_GAME_TOPIC_PREFIX + topicNumber;
 	}
 
 	public String getChatTeamTopicName(Long teamSeq) {
@@ -73,7 +73,7 @@ public class CustomKafkaListener {
 	}
 
 	public void startContainer(String containerId, @NotNull String... topicName) {
-		log.info("====================== 컨테이너 시작 ===========================");
+		log.info("====================== Listener Container 시작 ===========================");
 		if (this.kafkaListenerEndpointRegistry.getListenerContainer(containerId) != null) {
 			///////////////Exception 발생으로 수정 필요/////////////////
 			log.info("이미 listener 컨테이너 있어서 함수 종료");
@@ -95,6 +95,7 @@ public class CustomKafkaListener {
 		container.setupMessageListener(customListener);
 
 		//Listener Endpoint 생성
+		log.info("====================== Listener Endpoint 생성 ===========================");
 		MethodKafkaListenerEndpoint myEndpoint = new MethodKafkaListenerEndpoint<>();
 		myEndpoint.setId(containerId);
 		myEndpoint.setGroupId(containerId);
@@ -112,7 +113,7 @@ public class CustomKafkaListener {
 	}
 
 	public void stopContainer(String containerId) {
-		log.info("====================== 컨테이너 멈춤 ===========================");
+		log.info("====================== Listener Container 멈춤 ===========================");
 		Objects.requireNonNull(this.kafkaListenerEndpointRegistry.getListenerContainer(containerId)).stop();
 	}
 

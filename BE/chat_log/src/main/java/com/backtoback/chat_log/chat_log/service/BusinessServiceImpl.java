@@ -14,8 +14,8 @@ public class BusinessServiceImpl implements BusinessService {
 	private final BusinessClient businessClient;
 
 	@Override
-	public GameTeamSeqResponseDto getHomeTeamSeqAndAwayTeamSeq(Long gameSeq) {
-		return businessClient.getGameTeamSeq(gameSeq);
+	public GameTeamSeqResponseDto getGameTeamSeqAndTopicNumber(Long gameSeq) {
+		return businessClient.getGameTeamSeqAndTopicNumber(gameSeq);
 	}
 
 }
