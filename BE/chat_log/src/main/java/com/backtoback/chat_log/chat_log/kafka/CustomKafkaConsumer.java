@@ -14,16 +14,16 @@
 //
 // 	// Kafka Consumer 설정
 // 	Properties props = new Properties();
-// 	props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-// 	props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-group");
-// 	props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-// 	props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+// 	// props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+// 	// props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-group");
+// 	// props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+// 	// props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 //
 // 	// Kafka Consumer 생성
-// 	Consumer<String, String> consumer = new KafkaConsumer<>(props);
+// 	KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 //
 // 	// 구독할 토픽 지정
-// 	consumer.subscribe(Arrays.asList("test-topic"));
+// 	consumer.(Arrays.asList("test-topic"));
 //
 // 	// 5초 동안 쌓인 모든 메시지를 가져옴
 // 	ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(5));
