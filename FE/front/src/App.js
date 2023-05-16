@@ -32,6 +32,7 @@ function App() {
       <Route path="/" element={<GameList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/join" element={<SignUp />} />
+      <Route path="/live" element={<GameList />} />
       <Route path="/photocard/home" element={<PhotocardHome />} />
       <Route path="/photocard/detail/:gameid" element={<PhotocardDetail />} />
     </Routes>

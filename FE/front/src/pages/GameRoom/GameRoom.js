@@ -2,39 +2,40 @@ import Betting from "../Betting";
 import Cheer from "../Cheer";
 import Chat from "../Chat";
 import "./GameRoom.css";
-import { useEffect , useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const GameRoom = () => {
-
   // const {gameSeq} =  useParams();
   const gameSeq = 3;
 
-  const [homeSeq, setHomeSeq] = useState(0);
-  const [awaySeq, setAwaySeq] = useState(0);
+  const [homeSeq, setHomeSeq] = useState(1);
+  const [awaySeq, setAwaySeq] = useState(2);
   const [homeName, setHomeName] = useState(null);
   const [awayName, setAwayName] = useState(null);
   const [gameState, setGameState] = useState(null);
   const [topicNumber, setTopicNumber] = useState(0);
 
   const getGameInfo = async () => {
-    try { // 게임 정보 받아오기
-      const response = await axios.get('http://localhost:8000/api/business/games/' + gameSeq + '/info')
-      .then(response => {
-        console.log(response.data);
-        setHomeSeq(response.data.homeSeq);
-        setAwaySeq(response.data.awaySeq);
-        setHomeName(response.data.homeName);
-        setAwayName(response.data.awayName);
-        setGameState(response.data.gameActiveType);
-        setTopicNumber(response.data.topicNumber);
-      });
+    try {
+      // 게임 정보 받아오기
+      const response = await axios
+        .get("http://localhost:8000/api/business/games/" + gameSeq + "/info")
+        .then((response) => {
+          console.log(response.data);
+          setHomeSeq(response.data.homeSeq);
+          setAwaySeq(response.data.awaySeq);
+          setHomeName(response.data.homeName);
+          setAwayName(response.data.awayName);
+          setGameState(response.data.gameActiveType);
+          setTopicNumber(response.data.topicNumber);
+        });
       console.log("GameRoom Info Success..............");
     } catch (error) {
       console.log("Game Info Error....");
     }
-  }
+  };
 
   useEffect(() => {
     console.log("GameRoom render..............");
@@ -50,9 +51,13 @@ const GameRoom = () => {
           //style해제하고 스트리밍 컴포넌트 넣으면 됩니다.
         ></div>
         <div className="cheer">
-          <Cheer {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }} />
+          <Cheer
+            {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }}
+          />
         </div>
-        <div><h2>{gameState}</h2></div>
+        <div>
+          <h2>{gameState}</h2>
+        </div>
         <div className="betting">
           <Betting
             {...{
