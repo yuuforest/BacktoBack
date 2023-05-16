@@ -1,51 +1,43 @@
-import React, { useState } from "react";
-// import {
-//   Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink,
-
-//   // NavbarText,
-// } from "react-bootstrap";
-// import {
-//   Navbar,
-//   Nav,
-//   NavDropdown,
-//   Form,
-//   FormControl,
-//   Button,
-//   Container,
-// } from "react-bootstrap";
+import React from "react";
 import { Link } from "react-router-dom";
-import { CTLogo } from "../components";
-import { UserArea } from "./components";
+import "primeicons/primeicons.css";
+
+import "./styles/TheHeader.css";
+import Logo from "../images/logo.svg";
 
 const TheHeader = () => {
-  const [collapsed, setCollapsed] = useState(true);
-
-  const toggleNavbar = () => setCollapsed(!collapsed);
-
   return (
-    <div></div>
-    // <header className="sticky-top mb-3">
-    //   <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-    //     <Container>
-    //       <Navbar.Brand className="text-primary" href="/"><CTLogo margin="1px" width="170px" /></Navbar.Brand>
-    //       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    //       <Navbar.Collapse id="responsive-navbar-nav">
-    //         <Nav className="me-auto">
-    //           <Nav.Link href="/storelist">상점리스트</Nav.Link>
-    //           <Nav.Link href="/couponManage">쿠폰관리</Nav.Link>
-    //           <Nav.Link href="/link">연계할인관리</Nav.Link>
-    //         </Nav>
-    //         {/* <Nav>
-    //           <Nav.Link href="#deets">More deets</Nav.Link>
-    //           <Nav.Link eventKey={2} href="#memes">
-    //             Dank memes
-    //           </Nav.Link>
-    //         </Nav> */}
-    //         <UserArea />
-    //       </Navbar.Collapse>
-    //     </Container>
-    //   </Navbar>
-    // </header>
+    <div className="header">
+      <Link to="/">
+        <img alt="logo" src={Logo} style={{ height: "3rem" }}></img>
+      </Link>
+      <Link className="menu-item" to="/live">
+        라이브시청
+      </Link>
+      <Link className="menu-item" to="/photocard">
+        포토카드
+      </Link>
+      <div>
+        <div className="no-login">
+          <Link className="nav-btn" to="/login">
+            로그인
+          </Link>
+          <Link className="nav-btn" to="/join">
+            회원가입
+          </Link>
+        </div>
+        {/* <div className="yes-login">
+          <div className="profile">
+            <div className="pi pi-user" style={{ fontSize: "1rem" }}></div>
+            <div>닉네임</div>
+            <div className="point">100p</div>
+          </div>
+          <Link className="nav-btn" to="/logout">
+            로그아웃
+          </Link>
+        </div> */}
+      </div>
+    </div>
   );
 };
 

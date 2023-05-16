@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Redirect, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import TheLayout from "./container";
 
 function App() {
