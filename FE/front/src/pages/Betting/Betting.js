@@ -17,7 +17,8 @@ function Betting(props) {
   // =============================================================================================================================
 
   /* axios url */
-  const bettingUrl = "http://localhost:8084/api/point/betting";
+  // const bettingUrl = "http://localhost:8084/api/point/betting";
+  const connectionUrl = 'http://localhost:8000/api/point/betting';
 
   /*임시 */
   const [member, setMember] = useState(2);
@@ -55,7 +56,7 @@ function Betting(props) {
     try {
       // 베팅 정보 받아오기
       const response = await axios.get(
-        bettingUrl + "/member/" + member + "/info",
+        connectionUrl + '/member/' + member + '/info',
         {
           params: {
             gameID: props.gameSeq,
@@ -81,7 +82,7 @@ function Betting(props) {
   const doBetting = async (teamSeq) => {
     try {
       // 베팅 진행
-      await axios.post(bettingUrl + "/member/" + member, {
+      await axios.post(connectionUrl + '/member/' + member, {
         gameSeq: props.gameSeq,
         teamSeq: teamSeq,
         bettingPoint: bettingPoint,
@@ -106,7 +107,7 @@ function Betting(props) {
 
   const getBettingResult = async () => {
     try {
-      const response = await axios.get(bettingUrl + "/member/" + member, {
+      const response = await axios.get(connectionUrl + '/member/' + member, {
         params: {
           gameID: props.gameSeq,
         },
