@@ -21,7 +21,7 @@ logging:
 
 spring:
   application:
-    name: point
+    name: cheer
 
   datasource:
     # develop 브랜치 용
