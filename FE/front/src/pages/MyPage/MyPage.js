@@ -1,12 +1,40 @@
+import axios from "axios";
 import MyPhotoCardList from "./components/MyPhotoCardList";
 import Profile from "./components/Profile";
+import { useState, useEffect } from "react";
 
 const MyPage = () => {
+  const [cards, setCards] = useState([]);
+  const [quantity, setQuantity] = useState(0);
+
+  const getMyPhotoCards = async () => {
+    try {
+      await axios
+        .get(
+          "http://k8a708.p.ssafy.io/api/point/photocard/getMyPhotocard/" +
+            memberSeq
+        )
+        .then((response) => {
+          console.log(response.data);
+          setCards(response.data);
+          setQuantity(cards.size());
+        });
+      console.log("Get Photo Card Success......");
+    } catch (error) {
+      console.log("Get Photo Card Error......");
+    }
+  };
+
+  useEffect(() => {
+    console.log("MyPage Render............");
+    getMyPhotoCards();
+  }, []);
+
   return (
     <div>
-      <Profile />
+      <Profile cardCount={quantity} />
       <hr />
-      <MyPhotoCardList />
+      <MyPhotoCardList cards={cards} />
     </div>
   );
 };

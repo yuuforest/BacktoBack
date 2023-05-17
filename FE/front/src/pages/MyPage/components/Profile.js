@@ -14,7 +14,7 @@ import {
   selectTeamSeq,
 } from "store/reducers/loginReducer";
 
-const Profile = () => {
+const Profile = ({ quantity }) => {
   const memberTeamSeq = useSelector(selectTeamSeq);
   const nickname = useSelector(selectNickName);
   const teamName = useSelector(selectTeamName);
@@ -24,12 +24,12 @@ const Profile = () => {
 
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
-  const [cardCount, setCardCount] = useState(0);
+  // const [cardCount, setCardCount] = useState(0);
 
   var data = {
     "my-team": teamName,
     "my-point": point,
-    "card-quantity": cardCount,
+    "card-quantity": quantity,
     "win-rate": winRate + "%",
   };
 

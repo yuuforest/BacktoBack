@@ -2,36 +2,36 @@ import { useEffect, useState } from "react";
 import "./styles/MyPhotoCardList.css";
 import { DataView } from "primereact/dataview";
 
-const MyPhotoCardList = () => {
+const MyPhotoCardList = ({ cards }) => {
   // const [cards, setCards] = useState([]);
   const [products, setProducts] = useState([]);
   const [layout, setLayout] = useState("grid");
 
-  var data = [
-    {
-      name: 1,
-      image: "bamboo-watch.jpg",
-    },
-    {
-      name: 2,
-      image: "bamboo-watch.jpg",
-    },
-    {
-      name: 3,
-      image: "bamboo-watch.jpg",
-    },
-    {
-      name: 4,
-      image: "bamboo-watch.jpg",
-    },
-    {
-      name: 5,
-      image: "bamboo-watch.jpg",
-    },
-  ];
+  // var data = [
+  //   {
+  //     name: 1,
+  //     image: "bamboo-watch.jpg",
+  //   },
+  //   {
+  //     name: 2,
+  //     image: "bamboo-watch.jpg",
+  //   },
+  //   {
+  //     name: 3,
+  //     image: "bamboo-watch.jpg",
+  //   },
+  //   {
+  //     name: 4,
+  //     image: "bamboo-watch.jpg",
+  //   },
+  //   {
+  //     name: 5,
+  //     image: "bamboo-watch.jpg",
+  //   },
+  // ];
 
   useEffect(() => {
-    setProducts(data);
+    setProducts(cards);
   }, []);
 
   const itemTemplate = (product, layout) => {
