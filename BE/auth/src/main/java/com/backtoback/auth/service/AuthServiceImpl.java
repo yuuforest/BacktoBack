@@ -62,9 +62,8 @@ public class AuthServiceImpl implements AuthService{
                 .set("RT:" + authentication.getName(), refreshToken, tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         ResponseCookie responseCookie = cookieProvider.createRefreshTokenCookie(refreshToken);
-
+        tokenInfo.setMemberSeq(Long.valueOf(authentication.getName()));
         Cookie cookie = cookieProvider.of(responseCookie);
-
         response.setContentType(APPLICATION_JSON_VALUE);
         response.addCookie(cookie);
 
