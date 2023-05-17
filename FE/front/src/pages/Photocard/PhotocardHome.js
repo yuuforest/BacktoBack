@@ -15,7 +15,7 @@ function PhotocardHome() {
     try {
       // 경기 정보 받아오기
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/getGames"
+        "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
       );
       setGames(response.data);
       setLoading(false);
