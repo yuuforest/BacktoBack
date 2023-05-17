@@ -25,7 +25,7 @@ const Login = () => {
 
   const selectMember = (memberSeq) => {
     axios
-      .get(`http://k8a708.p.ssafy.io:8000/api/member/member/${memberSeq}`)
+      .get(`http://k8a708.p.ssafy.io/api/member/member/${memberSeq}`)
       .then((res) => {
         console.log(res.data);
         dispatch(
@@ -43,23 +43,13 @@ const Login = () => {
       });
   };
 
-  const changeUser = () => {
-    //1. await axios 호출
-    //2. 유저 정보 아래 함수로 저장
-    dispatch(setUser({ memberId: "환규", nickname: "hwan" }));
-  };
-
   const onClickLogin = () => {
     axios
-      .post(
-        "http://k8a708.p.ssafy.io:8000/api/auth/login",
-        JSON.stringify(data),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         if (!res.data) {
         } else {
