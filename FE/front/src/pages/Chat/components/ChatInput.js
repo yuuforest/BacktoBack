@@ -8,6 +8,9 @@ function ChatInput({
   chatType,
   teamChatShow,
   topicNumber,
+  memberSeq,
+  nickname,
+  memberTeamSeq,
 }) {
   const [inputValue, setInputValue] = useState("");
 
@@ -20,9 +23,9 @@ function ChatInput({
     if (inputValue.trim() !== "") {
       var curMessage = {
         gameSeq: gameSeq,
-        memberSeq: 1, //추후 수정 필요
-        memberTeamSeq: 1, //추후 수정 필요
-        nickname: "닉넴", //추후 수정 필요
+        memberSeq: memberSeq,
+        memberTeamSeq: memberTeamSeq,
+        nickname: nickname,
         message: inputValue,
         time: "",
         topicNumber: topicNumber,
