@@ -157,6 +157,9 @@ const MatchDetail = ({gameSeq}) => {
      <div>
       <video  poster={ require('images/Video/beforelive.png') } ref={videoRef} autoPlay/>
     </div>
+     <button onClick={start}>비디오 시작</button>
+    <button onClick={startStream}>비디오 스트림 시작</button>
+    <button onClick={enterRoom}>방 입장</button>
   </>)
 }
 
