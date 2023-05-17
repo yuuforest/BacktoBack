@@ -28,14 +28,16 @@ const MatchDetail = ({gameSeq}) => {
   }, []);
 
   useEffect(()=>{
-      if(readyToStart===true){
+    if (readyToStart === true) {
+      console.log("start");
         start();
       }
   },[readyToStart]);
 
   useEffect(()=>{
-      if(readyToVideo===true){
-        startStream();
+    if (readyToVideo === true) {
+        console.log("start Stream")
+        // startStream();
       }
   },[readyToVideo]);
 
@@ -58,7 +60,7 @@ const MatchDetail = ({gameSeq}) => {
             console.log("playEnd");
             break;
           case "videoInfo":
-            // startStream();
+            startStream();
             setReadyToVideo(true);
             break;
           case "iceCandidate":
@@ -143,6 +145,7 @@ const MatchDetail = ({gameSeq}) => {
   }
   
   const startStream = () => {
+    console.log("start remoteStream"+webRtcPeer.getRemoteStream)
     videoRef.current.srcObject = webRtcPeer.getRemoteStream();
   }
   
