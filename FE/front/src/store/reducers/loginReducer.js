@@ -8,6 +8,7 @@ const initialState = {
     bettingTotal: "",
     bettingWin: "",
     point: "",
+    teamSeq: "",
     teamName: "",
     isLogin: false,
   },
@@ -36,6 +37,7 @@ export const selectBettingWin = (state) => state.login.user.bettingWin;
 export const selectPoint = (state) => state.login.user.point;
 export const selectNickName = (state) => state.login.user.nickname;
 export const selectTeamName = (state) => state.login.user.teamName;
+export const selectTeamSeq = (state) => state.login.user.teamSeq;
 export const selectIsLogin = (state) => state.login.user.isLogin;
 
 export default login.reducer;
