@@ -24,7 +24,7 @@ function Chat(props) {
   // const { gameSeq } = useParams();
   const gameSeq = 1; //추후수정필요
 
-  const [topicNumber, setTopicNumber] = useState(null);
+  const [topicNumber, setTopicNumber] = useState(1); //이거 받아오는 api 개발해야함.
 
   const options = ["전체 채팅", "마이팀 채팅"];
   const [chatType, setChatType] = useState(options[0]);
