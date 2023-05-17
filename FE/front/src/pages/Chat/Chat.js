@@ -49,7 +49,6 @@ function Chat(props) {
   //홈 팀 시퀀스 넘버와 원정팀 시퀀스 넘버를 가져온다.
   useEffect(() => {
     fetchTeams();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //myteam에 따른 teamChat on/off
