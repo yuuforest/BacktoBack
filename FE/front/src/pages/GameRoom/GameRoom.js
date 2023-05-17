@@ -8,7 +8,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const GameRoom = () => {
-  const { gameid } = useParams();
+
+  const {gameid} =  useParams();
 
   const [gameSeq, setGameSeq] = useState(gameid);
   const [homeSeq, setHomeSeq] = useState(1);
@@ -21,7 +22,7 @@ const GameRoom = () => {
   const getGameInfo = async () => {
     try {
       // 게임 정보 받아오기
-      const response = await axios
+      await axios
         .get("http://k8a708.p.ssafy.io/api/business/games/" + gameSeq + "/info")
         .then((response) => {
           console.log(response.data);
