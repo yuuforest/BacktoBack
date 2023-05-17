@@ -50,7 +50,7 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
 eureka:
 #  instance:
@@ -59,7 +59,7 @@ eureka:
     register-with-eureka: false
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 
 
