@@ -19,11 +19,7 @@ import java.util.stream.Collectors;
 @SuperBuilder(toBuilder = true)
 @Entity
 @NoArgsConstructor()
-<<<<<<< HEAD
 @Table(name = "members")
-=======
-@Table(name = "MEMBERS")
->>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Identity로 하면 디비엔진에 따라 오토 인크리먼트가 안먹는다.
