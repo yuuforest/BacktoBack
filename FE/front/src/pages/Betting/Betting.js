@@ -65,11 +65,11 @@ function Betting(props) {
         // setBettingTeamSeq(response.data.teamSeq);
         setBettingPoint(response.data.bettingPoint);
         if (response.data.teamSeq === props.homeSeq) {
-          console.log("HOME과 같습니다!!!!!!!!!!!!!!!!!!!")
+          // console.log("HOME과 같습니다!!!!!!!!!!!!!!!!!!!")
           setHomeChecked(true);
           setBettingTeamName(props.homeName);
         } else {
-          console.log("AWAY과 같습니다!!!!!!!!!!!!!!!!!!!")
+          // console.log("AWAY과 같습니다!!!!!!!!!!!!!!!!!!!")
           setAwayChecked(true);
           setBettingTeamName(props.awayName);
         }
