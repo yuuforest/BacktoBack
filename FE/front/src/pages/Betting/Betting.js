@@ -17,8 +17,7 @@ function Betting(props) {
   // =============================================================================================================================
 
   /* axios url */
-  // const bettingUrl = "http://localhost:8084/api/point/betting";
-  const connectionUrl = 'http://localhost:8000/api/point/betting';
+  const connectionUrl = 'http://k8a708.p.ssafy.io/api/point/betting';
 
   /*임시 */
   const [member, setMember] = useState(2);

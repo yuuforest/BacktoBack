@@ -3,6 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./styles/Profile.css";
 import Modal from "./Modal";
+import PointModal from "./PointModal";
 
 const Profile = () => {
   const [memberTeamSeq, setMemberTeamSeq] = useState(1);
@@ -50,6 +51,7 @@ const Profile = () => {
 
       {/* Modal Test */}
       <Modal />
+      <PointModal />
 
     </div>
   );
