@@ -2,17 +2,18 @@ server:
   port: 8088
 
   servlet:
-    context-path: /
+    context-path: /api/chat-log
     encoding:
       charset: utf-8
       enabled: true
 
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka
+eureka:
+  client:
+    register-with-eureka: true # true
+    fetch-registry: true   #true
+    service-url:
+      #      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 logging:
   level:
@@ -21,7 +22,10 @@ logging:
 
 spring:
   application:
-    name: chat_log
+    name: chat-log
+
+  profiles:
+    default: local # 기본 환경을 local로
 
   integration:
     poller:
@@ -29,98 +33,38 @@ spring:
       maxMessagesPerPoll: 10000
       initialDelay: 5000
 
+  #    redis:
+  #      host: localhost
+  #      port: 6379
+
   cloud:
     function:
-      definition: getGameCondition; #process;
+      definition: getGameCondition;highlight; #process;
       #      routing-expression:
       #
     stream:
-      #      pollable-source:
-      #        chat-all-game-1;
-      #
-      #      #        chat.team.1;
-      #      #        chat.team.2;
-      #
       default-binder: kafka
 
       bindings:
-        #        chat-all-game-1-in-0:
-        #          destination: chat.all.game.1 #,chat.all.game.2
-        #          #        chat.team.1-in-0:
-        #          #        chat.team.2-in-0:
-        #          #          destination:  # ${destination.name}
-        #          group: game1
-        #          consumer:
-        #            partitioned: false
-        #          content-type: application/json
-        #        #            batch-mode: true
-        #
-        #
         getGameCondition-in-0:
-          destination: game-condition
+          destination: game-event
           group: game-group1 # 컨슈머 그룹
           content-type: application/json;type=com.backtoback.chat_log.chat_log.dto.request.GameConditionDto
           consumer:
             #            batch-mode: true #한꺼번에 가져오기
             partitioned: false
 
+        highlight-out-0:
+          destination: highlight-event
+          content-type: application/json;
 
-        #            instance-count: 1
-        #
-        #          #        process-in-0:
-        #          #          destination: test
-        #          #          group: group2 # 컨슈머 그룹
-        #          #          content-type: application/json
-        #
-        #
-        #          #        process-out-0:
-        #          #          destination: topic2
-        #          #          producer:
-        #          #            auto-startup: false
-        #          #            poller:
-        #          #              fixedDelay: 0
-        #
-        #
-        #      #        pollableInput-in-0: #name of our custom channel
-        #      #          group: pollable-group #kafka consumer group
-        #      #          destination: chat-room-1 #setting kafka topic to read from
-        #
-        #
       kafka:
-        #        bindings:
-        #          pollableInput-in-0:
-        #            consumer:
-        #              destination-is-pattern: true
-        #
         binder:
           auto-create-topics: false # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
-          brokers: localhost:9092
-  #
-  #          #          replication-factor: 1
-  #
-  #          consumer-properties:
-  #            max:
-  #              poll:
-  #                records: 10000
-  #
-  #            fetch.max.wait.ms: 5000
-  #
-  #            auto.offset.reset: latest
-
-
-
-  #        bindings:
-
-  #          process-out-0:
-  #            producer:
-  #              configuration:
-  #                value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
-  #      dynamic-destinations:
-
+          brokers: localhost:9092 # k8a708.p.ssafy.io:9092
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:9092 #k8a708.p.ssafy.io:9092
 
     #    consumer:
     #      auto-offset-reset: latest
@@ -165,10 +109,10 @@ spring:
     #    password: ssafy
 
     # 효진 노트북 local 용
-    url: jdbc:mysql://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
-    username: ssafy
-    password: ssafy
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
+    #    username: ssafy
+    #    password: ssafy
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
 
     #추가
     hikari:
@@ -187,10 +131,10 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none # create, update, none
-      naming:
+    #      naming:
     #    physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     #    show-sql: true
-    generate-ddl: true
+    generate-ddl: false
     properties:
       hibernate:
         #        dialect:
@@ -214,6 +158,7 @@ spring:
 
 
 logging.level:
+  com.backtoback.chat_log: trace
   project.user.UserClient: DEBUG
   #  org.apache: trace
   org.hibernate.SQL: debug

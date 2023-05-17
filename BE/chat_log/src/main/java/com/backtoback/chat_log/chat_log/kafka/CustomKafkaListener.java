@@ -1,7 +1,6 @@
 package com.backtoback.chat_log.chat_log.kafka;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +10,7 @@ import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.config.MethodKafkaListenerEndpoint;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.DefaultErrorHandler;
+import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.stereotype.Component;
 
@@ -24,45 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class CustomKafkaListener {
 
-	public static final String BEAN_NAME_PREFIX = "listener_";
+	// public static final String BEAN_NAME_PREFIX = "listener_";
 	private static final String CHAT_ALL_GAME_TOPIC_PREFIX = "chat.all.game.";
 	private static final String CHAT_TEAM_TOPIC_PREFIX = "chat.team.";
+
 	private final KafkaListenerContainerFactory<?> kafkaListenerContainerFactory;
 	private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-	private final CustomListener customListener;
-
-	// private ThreadLocal<Long> homeSeq;
-	// private ThreadLocal<Long> awaySeq;
-
-	// @KafkaListener(
-	// 	id = CHAT_ALL_GAME_TOPIC_PREFIX + 1,
-	// 	topics = {
-	// 		CHAT_ALL_GAME_TOPIC_PREFIX + 1,
-	// 		"",
-	// 		""
-	// 	},
-	// 	batch = "true",
-	// 	groupId = "group_sample",
-	// 	autoStartup = "false",
-	// 	properties = {"spring.json.value.default.type=com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto"},
-	// 	containerFactory = "customKafkaListenerContainerFactory"
-	// )
-	// private void listenChatDto(List<ChatMessageDto> message) {
-	// 	log.info("================receive====================");
-	// 	log.info("############ 총 size: {}", message.size());
-	// }
-
-	// public void setHomeSeq(Long homeSeq) {
-	// 	if (this.homeSeq == null) {
-	// 		this.homeSeq = homeSeq;
-	// 	}
-	// }
-	//
-	// public void setAwaySeq(Long awaySeq) {
-	// 	if (this.awaySeq == null) {
-	// 		this.awaySeq = awaySeq;
-	// 	}
-	// }
 
 	public String getContainerId(Integer topicNumber) {
 		return CHAT_ALL_GAME_TOPIC_PREFIX + topicNumber;
@@ -72,13 +39,24 @@ public class CustomKafkaListener {
 		return CHAT_TEAM_TOPIC_PREFIX + teamSeq;
 	}
 
-	public void startContainer(String containerId, @NotNull String... topicName) {
+	/*
+	리팩토링 - 로직 분리 필요
+	 */
+	public void startContainer(List<CustomListener> customListenerList, String containerId,
+		int topicNumber, Long mediaStartTime, @NotNull String... topicName) {
 		log.info("====================== Listener Container 시작 ===========================");
-		if (this.kafkaListenerEndpointRegistry.getListenerContainer(containerId) != null) {
+		log.info("####################containerId: {}##################", containerId);
+
+		if (this.kafkaListenerEndpointRegistry.getListenerContainer(containerId) != null
+			&& this.kafkaListenerEndpointRegistry.getListenerContainer(containerId).isRunning()) {
+
 			///////////////Exception 발생으로 수정 필요/////////////////
 			log.info("이미 listener 컨테이너 있어서 함수 종료");
 			return;
 		}
+
+		//Listener Class 생성
+		final CustomListener customListener = new CustomListener(mediaStartTime);
 
 		//Listener Container 생성
 		ConcurrentMessageListenerContainer<String, ChatMessageDto> container =
@@ -110,11 +88,26 @@ public class CustomKafkaListener {
 		myEndpoint.setTopics(containerId, topicName[0], topicName[1]);
 
 		kafkaListenerEndpointRegistry.registerListenerContainer(myEndpoint, kafkaListenerContainerFactory, true);
+		customListenerList.add(topicNumber - 1, customListener);
+
+		log.info("####################registry 속 containerIDs: {}",
+			this.kafkaListenerEndpointRegistry.getListenerContainerIds());
 	}
 
-	public void stopContainer(String containerId) {
+	public MessageListenerContainer stopContainer(String containerId) {
 		log.info("====================== Listener Container 멈춤 ===========================");
-		Objects.requireNonNull(this.kafkaListenerEndpointRegistry.getListenerContainer(containerId)).stop();
+		ConcurrentMessageListenerContainer<String, ChatMessageDto> container = (ConcurrentMessageListenerContainer<String, ChatMessageDto>)this.kafkaListenerEndpointRegistry.getListenerContainer(
+			containerId);
+
+		if (container == null) {
+			///////////////Exception 발생으로 수정 필요/////////////////
+			log.info("listener 컨테이너 없어서 함수 종료");
+			return null;
+		}
+
+		container.stop();
+
+		return container;
 	}
 
 }

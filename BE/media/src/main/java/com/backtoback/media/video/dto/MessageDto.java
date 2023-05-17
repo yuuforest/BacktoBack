@@ -14,6 +14,7 @@ public class MessageDto implements Serializable {
 
     private GameActiveType gameActiveType;
 
+
     private Long mediaStartTime;
 
     public MessageDto(Long gameSeq, GameActiveType gameActiveType,Long mediaStartTime) {
