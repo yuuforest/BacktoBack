@@ -11,5 +11,8 @@ public class PhotocardResultRes {
     private Long photocardSeq;
 
     @ApiModelProperty(name = "포토카드 URL")
-    private String photoCardUrl;
+    private String photocardUrl;
+
+    @ApiModelProperty(name = "포토카드 수량")
+    private Integer photocardQuantity;
 }
