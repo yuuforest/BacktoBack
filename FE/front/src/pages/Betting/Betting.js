@@ -75,6 +75,7 @@ function Betting(props) {
       });
       console.log("베팅 기록 있음");
     } catch (error) {
+      setIsBetting(false);
       console.log("베팅 기록 없음 : Do Nothing..............");
     }
   };

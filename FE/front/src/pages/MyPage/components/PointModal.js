@@ -10,6 +10,7 @@ function PointModal() {
     const [infos, setInfos] = useState([]);
 
     const getPoingLogs = async () => {
+        console.log("Point Log method....");
         try{
             await axios
                 .get("http://k8a708.p.ssafy.io/api/point/point-log/member/" + 1)
