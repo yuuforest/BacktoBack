@@ -6,29 +6,6 @@ const MyPhotoCardList = ({ cards }) => {
   const [products, setProducts] = useState([]);
   const [layout, setLayout] = useState("grid");
 
-  // var data = [
-  //   {
-  //     name: 1,
-  //     image: "bamboo-watch.jpg",
-  //   },
-  //   {
-  //     name: 2,
-  //     image: "bamboo-watch.jpg",
-  //   },
-  //   {
-  //     name: 3,
-  //     image: "bamboo-watch.jpg",
-  //   },
-  //   {
-  //     name: 4,
-  //     image: "bamboo-watch.jpg",
-  //   },
-  //   {
-  //     name: 5,
-  //     image: "bamboo-watch.jpg",
-  //   },
-  // ];
-
   useEffect(() => {
     console.log("MyPhotoCardList Render.............");
     console.log("cards: ", cards);

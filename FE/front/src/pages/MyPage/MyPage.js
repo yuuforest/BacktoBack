@@ -25,6 +25,8 @@ const MyPage = () => {
           console.log(response.data);
           setCards(response.data, () => {
             setQuantity(cards.length);
+            console.log("quantity: ", quantity);
+            console.log("cards", cards);
           });
         });
       console.log("Get Photo Card Success......");
@@ -36,8 +38,6 @@ const MyPage = () => {
   useEffect(() => {
     console.log("MyPage Render............");
     getMyPhotoCards();
-    console.log("quantity: ", quantity);
-    console.log("cards", cards);
   }, []);
 
   return (
