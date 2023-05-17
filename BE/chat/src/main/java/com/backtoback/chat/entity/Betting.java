@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "Betting", uniqueConstraints = @UniqueConstraint(columnNames = {"member_seq", "game_seq"}))
+@Table(name = "BETTING", uniqueConstraints = @UniqueConstraint(columnNames = {"member_seq", "game_seq"}))
 public class Betting implements Serializable {
 
 	@Id

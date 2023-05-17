@@ -50,13 +50,13 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 
 eureka:
 #  instance:
 #    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
-    register-with-eureka: false
+    register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://eureka:8761/eureka

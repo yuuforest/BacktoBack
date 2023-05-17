@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,windows,eclipse,java,visualstudiocode,macos,gradle,maven,python,react,flask,node,yarn,jupyternotebooks,intellij+all,pycharm,batch
 # 디폴트 무시된 파일
 /shelf/
+/workspace.xml
 /.idea/workspace.xml
 # 에디터 기반 HTTP 클라이언트 요청
 /httpRequests/

@@ -10,18 +10,33 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
-
-
+#      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka:8761/eureka
 
 spring:
   application:
     name: apigateway
   cloud:
     gateway:
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://k8a708.p.ssafy.io:3000'
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+
       routes:
         - id: auth
-          uri: http://localhost:8085
+          uri: http://auth:8085
           predicates:
             - Path=/api/auth/**
         - id: business

@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Entity
-@Table(name="ChatLogs")
+@Table(name="CHATLOG")
 public class ChatLog implements Serializable {
 
 	@Id

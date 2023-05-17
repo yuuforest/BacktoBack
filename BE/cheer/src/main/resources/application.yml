@@ -47,10 +47,7 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none # create, update, none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # 대문자, 소분자 구분
-    #    show-sql: true
-    generate-ddl: true
+    generate-ddl: false
     properties:
       hibernate:
         #        dialect:

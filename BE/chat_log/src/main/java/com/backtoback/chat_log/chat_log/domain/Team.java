@@ -1,4 +1,4 @@
-package com.backtoback.chat_log.entity;
+package com.backtoback.chat_log.chat_log.domain;
 
 import java.io.Serializable;
 

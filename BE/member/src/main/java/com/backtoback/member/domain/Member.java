@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @DynamicInsert
 @SuperBuilder(toBuilder = true)
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "members")
+@NoArgsConstructor()
+@Table(name = "MEMBERS")
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Identity로 하면 디비엔진에 따라 오토 인크리먼트가 안먹는다.

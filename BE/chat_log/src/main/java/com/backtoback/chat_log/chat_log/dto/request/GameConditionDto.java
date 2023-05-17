@@ -2,7 +2,7 @@ package com.backtoback.chat_log.chat_log.dto.request;
 
 import java.io.Serializable;
 
-import com.backtoback.chat_log.entity.GameActiveType;
+import com.backtoback.chat_log.chat_log.domain.GameActiveType;
 
 import lombok.Builder;
 import lombok.Getter;

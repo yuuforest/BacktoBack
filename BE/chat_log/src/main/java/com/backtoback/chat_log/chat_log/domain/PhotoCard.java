@@ -1,4 +1,4 @@
-package com.backtoback.media.betting.domain;
+package com.backtoback.chat_log.chat_log.domain;
 
 import java.io.Serializable;
 
@@ -11,11 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-import com.backtoback.media.game.domain.Game;
-import com.backtoback.media.member.domain.Member;
-import com.backtoback.media.team.domain.Team;
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,27 +24,23 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "BETTING", uniqueConstraints = @UniqueConstraint(columnNames = {"member_seq", "game_seq"}))
-public class Betting implements Serializable {
+@Table(name = "PHOTOCARDS")
+public class PhotoCard implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Identity로 하면 디비엔진에 따라 오토 인크리먼트가 안먹는다.
-	@Column(name = "betting_seq")
-	private Long bettingSeq;
+	@Column(name = "photo_card_seq")
+	private Long photoCardSeq;
 
-	@Column(name = "betting_point", nullable = false)
-	private Integer bettingPoint;
+	@Column(name = "photo_card_url", nullable = false, length = 2500)
+	private String photoCardUrl;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_seq", nullable = false)
-	private Member member;
+	@Column(name = "quantity", nullable = false)
+	@ColumnDefault(value = "10")
+	private Integer quantity;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "game_seq", nullable = false)
 	private Game game;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "team_seq", nullable = false)
-	private Team team;
 
 }
