@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface PointServiceClient {
 
   @PostMapping("/api/point/betting/start")
-  public ResponseEntity<?> readyToStartBetting();
+  public void readyToStartBetting();
 }
