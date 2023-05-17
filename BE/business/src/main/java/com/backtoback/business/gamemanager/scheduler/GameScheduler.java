@@ -24,16 +24,21 @@ public class GameScheduler {
 
 	private final VideoServiceClient videoServiceClient;
 
-  private final PointServiceClient pointServiceClient;
+    private final PointServiceClient pointServiceClient;
 
 	private final StreamBridge streamBridge;
 
-	@Async
-	@Scheduled(cron = "0 0/2 * * * *")
+//	@Scheduled(cron = "0 0 0 * * *")
+//    public void midnightScheduler() {
+//		videoServiceClient.makeRoom();
+//		pointServiceClient.readyToStartBetting();
+//    }
+
+	@Scheduled(initialDelay = 20000, fixedDelay = 300000)
 	public void dateChange() {
-		log.info("dateChange");
-		// videoServiceClient.makeRoom();
-		//    bettingServiceClient.makeRoom();
+		log.info("dateChange!!!!!!");
+		videoServiceClient.makeRoom();
+		pointServiceClient.readyToStartBetting();
 	}
 
 }
