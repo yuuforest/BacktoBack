@@ -19,24 +19,27 @@ const Profile = ({ quantity }) => {
   const nickname = useSelector(selectNickName);
   const teamName = useSelector(selectTeamName);
   const point = useSelector(selectPoint);
-  const winRate =
-    (useSelector(selectBettingTotal) / useSelector(selectBettingWin)) * 100;
+  const bettingWin = parseFloat(useSelector(selectBettingWin));
+  const bettingTotal = parseFloat(useSelector(selectBettingTotal));
 
+  const winRate =
+    !isNaN(bettingWin) && !isNaN(bettingTotal) && bettingWin !== 0
+      ? (bettingTotal / bettingWin) * 100
+      : 0;
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
-  // const [cardCount, setCardCount] = useState(0);
-
-  var data = {
-    "my-team": teamName,
-    "my-point": point,
-    "card-quantity": quantity,
-    "win-rate": winRate + "%",
-  };
 
   console.log("data: ", data);
 
   useEffect(() => {
-    setInfos([data]);
+    setInfos([
+      {
+        "my-team": teamName,
+        "my-point": point,
+        "card-quantity": quantity,
+        "win-rate": winRate + "%",
+      },
+    ]);
     setImageUrl(process.env.PUBLIC_URL + "/team/" + memberTeamSeq + ".svg");
   }, [quantity]);
 
