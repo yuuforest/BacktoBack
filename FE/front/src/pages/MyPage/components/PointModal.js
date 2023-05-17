@@ -14,8 +14,9 @@ function PointModal() {
             await axios
                 .get("http://k8a708.p.ssafy.io/api/point/point-log/member/" + 1)
                 .then((response) => {
+                    console.log(response);
                     console.log(response.data);
-                    setInfos([response.data]);
+                    setInfos(response.data);
                 })
         } catch (error) {
             console.log("Point Log Error....");
