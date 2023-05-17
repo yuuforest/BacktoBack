@@ -1,14 +1,12 @@
 package com.backtoback.chat_log.chat_log.dto.request;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.GenericMessage;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,39 +15,52 @@ import lombok.Setter;
 @Setter
 // @RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChatMessageDto implements Serializable {
 
+	private Long gameSeq;
+	private Long memberSeq;
+	private Long memberTeamSeq;
+	private String nickname;
 	private String message;
 
-	@Builder
-	public ChatMessageDto(String message) {
-		this.message = message;
-	}
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	private LocalDateTime time;
 
-	public static ChatMessageDto from(Message message) {
-		ChatMessageDto dto = new ChatMessageDto();
-		GenericMessage convertMessage = (GenericMessage)message;
-		BeanUtils.copyProperties(convertMessage.getPayload(), dto);
-		return dto;
-	}
+	private Integer topicNumber;
 
-	public static ChatMessageDto from(byte[] messagePayload) {
-		// 역직렬화
-		ObjectMapper objectMapper = new ObjectMapper();
-		ChatMessageDto chatMessageDto;
-		try {
-			chatMessageDto = objectMapper.readValue(messagePayload, ChatMessageDto.class);
-			return chatMessageDto;
-		} catch (Exception e) {
-			e.printStackTrace();
-
-			return ChatMessageDto.builder().message("No message").build(); //null safety
-		}
-	}
+	// public static ChatMessageDto from(Message message) {
+	// 	ChatMessageDto dto = new ChatMessageDto();
+	// 	GenericMessage convertMessage = (GenericMessage)message;
+	// 	BeanUtils.copyProperties(convertMessage.getPayload(), dto);
+	// 	return dto;
+	// }
+	//
+	// public static ChatMessageDto from(byte[] messagePayload) {
+	// 	// 역직렬화
+	// 	ObjectMapper objectMapper = new ObjectMapper();
+	// 	ChatMessageDto chatMessageDto;
+	// 	try {
+	// 		chatMessageDto = objectMapper.readValue(messagePayload, ChatMessageDto.class);
+	// 		return chatMessageDto;
+	// 	} catch (Exception e) {
+	// 		e.printStackTrace();
+	//
+	// 		return ChatMessageDto.builder().message("No message").build(); //null safety
+	// 	}
+	// }
 
 	@Override
 	public String toString() {
-		return String.format("ChatMessage{message='%s'}", message);
+		return "ChatMessageDto{" +
+			"gameSeq=" + gameSeq +
+			", memberSeq=" + memberSeq +
+			", memberTeamSeq=" + memberTeamSeq +
+			", nickname='" + nickname + '\'' +
+			", message='" + message + '\'' +
+			", time=" + time +
+			", topicNumber=" + topicNumber +
+			'}';
 	}
 
 }

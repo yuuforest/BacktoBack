@@ -96,14 +96,13 @@ public class BindingConfig {
 			return;
 		}
 
-		streamBridge.send("highlight-out-0", getMessageDtoFromContainer(topicNumber, stoppedContainer, gameSeq));
+		streamBridge.send("highlight-out-0", getMessageDtoFromContainer(topicNumber, gameSeq));
 
 		customListenerList.set(topicNumber - 1, null);
 	}
 
 	private HighLightMessageDto getMessageDtoFromContainer(
 		int topicNumber,
-		MessageListenerContainer messageListenerContainer,
 		Long gameSeq
 	) {
 		HighLightMessageDto highLightMessageDto = HighLightMessageDto.builder().gameSeq(gameSeq).build();
