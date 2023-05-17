@@ -14,9 +14,12 @@ public class MessageDto implements Serializable {
 
     private GameActiveType gameActiveType;
 
-    public MessageDto(Long gameSeq, GameActiveType gameActiveType) {
+    private Long mediaStartTime;
+
+    public MessageDto(Long gameSeq, GameActiveType gameActiveType,Long mediaStartTime) {
         this.gameSeq = gameSeq;
         this.gameActiveType = gameActiveType;
+        this.mediaStartTime = mediaStartTime;
     }
 
     @Override
