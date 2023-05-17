@@ -25,7 +25,7 @@ const Login = () => {
 
   const selectMember = (memberSeq) => {
     axios
-      .get(`http://k8a708.p.ssafy.io/:8000/api/member/member/${memberSeq}`)
+      .get(`http://k8a708.p.ssafy.io:8000/api/member/member/${memberSeq}`)
       .then((res) => {
         console.log(res.data);
         dispatch(
@@ -52,7 +52,7 @@ const Login = () => {
   const onClickLogin = () => {
     axios
       .post(
-        "http://k8a708.p.ssafy.io/:8000/api/auth/login",
+        "http://k8a708.p.ssafy.io:8000/api/auth/login",
         JSON.stringify(data),
         {
           headers: {
