@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 @Getter
 public class PointLogRes {
 
+    @ApiModelProperty(name = "순서")
+    private Long num;
+
     @ApiModelProperty(name = "포인트")
     private Integer point;
 

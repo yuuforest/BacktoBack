@@ -46,8 +46,8 @@ public class BindingConfig {
 
 			Long gameSeq = gameConditionDto.getGameSeq();
 			GameActiveType gameActiveType = gameConditionDto.getGameActiveType();
-			// Long mediaStartTime = gameConditionDto.getMediaStartTime();
-			Long mediaStartTime = System.currentTimeMillis();
+			Long mediaStartTime = gameConditionDto.getMediaStartTime(); //배포용
+			// Long mediaStartTime = System.currentTimeMillis(); //로컬테스트용
 
 			log.info("mediaStartTime: " + mediaStartTime);
 
@@ -76,7 +76,7 @@ public class BindingConfig {
 		String homeTopicName = customKafkaListener.getChatTeamTopicName(homeSeq);
 		String awayTopicName = customKafkaListener.getChatTeamTopicName(awaySeq);
 
-		CustomListener customListener = customKafkaListener.startContainer(
+		customKafkaListener.startContainer(
 			customListenerList,
 			containerId,
 			topicNumber,
