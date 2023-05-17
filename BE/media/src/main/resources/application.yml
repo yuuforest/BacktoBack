@@ -31,8 +31,8 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
-    generate-ddl: true
+      ddl-auto: none
+    generate-ddl: false
     properties:
       hibernate:
         format_sql: true

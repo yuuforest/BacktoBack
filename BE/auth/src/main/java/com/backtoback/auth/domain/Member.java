@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @SuperBuilder(toBuilder = true)
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="MEMBER")
+@Table(name="MEMBERS")
 public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Identity로 하면 디비엔진에 따라 오토 인크리먼트가 안먹는다.
@@ -48,7 +48,7 @@ public class Member implements UserDetails {
     private Integer bettingWin;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_seq")
+    @JoinColumn(name = "my_team_seq")
     private Team team;
 
     @Column(nullable = false)

@@ -48,7 +48,7 @@ public class Member implements UserDetails {
     private Integer bettingWin;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_seq")
+    @JoinColumn(name = "my_team_seq")
     private Team team;
 
     @Column(nullable = false)

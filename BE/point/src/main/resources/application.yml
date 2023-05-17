@@ -53,7 +53,7 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none # create, update, none
-    generate-ddl: true
+    generate-ddl: false
     properties:
       hibernate:
         #        dialect:

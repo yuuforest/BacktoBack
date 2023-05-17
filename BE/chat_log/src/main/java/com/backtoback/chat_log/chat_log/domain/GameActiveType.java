@@ -1,4 +1,4 @@
-package com.backtoback.business.game.domain;
+package com.backtoback.chat_log.chat_log.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
