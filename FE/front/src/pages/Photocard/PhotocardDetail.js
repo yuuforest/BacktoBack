@@ -83,7 +83,7 @@ function PhotocardDetail() {
   };
 
   // HL 받아오기
-  const getHL = async (gameSeq) => {
+  const getHL = async () => {
     try {
       const response = await axios.get(
         "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" + gameSeq
@@ -92,7 +92,7 @@ function PhotocardDetail() {
       console.log(response.data);
       setLoading(false);
     } catch (error) {
-      console.log(gameSeq);
+      console.log();
       console.log("HL 조회 불가");
     }
   };
@@ -123,15 +123,12 @@ function PhotocardDetail() {
   };
 
   // 포토카드 구매 | 가격 차감 > HL 랜덤 > HL 수량 차감 > 유저-HL 등록
-  const buyPhotocard = async (gameSeq) => {
+  const buyPhotocard = async () => {
     try {
       updatePoint();
       const photocardSeq = Math.floor(Math.random() * HL.length);
       updatePhotocard(photocardSeq);
       updateMyPhotocard(memberSeq, photocardSeq);
-      if (gameSeq !== null) {
-        getHL(gameSeq);
-      }
     } catch (error) {
       console.log("HL 구매 불가");
     }
@@ -161,10 +158,17 @@ function PhotocardDetail() {
   useEffect(() => {
     getGame();
     getPoint();
-    if (gameSeq !== null) {
-      getHL(gameSeq);
-    }
   }, []);
+
+  useEffect(() => {
+    if (gameSeq !== null) {
+      getHL();
+    }
+  }, [gameSeq]);
+
+  useEffect(() => {
+    getHL();
+  }, [HL]);
 
   return (
     <div>
