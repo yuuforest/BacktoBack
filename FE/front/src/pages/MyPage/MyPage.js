@@ -36,6 +36,8 @@ const MyPage = () => {
   useEffect(() => {
     console.log("MyPage Render............");
     getMyPhotoCards();
+    console.log("quantity: ", quantity);
+    console.log("cards", cards);
   }, []);
 
   return (
