@@ -38,7 +38,7 @@ const Profile = ({ quantity }) => {
   useEffect(() => {
     setInfos([data]);
     setImageUrl(process.env.PUBLIC_URL + "/team/" + memberTeamSeq + ".svg");
-  }, []);
+  }, [quantity]);
 
   return (
     <div className="grid profile-container mt-3 mb-3">

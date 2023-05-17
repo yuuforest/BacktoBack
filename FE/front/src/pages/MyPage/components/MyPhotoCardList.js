@@ -30,8 +30,10 @@ const MyPhotoCardList = ({ cards }) => {
   // ];
 
   useEffect(() => {
+    console.log("MyPhotoCardList Render.............");
+    console.log("cards: ", cards);
     setProducts(cards);
-  }, []);
+  }, [cards]);
 
   const itemTemplate = (product, layout) => {
     if (!product) {
