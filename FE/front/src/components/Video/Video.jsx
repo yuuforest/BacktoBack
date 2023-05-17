@@ -156,7 +156,7 @@ const MatchDetail = ({gameSeq}) => {
 
   return (<>
     <video style={{
-      width: "100%", height:"100%"
+      width: "100%", height:"520px"
     }} poster={require('images/Video/beforelive.png')} ref={videoRef} autoPlay />
   </>)
 }
