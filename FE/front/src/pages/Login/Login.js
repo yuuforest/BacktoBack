@@ -8,6 +8,17 @@ import { setCookie } from "./cookies.js";
 import { setUser } from "store/reducers/loginReducer";
 import { useDispatch } from "react-redux";
 import { atom } from "recoil";
+import { useSetRecoilState } from "recoil";
+import {
+  teamName,
+  memberId,
+  memberSeq,
+  point,
+  bettingTotal,
+  bettingWin,
+  isLogin,
+  nickname,
+} from "components/State/UserState";
 const Login = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
