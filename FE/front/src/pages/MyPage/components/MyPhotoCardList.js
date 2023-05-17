@@ -3,7 +3,6 @@ import "./styles/MyPhotoCardList.css";
 import { DataView } from "primereact/dataview";
 
 const MyPhotoCardList = ({ cards }) => {
-  // const [cards, setCards] = useState([]);
   const [products, setProducts] = useState([]);
   const [layout, setLayout] = useState("grid");
 
@@ -48,10 +47,7 @@ const MyPhotoCardList = ({ cards }) => {
       <div className="col-12 sm:col-6 lg:col-3 xl:col-3 p-2">
         <div className="p-4 border-1 surface-border surface-card border-round">
           <div className="flex flex-column align-items-center gap-3 py-5">
-            <img
-              src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`}
-              alt={product.name}
-            />
+            <img src={product.photocardUrl} alt={product.photocardSeq} />
           </div>
         </div>
       </div>
