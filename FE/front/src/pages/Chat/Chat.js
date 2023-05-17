@@ -78,7 +78,7 @@ function Chat(props) {
       setSendTopic("/api/chat/kafka/chat.message.team." + memberTeamSeq);
       setReceiveTopic("/topic/chat.message.team." + memberTeamSeq);
     }
-  }, [chatType]);
+  }, [chatType, topicNumber]);
 
   //채팅방 내 메시지 전달받음 : 메시지 리스트에 메시지 추가
   const onMessageReceive = useCallback(
