@@ -2,6 +2,8 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "./Betting.css";
 
+import { useRecoilValue } from "recoil";
+import { memberSeq } from "../../components/State/UserState";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -19,8 +21,8 @@ function Betting(props) {
   /* axios url */
   const connectionUrl = 'http://k8a708.p.ssafy.io/api/point/betting';
 
-  /*임시 */
-  const [member, setMember] = useState(2);
+  /* 멤버 정보 */
+  const memSeq = useRecoilValue(memberSeq);
 
   /* ToggleButton */
   const [home_checked, setHomeChecked] = useState(false);
@@ -54,7 +56,7 @@ function Betting(props) {
   const getBettingInfo = async () => {
     try {
       // 베팅 정보 받아오기
-      await axios.get(connectionUrl + '/member/' + member + '/info',
+      await axios.get(connectionUrl + '/member/' + memSeq + '/info',
       {
         params: {
           gameID: props.gameSeq,
@@ -85,7 +87,7 @@ function Betting(props) {
   const doBetting = async (teamSeq) => {
     try {
       // 베팅 진행
-      await axios.post(connectionUrl + '/member/' + member, {
+      await axios.post(connectionUrl + '/member/' + memSeq, {
         gameSeq: props.gameSeq,
         teamSeq: teamSeq,
         bettingPoint: bettingPoint,
@@ -112,7 +114,7 @@ function Betting(props) {
 
   const getBettingResult = async () => {
     try {
-      await axios.get(connectionUrl + '/member/' + member, {
+      await axios.get(connectionUrl + '/member/' + memSeq, {
         params: {
           gameID: props.gameSeq,
         },
