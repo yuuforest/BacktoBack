@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 import SockJsClient from "react-stomp";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
