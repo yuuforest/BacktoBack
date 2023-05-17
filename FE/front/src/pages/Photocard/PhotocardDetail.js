@@ -38,7 +38,7 @@ function PhotocardDetail() {
   const getGame = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8084/photocard/getGames"
+        "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
       );
       setGameSeq(response.data[gameid % 5].gameSeq);
       setPlace(response.data[gameid % 5].gamePlace);
@@ -59,7 +59,7 @@ function PhotocardDetail() {
   const getPoint = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8084/photocard/getPoint"
+        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint"
       );
       setPoint(response.data);
     } catch (error) {
@@ -71,7 +71,7 @@ function PhotocardDetail() {
   const updatePoint = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8084/photocard/updatePoint"
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint"
       );
       getPoint();
     } catch (error) {
@@ -83,7 +83,7 @@ function PhotocardDetail() {
   const getHL = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8084/photocard/getHL/" + gameSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" + gameSeq
       );
       setHL(response.data);
       console.log(response.data);
