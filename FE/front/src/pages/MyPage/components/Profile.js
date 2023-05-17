@@ -7,6 +7,7 @@ const Profile = () => {
   const [memberTeamSeq, setMemberTeamSeq] = useState(1);
   const [nickname, setNickname] = useState("야구조아");
   const [infos, setInfos] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
 
   var data = {
     "my-team": "SSG",
@@ -17,13 +18,20 @@ const Profile = () => {
 
   useEffect(() => {
     setInfos([data]);
+    setImageUrl(process.env.PUBLIC_URL + "/team/" + memberTeamSeq + ".svg");
   }, []);
+
+  console.log("imageUrl: " + imageUrl);
 
   return (
     <div className="grid profile-container mt-3 mb-3">
       <div className="col-5 profile-left grid">
         <div className="my-team-img col-5">
-          <img alt="teamImage" src=""></img>
+          <img
+            alt="teamImage"
+            src={imageUrl}
+            style={{ width: "100%", height: "auto" }}
+          ></img>
         </div>
         <div className="col-6">
           <div className="nickname">{nickname}</div>
