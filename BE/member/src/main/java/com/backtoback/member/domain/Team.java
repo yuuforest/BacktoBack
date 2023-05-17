@@ -13,10 +13,7 @@ import java.io.Serializable;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Entity
-<<<<<<< HEAD
 @Table(name = "teams")
-=======
-@Table(name = "TEAMS")
 >>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 public class Team implements Serializable {
 
