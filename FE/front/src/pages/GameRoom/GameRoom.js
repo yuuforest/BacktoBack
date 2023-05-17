@@ -54,7 +54,9 @@ const GameRoom = () => {
           <Video {...{ gameSeq }} />
         </div>
         <div className="cheer">
-          <Cheer {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }} />
+          <Cheer
+            {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }}
+          />
         </div>
         <div>
           <h2>{gameState}</h2>
@@ -74,13 +76,14 @@ const GameRoom = () => {
       </div>
       <div class="col-5 right">
         <div className="chat">
-          <Chat />
-          {/* <Chat {...{
-            homeSeq: 1,
-            awaySeq: 2,
-            memberTeamSeq: 1,
-            topicNumber: 1,
-          }}/> */}
+          <Chat
+            {...{
+              homeSeq: 1,
+              awaySeq: 2,
+              memberTeamSeq: 1,
+              topicNumber: 1,
+            }}
+          />
         </div>
       </div>
     </div>

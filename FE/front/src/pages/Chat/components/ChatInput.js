@@ -2,7 +2,13 @@ import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
-function ChatInput({ onSendMessage, gameSeq, chatType, teamChatShow }) {
+function ChatInput({
+  onSendMessage,
+  gameSeq,
+  chatType,
+  teamChatShow,
+  topicNumber,
+}) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -16,10 +22,10 @@ function ChatInput({ onSendMessage, gameSeq, chatType, teamChatShow }) {
         gameSeq: gameSeq,
         memberSeq: 1, //추후 수정 필요
         memberTeamSeq: 1, //추후 수정 필요
-        nickname: "바람", //추후 수정 필요
+        nickname: "닉넴", //추후 수정 필요
         message: inputValue,
         time: "",
-        topicNumber: 2,
+        topicNumber: topicNumber,
       };
       onSendMessage(curMessage);
       setInputValue("");

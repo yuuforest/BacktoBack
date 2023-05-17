@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 // import { useParams } from "react-router-dom";
 import SockJsClient from "react-stomp";
-import axiosInstance from "../../remote/client";
+// import axiosInstance from "../../remote/client";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
 import { SelectButton } from "primereact/selectbutton";
 import "./styles/Chat.css";
+// import {selectMemberId, selectNickName,selectTeamSeq} from 'store/reducers/loginReducer'
 
 function Chat(props) {
   const [allMessages, setAllMessages] = useState([]); //전체 채팅 메시지들을 담을 배열
@@ -17,38 +18,44 @@ function Chat(props) {
   // const [memberTeamSeq, setMemberTeamSeq] = useState(null);
   const [teamChatShow, setTeamChatShow] = useState(false);
   const clientRef = useRef(null);
-  const wsConnectionUrl = "http://localhost:8000/api/chat/ws-chat";
+  // const wsConnectionUrl = "http://localhost:8000/api/chat/ws-chat";
+  const wsConnectionUrl = "http://k8a708.p.ssafy.io/api/chat/ws-chat";
 
   // const { gameSeq } = useParams();
   const gameSeq = 1; //추후수정필요
 
-  const [topicNumber, setTopicNumber] = useState(2);
+  const [topicNumber, setTopicNumber] = useState(null);
 
   const options = ["전체 채팅", "마이팀 채팅"];
   const [chatType, setChatType] = useState(options[0]);
 
   const memberTeamSeq = 1; //추후 수정 필요
-  // setMemberTeamSeq(props.memberTeamSeq);
-  // setHomeSeq(props.homeSeq);
-  // setAwaySeq(props.awaySeq);
-  // setTopicNumber(props.topicNumber);
+
+  //불러오는 법
+  // const memberSeq = useSelector(selectMemberId);
+  // const nickname = useSelector(selectNickName);
+  // const memberTeamSeq = useSelector(selectTeamSeq);
 
   //axios 통신 : axiosInstance.get() 형태로 변경해야함.
-  const fetchTeams = async () => {
-    try {
-      const response = await axiosInstance.get(
-        `/api/chat/teams?gameSeq=${gameSeq}`
-      );
-      setHomeSeq(response.data.homeSeq);
-      setAwaySeq(response.data.awaySeq);
-    } catch (error) {
-      console.error("Error fetching game team data", error);
-    }
-  };
+  // const fetchTeams = async () => {
+  //   try {
+  //     const response = await axiosInstance.get(
+  //       `/api/chat/teams?gameSeq=${gameSeq}`
+  //     );
+  //     setHomeSeq(response.data.homeSeq);
+  //     setAwaySeq(response.data.awaySeq);
+  //   } catch (error) {
+  //     console.error("Error fetching game team data", error);
+  //   }
+  // };
 
   //홈 팀 시퀀스 넘버와 원정팀 시퀀스 넘버를 가져온다.
   useEffect(() => {
-    fetchTeams();
+    //fetchTeams();
+    // setMemberTeamSeq(props.memberTeamSeq);
+    setHomeSeq(props.homeSeq);
+    setAwaySeq(props.awaySeq);
+    setTopicNumber(props.topicNumber);
   }, []);
 
   //myteam에 따른 teamChat on/off
@@ -92,6 +99,11 @@ function Chat(props) {
     }
   };
 
+  console.log("gameSeq: " + gameSeq);
+  console.log("homeSeq: " + homeSeq);
+  console.log("awaySeq: " + awaySeq);
+  console.log("topicNumber: " + topicNumber);
+
   return (
     <div>
       <div className="chat-box">
@@ -113,6 +125,7 @@ function Chat(props) {
           gameSeq={gameSeq}
           chatType={chatType}
           teamChatShow={teamChatShow}
+          topicNumber={topicNumber}
         />
       </div>
       <SockJsClient
