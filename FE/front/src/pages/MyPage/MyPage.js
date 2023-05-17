@@ -23,8 +23,9 @@ const MyPage = () => {
         )
         .then((response) => {
           console.log(response.data);
-          setCards(response.data);
-          setQuantity(cards.size());
+          setCards(response.data, () => {
+            setQuantity(cards.length);
+          });
         });
       console.log("Get Photo Card Success......");
     } catch (error) {
