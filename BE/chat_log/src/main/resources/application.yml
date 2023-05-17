@@ -33,9 +33,9 @@ spring:
       maxMessagesPerPoll: 10000
       initialDelay: 5000
 
-    redis:
-      host: localhost
-      port: 6379
+  #    redis:
+  #      host: localhost
+  #      port: 6379
 
   cloud:
     function:

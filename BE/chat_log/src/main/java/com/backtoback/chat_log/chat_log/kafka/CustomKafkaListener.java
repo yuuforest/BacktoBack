@@ -24,46 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class CustomKafkaListener {
 
-	public static final String BEAN_NAME_PREFIX = "listener_";
+	// public static final String BEAN_NAME_PREFIX = "listener_";
 	private static final String CHAT_ALL_GAME_TOPIC_PREFIX = "chat.all.game.";
 	private static final String CHAT_TEAM_TOPIC_PREFIX = "chat.team.";
 
 	private final KafkaListenerContainerFactory<?> kafkaListenerContainerFactory;
 	private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-	// private final CustomListener customListener;
-
-	// private ThreadLocal<Long> homeSeq;
-	// private ThreadLocal<Long> awaySeq;
-
-	// @KafkaListener(
-	// 	id = CHAT_ALL_GAME_TOPIC_PREFIX + 1,
-	// 	topics = {
-	// 		CHAT_ALL_GAME_TOPIC_PREFIX + 1,
-	// 		"",
-	// 		""
-	// 	},
-	// 	batch = "true",
-	// 	groupId = "group_sample",
-	// 	autoStartup = "false",
-	// 	properties = {"spring.json.value.default.type=com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto"},
-	// 	containerFactory = "customKafkaListenerContainerFactory"
-	// )
-	// private void listenChatDto(List<ChatMessageDto> message) {
-	// 	log.info("================receive====================");
-	// 	log.info("############ 총 size: {}", message.size());
-	// }
-
-	// public void setHomeSeq(Long homeSeq) {
-	// 	if (this.homeSeq == null) {
-	// 		this.homeSeq = homeSeq;
-	// 	}
-	// }
-	//
-	// public void setAwaySeq(Long awaySeq) {
-	// 	if (this.awaySeq == null) {
-	// 		this.awaySeq = awaySeq;
-	// 	}
-	// }
 
 	public String getContainerId(Integer topicNumber) {
 		return CHAT_ALL_GAME_TOPIC_PREFIX + topicNumber;
@@ -76,7 +42,7 @@ public class CustomKafkaListener {
 	/*
 	리팩토링 - 로직 분리 필요
 	 */
-	public CustomListener startContainer(List<CustomListener> customListenerList, String containerId,
+	public void startContainer(List<CustomListener> customListenerList, String containerId,
 		int topicNumber, Long mediaStartTime, @NotNull String... topicName) {
 		log.info("====================== Listener Container 시작 ===========================");
 		log.info("####################containerId: {}##################", containerId);
@@ -86,7 +52,7 @@ public class CustomKafkaListener {
 
 			///////////////Exception 발생으로 수정 필요/////////////////
 			log.info("이미 listener 컨테이너 있어서 함수 종료");
-			return null;
+			return;
 		}
 
 		//Listener Class 생성
@@ -126,8 +92,6 @@ public class CustomKafkaListener {
 
 		log.info("####################registry 속 containerIDs: {}",
 			this.kafkaListenerEndpointRegistry.getListenerContainerIds());
-
-		return customListener;
 	}
 
 	public MessageListenerContainer stopContainer(String containerId) {
