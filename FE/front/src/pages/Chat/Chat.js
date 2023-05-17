@@ -18,10 +18,10 @@ function Chat(props) {
   const [receiveTopic, setReceiveTopic] = useState("");
 
   //props 데이터
-  const [gameSeq, setGameSeq] = useState(null);
-  const [homeSeq, setHomeSeq] = useState(null);
-  const [awaySeq, setAwaySeq] = useState(null);
-  const [topicNumber, setTopicNumber] = useState(null);
+  // const [gameSeq, setGameSeq] = useState(null);
+  // const [homeSeq, setHomeSeq] = useState(null);
+  // const [awaySeq, setAwaySeq] = useState(null);
+  // const [topicNumber, setTopicNumber] = useState(null);
 
   const [teamChatShow, setTeamChatShow] = useState(false);
   const clientRef = useRef(null);
@@ -36,34 +36,34 @@ function Chat(props) {
   const memberTeamSeq = useSelector(selectTeamSeq);
 
   //홈 팀 시퀀스 넘버와 원정팀 시퀀스 넘버를 가져온다.
-  useEffect(() => {
-    setGameSeq(props.gameSeq);
-    setHomeSeq(props.homeSeq);
-    setAwaySeq(props.awaySeq);
-    setTopicNumber(props.topicNumber);
-  }, []);
+  // useEffect(() => {
+  //   setGameSeq(props.gameSeq);
+  //   setHomeSeq(props.homeSeq);
+  //   setAwaySeq(props.awaySeq);
+  //   setTopicNumber(props.topicNumber);
+  // }, []);
 
   //myteam에 따른 teamChat on/off
   useEffect(() => {
-    if (homeSeq && awaySeq) {
-      if (memberTeamSeq !== homeSeq && memberTeamSeq !== awaySeq) {
+    if (props.homeSeq && props.awaySeq) {
+      if (memberTeamSeq !== props.homeSeq && memberTeamSeq !== props.awaySeq) {
         setTeamChatShow(false);
       } else {
         setTeamChatShow(true);
       }
     }
-  }, [homeSeq, awaySeq]);
+  }, []);
 
   //채팅 타입에 따른 토픽 설정
   useEffect(() => {
     if (chatType === "전체 채팅") {
-      setSendTopic("/api/chat/kafka/chat.message.all." + topicNumber);
-      setReceiveTopic("/topic/chat.message.all." + topicNumber);
+      setSendTopic("/api/chat/kafka/chat.message.all." + props.topicNumber);
+      setReceiveTopic("/topic/chat.message.all." + props.topicNumber);
     } else if (chatType === "마이팀 채팅") {
       setSendTopic("/api/chat/kafka/chat.message.team." + memberTeamSeq);
       setReceiveTopic("/topic/chat.message.team." + memberTeamSeq);
     }
-  }, [chatType, topicNumber]);
+  }, [chatType]);
 
   //채팅방 내 메시지 전달받음 : 메시지 리스트에 메시지 추가
   const onMessageReceive = useCallback(
@@ -84,10 +84,10 @@ function Chat(props) {
     }
   };
 
-  console.log("gameSeq: " + gameSeq);
-  console.log("homeSeq: " + homeSeq);
-  console.log("awaySeq: " + awaySeq);
-  console.log("topicNumber: " + topicNumber);
+  console.log("gameSeq: " + props.gameSeq);
+  console.log("homeSeq: " + props.homeSeq);
+  console.log("awaySeq: " + props.awaySeq);
+  console.log("topicNumber: " + props.topicNumber);
 
   return (
     <div>
@@ -107,10 +107,10 @@ function Chat(props) {
         />
         <ChatInput
           onSendMessage={sendMessage}
-          gameSeq={gameSeq}
+          gameSeq={props.gameSeq}
           chatType={chatType}
           teamChatShow={teamChatShow}
-          topicNumber={topicNumber}
+          topicNumber={props.topicNumber}
           memberSeq={memberSeq}
           nickname={nickname}
           memberTeamSeq={memberTeamSeq}
