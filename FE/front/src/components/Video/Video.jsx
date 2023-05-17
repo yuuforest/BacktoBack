@@ -15,9 +15,8 @@ const MatchDetail = ({gameSeq}) => {
   // const {gameId} = useParams();
   const [readyToStart,setReadyToStart] = useState(false);
   const [readyToVideo,setReadyToVideo] = useState(false);
-  const [userId,setUserId] = useState(uuidv4());
-
-  gameSeq = 1;
+  const [userId, setUserId] = useState(uuidv4());
+  
   useEffect(() => {
      sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
      stomp = Stomp.over(sockJs);
