@@ -63,6 +63,10 @@ public class MemberServiceImpl implements MemberService{
         if(memberRepository.existsByMemberId(memberId)) throw new DuplicateMemberException();
     }
 
+    @Override
+    public void isExistNickname(String nickname) {
+        if(memberRepository.existsByNickname(nickname)) throw new DuplicateMemberException();
 
+    }
 
 }

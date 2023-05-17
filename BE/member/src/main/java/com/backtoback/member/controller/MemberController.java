@@ -44,15 +44,25 @@ public class MemberController {
                 .build();
     }
 
-    @GetMapping("/exist/{memberId}")
+    @GetMapping("/existId/{memberId}")
     @ApiOperation(value="아이디 중복 확인", notes = "아이디 중복 확인")
-    public ResponseEntity<?> exist(@PathVariable("memberId") String memberId){
+    public ResponseEntity<?> existId(@PathVariable("memberId") String memberId){
         memberService.isExistId(memberId);
         return ResponseEntity
             .status(HttpStatus.OK)
             .build();
-
     }
+
+    @GetMapping("/existNickname/{nickname}")
+    @ApiOperation(value="닉네임 중복 확인", notes = "닉네임 중복 확인")
+    public ResponseEntity<?> existNickname(@PathVariable("nickname") String nickname){
+        memberService.isExistNickname(nickname);
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .build();
+    }
+
+
 
 
     }

@@ -29,7 +29,7 @@ public class MemberSignUpReq {
     @ApiModelProperty(name = "memberNickname")
     private String nickname;
     @NotNull(message = "선호팀은 필수 입력값입니다.")
-    @ApiModelProperty(name = "teamSeq")
+    @ApiModelProperty(name = "myTeamSeq")
     private Team team;
 
 

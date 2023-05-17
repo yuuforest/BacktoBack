@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "TEAMS")
+@Table(name = "teams")
 public class Team implements Serializable {
 
     @Id
