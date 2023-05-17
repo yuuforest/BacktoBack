@@ -129,6 +129,7 @@ function PhotocardDetail() {
       const photocardSeq = Math.floor(Math.random() * HL.length);
       updatePhotocard(photocardSeq);
       updateMyPhotocard(memberSeq, photocardSeq);
+      getHL();
     } catch (error) {
       console.log("HL 구매 불가");
     }
@@ -165,10 +166,6 @@ function PhotocardDetail() {
       getHL();
     }
   }, [gameSeq]);
-
-  useEffect(() => {
-    getHL();
-  }, [HL]);
 
   return (
     <div>
