@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChatMessageDto implements Serializable {
 
-	String message;
+	private String message;
 
 	@Builder
 	public ChatMessageDto(String message) {

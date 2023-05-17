@@ -14,16 +14,22 @@ public class GameConditionDto implements Serializable {
 
 	private Long gameSeq;
 	private GameActiveType gameActiveType;
+	private Long mediaStartTime;
 
 	@Builder
-	public GameConditionDto(Long gameSeq, GameActiveType gameActiveType) {
+	public GameConditionDto(Long gameSeq, GameActiveType gameActiveType, Long mediaStartTime) {
 		this.gameSeq = gameSeq;
 		this.gameActiveType = gameActiveType;
+		this.mediaStartTime = mediaStartTime;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("GameAction{gameSeq=%d, gameActiveType=%s}", gameSeq, gameActiveType);
+		return "GameConditionDto{" +
+			"gameSeq=" + gameSeq +
+			", gameActiveType=" + gameActiveType +
+			", mediaStartTime=" + mediaStartTime +
+			'}';
 	}
-
+	
 }
