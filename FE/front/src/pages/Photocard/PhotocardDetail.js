@@ -83,7 +83,7 @@ function PhotocardDetail() {
   };
 
   // HL 받아오기
-  const getHL = async () => {
+  const getHL = async (gameSeq) => {
     try {
       const response = await axios.get(
         "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" + gameSeq
@@ -123,13 +123,13 @@ function PhotocardDetail() {
   };
 
   // 포토카드 구매 | 가격 차감 > HL 랜덤 > HL 수량 차감 > 유저-HL 등록
-  const buyPhotocard = async () => {
+  const buyPhotocard = async (gameSeq) => {
     try {
       updatePoint();
       const photocardSeq = Math.floor(Math.random() * HL.length);
       updatePhotocard(photocardSeq);
       updateMyPhotocard(memberSeq, photocardSeq);
-      getHL();
+      getHL(gameSeq);
     } catch (error) {
       console.log("HL 구매 불가");
     }
@@ -227,7 +227,7 @@ function PhotocardDetail() {
                 <Button
                   label="100p에 구매하기"
                   icon="pi pi-check"
-                  onClick={buyPhotocard}
+                  onClick={buyPhotocard(gameSeq)}
                   className="point-check"
                 />
               </div>
