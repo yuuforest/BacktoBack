@@ -60,12 +60,10 @@ spring:
 
       kafka:
         binder:
-          auto-create-topics: false # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
+          auto-create-topics: true # 바인더는 이미 구성된 주제에 의존합니다. 항목이 없으면 바인더가 시작되지 않습니다.
           brokers: localhost:9092 # k8a708.p.ssafy.io:9092
 
   kafka:
-    bootstrap-servers: localhost:9092 #k8a708.p.ssafy.io:9092
-
     #    consumer:
     #      auto-offset-reset: latest
     #      max-poll-records: 100000
