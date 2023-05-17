@@ -24,7 +24,7 @@ const routes = [
     component: PhotocardHome,
   },
   {
-    path: "/photocard/detail:gameid",
+    path: "/photocard/detail/:gameid",
     exact: true,
     component: PhotocardDetail,
   },

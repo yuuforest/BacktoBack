@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./styles/Profile.css";
+import Modal from "./Modal";
 
 const Profile = () => {
   const [memberTeamSeq, setMemberTeamSeq] = useState(1);
@@ -46,6 +47,10 @@ const Profile = () => {
           <Column field="win-rate" header="베팅 승률"></Column>
         </DataTable>
       </div>
+
+      {/* Modal Test */}
+      <Modal />
+
     </div>
   );
 };

@@ -15,9 +15,8 @@ const MatchDetail = ({gameSeq}) => {
   // const {gameId} = useParams();
   const [readyToStart,setReadyToStart] = useState(false);
   const [readyToVideo,setReadyToVideo] = useState(false);
-  const [userId,setUserId] = useState(uuidv4());
-
-  gameSeq = 1;
+  const [userId, setUserId] = useState(uuidv4());
+  
   useEffect(() => {
      sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
      stomp = Stomp.over(sockJs);
@@ -28,14 +27,16 @@ const MatchDetail = ({gameSeq}) => {
   }, []);
 
   useEffect(()=>{
-      if(readyToStart===true){
+    if (readyToStart === true) {
+      console.log("start");
         start();
       }
   },[readyToStart]);
 
   useEffect(()=>{
-      if(readyToVideo===true){
-        startStream();
+    if (readyToVideo === true) {
+        console.log("start Stream")
+        // startStream();
       }
   },[readyToVideo]);
 
@@ -58,7 +59,7 @@ const MatchDetail = ({gameSeq}) => {
             console.log("playEnd");
             break;
           case "videoInfo":
-            // startStream();
+            startStream();
             setReadyToVideo(true);
             break;
           case "iceCandidate":
@@ -143,6 +144,7 @@ const MatchDetail = ({gameSeq}) => {
   }
   
   const startStream = () => {
+    console.log("start remoteStream"+webRtcPeer.getRemoteStream)
     videoRef.current.srcObject = webRtcPeer.getRemoteStream();
   }
   
@@ -157,6 +159,9 @@ const MatchDetail = ({gameSeq}) => {
      <div>
       <video  poster={ require('images/Video/beforelive.png') } ref={videoRef} autoPlay/>
     </div>
+     <button onClick={start}>비디오 시작</button>
+    <button onClick={startStream}>비디오 스트림 시작</button>
+    <button onClick={enterRoom}>방 입장</button>
   </>)
 }
 
