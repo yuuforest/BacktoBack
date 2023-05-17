@@ -52,7 +52,7 @@ function Chat(props) {
         setTeamChatShow(true);
       }
     }
-  }, []);
+  }, [props.homeSeq, props.awaySeq]);
 
   //채팅 타입에 따른 토픽 설정
   useEffect(() => {
@@ -63,7 +63,7 @@ function Chat(props) {
       setSendTopic("/api/chat/kafka/chat.message.team." + memberTeamSeq);
       setReceiveTopic("/topic/chat.message.team." + memberTeamSeq);
     }
-  }, [chatType]);
+  }, [chatType, props.topicNumber]);
 
   //채팅방 내 메시지 전달받음 : 메시지 리스트에 메시지 추가
   const onMessageReceive = useCallback(
