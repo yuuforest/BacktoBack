@@ -10,7 +10,11 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
+<<<<<<< HEAD
 #      defaultZone: http://localhost:8761/eureka
+=======
+      #      defaultZone: http://localhost:8761/eureka
+>>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
       defaultZone: http://eureka:8761/eureka
 
 spring:
@@ -25,7 +29,11 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins: 'http://k8a708.p.ssafy.io'
+<<<<<<< HEAD
 #            allowedOrigins: 'http://localhost:3000'
+=======
+            #            allowedOrigins: 'http://localhost:3000'
+>>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
             allow-credentials: true
             allowedHeaders: '*'
             allowedMethods:

@@ -26,7 +26,7 @@ public class PointApplication {
 	@Bean
 	public Consumer<KafkaReq> process() {
 		return KafkaRes -> {
-			bettingService.getBettingResult(KafkaRes);
+			bettingService.getBettingResult(KafkaRes);	// OK
 		};
 	}
 

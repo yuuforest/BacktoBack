@@ -19,7 +19,11 @@ spring:
     redis:
       host: localhost
       port: 6379
+<<<<<<< HEAD
 #      password: ssafy
+=======
+      password: ssafy
+>>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 
   mvc:
     pathmatch:
@@ -50,7 +54,11 @@ spring:
         format_sql: true
     database: mysql
     hibernate:
+<<<<<<< HEAD
       ddl-auto: update
+=======
+      ddl-auto: none
+>>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 
 eureka:
 #  instance:
@@ -59,7 +67,11 @@ eureka:
     register-with-eureka: false
     fetch-registry: true
     service-url:
+<<<<<<< HEAD
       defaultZone: http://eureka:8761/eureka
+=======
+      defaultZone: http://127.0.0.1:8761/eureka
+>>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 
 
 

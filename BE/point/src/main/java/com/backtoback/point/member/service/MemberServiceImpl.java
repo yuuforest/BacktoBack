@@ -37,4 +37,19 @@ public class MemberServiceImpl implements MemberService {
         member.setPoint(member.getPoint() + point);
     }
 
+    @Override
+    @Transactional
+    public Integer getPoint(Long memberSeq) {
+        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(
+                "해당하는 회원 ID 정보가 존재하지 않습니다.", ENTITY_NOT_FOUND));
+        return member.getPoint();
+    }
+
+    @Override
+    @Transactional
+    public void updatePoint(Long memberSeq) {
+        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new EntityNotFoundException(
+                "해당하는 회원 ID 정보가 존재하지 않습니다.", ENTITY_NOT_FOUND));
+        member.setPoint(member.getPoint() - 100);
+    }
 }
