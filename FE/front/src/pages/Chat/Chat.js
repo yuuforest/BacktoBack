@@ -1,79 +1,64 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-// import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SockJsClient from "react-stomp";
-// import axiosInstance from "../../remote/client";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
 import { SelectButton } from "primereact/selectbutton";
 import "./styles/Chat.css";
-// import {selectMemberId, selectNickName,selectTeamSeq} from 'store/reducers/loginReducer'
+import {
+  selectMemberId,
+  selectNickName,
+  selectTeamSeq,
+} from "store/reducers/loginReducer";
 
 function Chat(props) {
   const [allMessages, setAllMessages] = useState([]); //전체 채팅 메시지들을 담을 배열
   const [teamMessages, setTeamMessages] = useState([]);
   const [sendTopic, setSendTopic] = useState("");
   const [receiveTopic, setReceiveTopic] = useState("");
-  const [homeSeq, setHomeSeq] = useState(null);
-  const [awaySeq, setAwaySeq] = useState(null);
-  // const [memberTeamSeq, setMemberTeamSeq] = useState(null);
+
+  //props 데이터
+  // const [gameSeq, setGameSeq] = useState(null);
+  // const [homeSeq, setHomeSeq] = useState(null);
+  // const [awaySeq, setAwaySeq] = useState(null);
+  // const [topicNumber, setTopicNumber] = useState(null);
+
   const [teamChatShow, setTeamChatShow] = useState(false);
   const clientRef = useRef(null);
-  // const wsConnectionUrl = "http://localhost:8000/api/chat/ws-chat";
   const wsConnectionUrl = "http://k8a708.p.ssafy.io/api/chat/ws-chat";
-
-  // const { gameSeq } = useParams();
-  const gameSeq = 1; //추후수정필요
-
-  const [topicNumber, setTopicNumber] = useState(1); //이거 받아오는 api 개발해야함.
 
   const options = ["전체 채팅", "마이팀 채팅"];
   const [chatType, setChatType] = useState(options[0]);
 
-  const memberTeamSeq = 1; //추후 수정 필요
-
-  //불러오는 법
-  // const memberSeq = useSelector(selectMemberId);
-  // const nickname = useSelector(selectNickName);
-  // const memberTeamSeq = useSelector(selectTeamSeq);
-
-  //axios 통신 : axiosInstance.get() 형태로 변경해야함.
-  // const fetchTeams = async () => {
-  //   try {
-  //     const response = await axiosInstance.get(
-  //       `/api/chat/teams?gameSeq=${gameSeq}`
-  //     );
-  //     setHomeSeq(response.data.homeSeq);
-  //     setAwaySeq(response.data.awaySeq);
-  //   } catch (error) {
-  //     console.error("Error fetching game team data", error);
-  //   }
-  // };
+  //redux 데이터
+  const memberSeq = useSelector(selectMemberId);
+  const nickname = useSelector(selectNickName);
+  const memberTeamSeq = useSelector(selectTeamSeq);
 
   //홈 팀 시퀀스 넘버와 원정팀 시퀀스 넘버를 가져온다.
-  useEffect(() => {
-    //fetchTeams();
-    // setMemberTeamSeq(props.memberTeamSeq);
-    setHomeSeq(props.homeSeq);
-    setAwaySeq(props.awaySeq);
-    setTopicNumber(props.topicNumber);
-  }, []);
+  // useEffect(() => {
+  //   setGameSeq(props.gameSeq);
+  //   setHomeSeq(props.homeSeq);
+  //   setAwaySeq(props.awaySeq);
+  //   setTopicNumber(props.topicNumber);
+  // }, []);
 
   //myteam에 따른 teamChat on/off
   useEffect(() => {
-    if (homeSeq && awaySeq) {
-      if (memberTeamSeq !== homeSeq && memberTeamSeq !== awaySeq) {
+    if (props.homeSeq && props.awaySeq) {
+      if (memberTeamSeq !== props.homeSeq && memberTeamSeq !== props.awaySeq) {
         setTeamChatShow(false);
       } else {
         setTeamChatShow(true);
       }
     }
-  }, [homeSeq, awaySeq]);
+  }, []);
 
   //채팅 타입에 따른 토픽 설정
   useEffect(() => {
     if (chatType === "전체 채팅") {
-      setSendTopic("/api/chat/kafka/chat.message.all." + topicNumber);
-      setReceiveTopic("/topic/chat.message.all." + topicNumber);
+      setSendTopic("/api/chat/kafka/chat.message.all." + props.topicNumber);
+      setReceiveTopic("/topic/chat.message.all." + props.topicNumber);
     } else if (chatType === "마이팀 채팅") {
       setSendTopic("/api/chat/kafka/chat.message.team." + memberTeamSeq);
       setReceiveTopic("/topic/chat.message.team." + memberTeamSeq);
@@ -99,10 +84,10 @@ function Chat(props) {
     }
   };
 
-  console.log("gameSeq: " + gameSeq);
-  console.log("homeSeq: " + homeSeq);
-  console.log("awaySeq: " + awaySeq);
-  console.log("topicNumber: " + topicNumber);
+  console.log("gameSeq: " + props.gameSeq);
+  console.log("homeSeq: " + props.homeSeq);
+  console.log("awaySeq: " + props.awaySeq);
+  console.log("topicNumber: " + props.topicNumber);
 
   return (
     <div>
@@ -122,10 +107,13 @@ function Chat(props) {
         />
         <ChatInput
           onSendMessage={sendMessage}
-          gameSeq={gameSeq}
+          gameSeq={props.gameSeq}
           chatType={chatType}
           teamChatShow={teamChatShow}
-          topicNumber={topicNumber}
+          topicNumber={props.topicNumber}
+          memberSeq={memberSeq}
+          nickname={nickname}
+          memberTeamSeq={memberTeamSeq}
         />
       </div>
       <SockJsClient
