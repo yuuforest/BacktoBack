@@ -1,0 +1,28 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-left {
+  align-items: center;
+}
+
+.nickname {
+  display: inline-flex;
+  font-weight: bold;
+  font-size: 35px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: center;
+  border: none;
+}
+
+.p-column-header-content {
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,137 @@
+.container {
+  margin: 20px;
+  background-color: white;
+  margin-bottom: 40px;
+  font-weight: 300;
+  padding: 10px;
+  border-radius: 5px;
+  color: #adaeb9;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(330px, 1fr));
+  grid-gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.game {
+  margin: 30px;
+  background-color: white;
+  margin-bottom: 40px;
+  max-width: 100%;
+  max-height: 1200px;
+  font-weight: 300;
+  padding: 10px;
+  border-radius: 5px;
+  color: #adaeb9;
+  display: grid;
+
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}
+
+.game__img {
+  opacity: 0.7;
+  max-width: 200px;
+  max-height: 450px;
+  padding: 5px;
+  width: 120%;
+  height: 100%;
+  object-fit: contain;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game__title a {
+  text-decoration: none;
+}
+
+.game__detail {
+  background-color: white;
+  font-weight: 300;
+  border-radius: 5px;
+  color: #adaeb9;
+  display: grid;
+  grid-gap: 10px;
+  text-decoration: none;
+  color: inherit;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.team__title {
+  background-color: white;
+  font-weight: 300;
+  border-radius: 5px;
+  color: #adaeb9;
+  display: grid;
+  grid-gap: 10px;
+  text-decoration: none;
+  color: inherit;
+
+  justify-items: center;
+  align-items: center;
+  position: relative;
+}
+
+.background_lt {
+  position: absolute;
+  top: 0;
+  left: 330px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+.background_rt {
+  position: absolute;
+  top: 0;
+  left: -60px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+.team__img {
+  max-width: 300px;
+  max-height: 300px;
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+}
+
+.foreground {
+  position: relative;
+  z-index: 2;
+}
+
+.h1over_lt {
+  font-size: 6em;
+}
+
+.h1over_rt {
+  font-size: 6em;
+}
+
+.vs__container {
+  max-width: 300px;
+  max-height: 150px;
+
+  margin: 10px;
+  background-color: white;
+  font-weight: 20px;
+  padding: 10px;
+  border-radius: 100px;
+  color: #adaeb9;
+  display: grid;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}

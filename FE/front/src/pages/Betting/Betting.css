@@ -1,0 +1,71 @@
+.toggleLeft {
+  width: 300px;
+  height: 80px;
+  margin-right: 20px;
+  font-size: 30px;
+  text-align: left;
+  font-weight: bold;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.toggleRight {
+  width: 300px;
+  height: 80px;
+  font-size: 30px;
+  text-align: left;
+  font-weight: bold;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.title {
+  font-weight: 900;
+  font-size: 30px;
+}
+
+.point-input {
+  width: 650px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.betting-btn {
+  width: 160px;
+  height: 40px;
+}
+
+.point-check {
+  width: 820px;
+  height: 30px;
+  font-size: 15px;
+}
+
+.container-left {
+  margin-top: 50px;
+}
+
+.container-bottom {
+  margin-bottom: 10px;
+}
+
+.betting-message {
+  width: 700px;
+  height: 30px;
+  font-size: 15px;
+  /* font-weight: bold; */
+  text-align: center;
+}
+
+.betting-card {
+  width: 820px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.container-bottom-sm {
+  margin-bottom: 10px;
+}
