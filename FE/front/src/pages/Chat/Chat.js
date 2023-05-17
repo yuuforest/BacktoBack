@@ -56,6 +56,7 @@ function Chat(props) {
 
   //채팅 타입에 따른 토픽 설정
   useEffect(() => {
+    console.log("**********Topic Changed***********");
     if (chatType === "전체 채팅") {
       setSendTopic("/api/chat/kafka/chat.message.all." + props.topicNumber);
       setReceiveTopic("/topic/chat.message.all." + props.topicNumber);
@@ -63,6 +64,8 @@ function Chat(props) {
       setSendTopic("/api/chat/kafka/chat.message.team." + memberTeamSeq);
       setReceiveTopic("/topic/chat.message.team." + memberTeamSeq);
     }
+    console.log("sendTopic: ", sendTopic);
+    console.log("receiveTopic: ", receiveTopic);
   }, [chatType, props.topicNumber]);
 
   //채팅방 내 메시지 전달받음 : 메시지 리스트에 메시지 추가
