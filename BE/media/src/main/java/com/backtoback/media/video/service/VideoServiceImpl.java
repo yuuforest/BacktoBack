@@ -308,10 +308,17 @@ public class VideoServiceImpl implements VideoService {
 
     participantRepository.findAll().forEach((participant -> {
       if (participant.getGameSeq().equals(gameSeq.toString())) {
+        sendPlayEnd(gameSeq.toString(),participant.getUserId());
         participantRepository.deleteById(participant.getId());
       }
     }));
 
+  }
+
+  public void sendPlayEnd(String gameId,String userId){
+    JsonObject response = new JsonObject();
+    response.addProperty("id", "playEnd");
+    sendStompMessage(gameId, userId, response.toString());
   }
 
   @Override
