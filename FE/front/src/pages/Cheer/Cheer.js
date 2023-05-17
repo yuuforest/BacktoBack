@@ -26,11 +26,17 @@ function Cheer(props) {
   const getCheerInfo = async () => {
     try {
       // 각 팀의 현재 응원수 조회
-      const response = await axios.get(connectionUrl + '/game/' + props.gameSeq);
-      setHomeCount(response.data.homeCount);
-      setAwayCount(response.data.awayCount);
+      // const response = await axios.get(connectionUrl + '/game/' + props.gameSeq);
+      // setHomeCount(response.data.homeCount);
+      // setAwayCount(response.data.awayCount);
+      await axios.get(connectionUrl + '/game/' + props.gameSeq)
+      .then((response) => {
+        setHomeCount(response.data.homeCount);
+        setAwayCount(response.data.awayCount);
+      })
+      console.log("getCheerInfo 성공");
     } catch (error) {
-      console.log("getCheerInfo Error");
+      console.log("getCheerInfo 실패");
       // console.log(error.response.data.messsage);
     }
   };
@@ -40,7 +46,7 @@ function Cheer(props) {
   useEffect(() => {
     console.log("always rendered......");
     getCheerInfo();
-  }, []);
+  }, [props.gameSeq]);
 
   // event =======================================================================================================================
 

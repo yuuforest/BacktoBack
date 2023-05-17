@@ -8,15 +8,18 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const GameRoom = () => {
-  // const {gameSeq} =  useParams();
-  const gameSeq = 3;
 
+  const {gameid} =  useParams();
+
+  const [gameSeq, setGameSeq] = useState(gameid);
   const [homeSeq, setHomeSeq] = useState(1);
   const [awaySeq, setAwaySeq] = useState(2);
   const [homeName, setHomeName] = useState(null);
   const [awayName, setAwayName] = useState(null);
   const [gameState, setGameState] = useState(null);
   const [topicNumber, setTopicNumber] = useState(0);
+
+
 
   const getGameInfo = async () => {
     try {
@@ -29,7 +32,7 @@ const GameRoom = () => {
           setAwaySeq(response.data.awaySeq);
           setHomeName(response.data.homeName);
           setAwayName(response.data.awayName);
-          setGameState(response.data.gameActiveType);
+          setGameState(response.data.isActive);
           setTopicNumber(response.data.topicNumber);
         });
       console.log("GameRoom Info Success..............");
@@ -58,9 +61,9 @@ const GameRoom = () => {
             {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }}
           />
         </div>
-        <div>
+        {/* <div>
           <h2>{gameState}</h2>
-        </div>
+        </div> */}
         <div className="betting">
           <Betting
             {...{

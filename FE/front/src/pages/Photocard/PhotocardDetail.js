@@ -14,7 +14,10 @@ import stupid from "../../images/stupid.gif";
 function PhotocardDetail() {
   const { gameid } = useParams();
 
-  const [gameSeq, setGameSeq] = useState();
+  // User - memberSeq 임시 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!
+  const [memberSeq, setMemberSeq] = useState(1);
+
+  const [gameSeq, setGameSeq] = useState(null);
   const [place, setPlace] = useState();
   const [time, setTime] = useState();
 
@@ -37,7 +40,7 @@ function PhotocardDetail() {
   // 해당 경기 받기
   const getGame = async () => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
       );
       setGameSeq(response.data[gameid % 5].gameSeq);
@@ -58,8 +61,8 @@ function PhotocardDetail() {
   // 포인트 받기
   const getPoint = async () => {
     try {
-      const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint"
+      const response = await axios.get(
+        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + memberSeq
       );
       setPoint(response.data);
     } catch (error) {
@@ -71,7 +74,7 @@ function PhotocardDetail() {
   const updatePoint = async () => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint"
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
       );
       getPoint();
     } catch (error) {
@@ -87,16 +90,49 @@ function PhotocardDetail() {
       );
       setHL(response.data);
       console.log(response.data);
+      setLoading(false);
     } catch (error) {
-      console.log(gameSeq);
+      console.log();
       console.log("HL 조회 불가");
     }
   };
 
-  // 포토카드 구매 -> 가격 차감
-  const buyPhotocard = async (teamSeq) => {
+  // HL 수량 차감
+  const updatePhotocard = async (photocardSeq) => {
     try {
-    } catch (error) {}
+      const response = await axios.post(
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" + photocardSeq
+      );
+    } catch (error) {
+      console.log("HL 조회 불가");
+    }
+  };
+
+  // 유저-HL 등록
+  const updateMyPhotocard = async (memberSeq, photocardSeq) => {
+    try {
+      const response = await axios.post(
+        "http://k8a708.p.ssafy.io/api/point/photocard/updateMyPhotocard/" +
+          memberSeq +
+          "/" +
+          photocardSeq
+      );
+    } catch (error) {
+      console.log("HL 조회 불가");
+    }
+  };
+
+  // 포토카드 구매 | 가격 차감 > HL 랜덤 > HL 수량 차감 > 유저-HL 등록
+  const buyPhotocard = async () => {
+    try {
+      updatePoint();
+      const photocardSeq = Math.floor(Math.random() * HL.length);
+      updatePhotocard(photocardSeq);
+      updateMyPhotocard(memberSeq, photocardSeq);
+      getHL();
+    } catch (error) {
+      console.log("HL 구매 불가");
+    }
   };
 
   const homeImgPath =
@@ -105,15 +141,15 @@ function PhotocardDetail() {
     process.env.PUBLIC_URL + "/component/images/team/" + awaySeq + ".svg";
 
   // HL 포토카드 받기
-  const getPhotocards = async () => {
-    const json = await (
-      await fetch(
-        `https://yts.mx/api/v2/list_movies.json?minimum_rating=9.8&sort_by=year`
-      )
-    ).json();
-    setPhotocards(json.data.movies);
-    setLoading(false);
-  };
+  // const getPhotocards = async () => {
+  //   const json = await (
+  //     await fetch(
+  //       `https://yts.mx/api/v2/list_movies.json?minimum_rating=9.8&sort_by=year`
+  //     )
+  //   ).json();
+  //   setPhotocards(json.data.movies);
+  //   setLoading(false);
+  // };
 
   // useEffect(() => {
   //   getHL();
@@ -122,9 +158,14 @@ function PhotocardDetail() {
   // 초기화 시작
   useEffect(() => {
     getGame();
-    getPhotocards();
     getPoint();
   }, []);
+
+  useEffect(() => {
+    if (gameSeq !== null) {
+      getHL();
+    }
+  }, [gameSeq]);
 
   return (
     <div>
@@ -178,7 +219,7 @@ function PhotocardDetail() {
                 autoPlay={true}
                 interval={3000}
               >
-                {photocards.slice(0, 15).map((photocard) => (
+                {photocards.slice(0, 15).map((HL) => (
                   <Photocard />
                 ))}
               </Carousel>
@@ -191,8 +232,7 @@ function PhotocardDetail() {
                 <Button
                   label="100p에 구매하기"
                   icon="pi pi-check"
-                  // visible={errorCheck}
-                  onClick={updatePoint}
+                  onClick={buyPhotocard(gameSeq)}
                   className="point-check"
                 />
               </div>

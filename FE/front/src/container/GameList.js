@@ -3,8 +3,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import routes, { defaultRedirect } from "../routes";
 import axios from "axios";
 
-import TheHeader from "./TheHeader";
-import TheFooter from "./TheFooter";
 import MainGames from "../pages/GameList/MainGames";
 import styles from "../container/styles/GameList.module.css";
 import stupid from "../images/stupid.gif";
@@ -15,7 +13,7 @@ function TheMain() {
   const getGames = async () => {
     try {
       // 경기 정보 받아오기
-      const response = await axios.post(
+      const response = await axios.get(
         "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
       );
       setGames(response.data);
