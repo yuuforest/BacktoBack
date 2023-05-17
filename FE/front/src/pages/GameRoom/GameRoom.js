@@ -22,7 +22,7 @@ const GameRoom = () => {
     try {
       // 게임 정보 받아오기
       const response = await axios
-        .get("http://localhost:8000/api/business/games/" + gameSeq + "/info")
+        .get("http://k8a708.p.ssafy.io/api/business/games/" + gameSeq + "/info")
         .then((response) => {
           console.log(response.data);
           setHomeSeq(response.data.homeSeq);
@@ -78,10 +78,10 @@ const GameRoom = () => {
         <div className="chat">
           <Chat
             {...{
-              homeSeq: 1,
-              awaySeq: 2,
-              memberTeamSeq: 1,
-              topicNumber: 1,
+              gameSeq: gameSeq,
+              homeSeq: homeSeq,
+              awaySeq: awaySeq,
+              topicNumber: topicNumber,
             }}
           />
         </div>
