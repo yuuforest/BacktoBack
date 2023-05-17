@@ -83,8 +83,8 @@ spring:
 
       bindings:
         process-in-0:
-          destination: temp-topic           # 추후 ChatLog 쪽과 이름 통일해야 함
-          group:  temp   # 컨슈머 그룹        # 추후 ChatLog 쪽과 이름 통일해야 함
+          destination: game.result           # 추후 ChatLog 쪽과 이름 통일해야 함
+          group:  game   # 컨슈머 그룹        # 추후 ChatLog 쪽과 이름 통일해야 함
           content-type: application/json
 
       kafka:
