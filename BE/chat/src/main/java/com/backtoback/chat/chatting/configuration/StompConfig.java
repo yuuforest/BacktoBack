@@ -17,7 +17,7 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/ws-chat")
-			.setAllowedOrigins("http://localhost:3000")
+			.setAllowedOrigins("http://k8a708.p.ssafy.io")
 			.withSockJS();
 	}
 
