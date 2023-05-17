@@ -49,7 +49,7 @@ spring:
         getGameCondition-in-0:
           destination: game-event
           group: game-group1 # 컨슈머 그룹
-          content-type: application/json;type=com.backtoback.chat_log.chat_log.dto.request.GameConditionDto
+          content-type: application/json;type=com.backtoback.chat_log.chat_log.dto.common.GameConditionDto
           consumer:
             #            batch-mode: true #한꺼번에 가져오기
             partitioned: false
@@ -79,7 +79,7 @@ spring:
     #          json:
     #            value:
     #              default:
-    #                type: com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto
+    #                type: com.backtoback.chat_log.chat_log.dto.common.ChatMessageDto
     #            trusted:
     #              packages: com.backtoback.chat_log.chat_log.dto
 

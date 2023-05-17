@@ -1,4 +1,4 @@
-package com.backtoback.chat_log.chat_log.dto.request;
+package com.backtoback.chat_log.chat_log.dto.common;
 
 import java.io.Serializable;
 

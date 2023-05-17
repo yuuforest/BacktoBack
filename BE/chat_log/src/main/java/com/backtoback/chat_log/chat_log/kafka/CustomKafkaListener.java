@@ -14,7 +14,7 @@ import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.stereotype.Component;
 
-import com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto;
+import com.backtoback.chat_log.chat_log.dto.common.ChatMessageDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

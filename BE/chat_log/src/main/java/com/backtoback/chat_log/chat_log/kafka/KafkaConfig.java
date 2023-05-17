@@ -15,7 +15,7 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto;
+import com.backtoback.chat_log.chat_log.dto.common.ChatMessageDto;
 
 @Configuration
 public class KafkaConfig {
@@ -65,7 +65,7 @@ public class KafkaConfig {
 		props.put("spring.deserializer.key.delegate.class", "org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("spring.deserializer.value.delegate.class",
 			"org.springframework.kafka.support.serializer.JsonDeserializer");
-		props.put("spring.json.value.default.type", "com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto");
+		props.put("spring.json.value.default.type", "com.backtoback.chat_log.chat_log.dto.common.ChatMessageDto");
 		props.put("spring.json.trusted.packages", "com.backtoback.chat_log.chat_log.dto");
 
 		// props.put(ProducerConfig.BOOTSTRAP_SERV ERS_CONFIG, embeddedKafka.getBrokersAsString());

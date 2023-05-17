@@ -11,7 +11,7 @@ import org.springframework.kafka.listener.BatchConsumerAwareMessageListener;
 import org.springframework.stereotype.Component;
 
 import com.backtoback.chat_log.chat_log.dto.common.HighLightPosition;
-import com.backtoback.chat_log.chat_log.dto.request.ChatMessageDto;
+import com.backtoback.chat_log.chat_log.dto.common.ChatMessageDto;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

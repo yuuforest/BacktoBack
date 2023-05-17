@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.listener.MessageListenerContainer;
 
 import com.backtoback.chat_log.chat_log.domain.GameActiveType;
-import com.backtoback.chat_log.chat_log.dto.request.GameConditionDto;
+import com.backtoback.chat_log.chat_log.dto.common.GameConditionDto;
 import com.backtoback.chat_log.chat_log.dto.response.GameTeamSeqResponseDto;
-import com.backtoback.chat_log.chat_log.dto.response.HighLightMessageDto;
+import com.backtoback.chat_log.chat_log.dto.common.HighLightMessageDto;
 import com.backtoback.chat_log.chat_log.service.BusinessService;
 
 import lombok.RequiredArgsConstructor;
