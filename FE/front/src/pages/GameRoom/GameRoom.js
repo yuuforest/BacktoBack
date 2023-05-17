@@ -21,7 +21,7 @@ const GameRoom = () => {
   const getGameInfo = async () => {
     try {
       // 게임 정보 받아오기
-      const response = await axios
+      await axios
         .get("http://k8a708.p.ssafy.io/api/business/games/" + gameSeq + "/info")
         .then((response) => {
           console.log(response.data);
