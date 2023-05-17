@@ -29,8 +29,6 @@ const Profile = ({ quantity }) => {
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
 
-  console.log("data: ", data);
-
   useEffect(() => {
     setInfos([
       {
