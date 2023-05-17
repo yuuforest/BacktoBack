@@ -2,10 +2,17 @@ import axios from "axios";
 import MyPhotoCardList from "./components/MyPhotoCardList";
 import Profile from "./components/Profile";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectMemberId } from "store/reducers/loginReducer";
 
 const MyPage = () => {
+  //redux 데이터
+  // const memberSeq = useSelector(selectMemberId);
+
   const [cards, setCards] = useState([]);
   const [quantity, setQuantity] = useState(0);
+
+  const [memberSeq, setMemberSeq] = useState(1);
 
   const getMyPhotoCards = async () => {
     try {
