@@ -46,7 +46,7 @@ function Cheer(props) {
   useEffect(() => {
     console.log("always rendered......");
     getCheerInfo();
-  }, []);
+  }, [props.gameSeq]);
 
   // event =======================================================================================================================
 
