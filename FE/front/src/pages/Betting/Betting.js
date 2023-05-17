@@ -71,6 +71,7 @@ function Betting(props) {
           setAwayChecked(true);
           setBettingTeamName(props.awayName);
         }
+        console.log(response.data);
       });
       console.log("베팅 기록 있음");
     } catch (error) {
