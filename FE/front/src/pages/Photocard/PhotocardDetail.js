@@ -101,7 +101,7 @@ function PhotocardDetail() {
   const updatePhotocard = async (photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" + photocardSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" + photocardSeq
       );
     } catch (error) {
       console.log("HL 조회 불가");
@@ -112,7 +112,7 @@ function PhotocardDetail() {
   const updateMyPhotocard = async (memberSeq, photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" +
+        "http://k8a708.p.ssafy.io/api/point/photocard/updateMyPhotocard/" +
           memberSeq +
           "/" +
           photocardSeq
