@@ -47,8 +47,11 @@ public class PointLogServiceImpl implements PointLogService {
     public List<PointLogRes> getPointLogs(Long memberSeq) {
         List<PointLog> logs = pointLogRepository.findByMemberMemberSeqOrderByPointLogSeqDesc(memberSeq);
         List<PointLogRes> pointLogs = new ArrayList<>();
+        Long number = 0L;
         for (PointLog log : logs) {
+            number++;
             PointLogRes res = PointLogRes.builder()
+                    .num(number)
                     .point(log.getPoint())
                     .detail(log.getPointDetail().toString())
                     .time(log.getTime())
