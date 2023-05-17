@@ -8,6 +8,7 @@ import PhotocardHome from "./pages/Photocard/PhotocardHome";
 import PhotocardDetail from "./pages/Photocard/PhotocardDetail";
 import User from "components/User";
 import Video from "components/Video";
+import { RecoilRoot } from "recoil";
 
 function App() {
   // <div className="App">
@@ -28,12 +29,14 @@ function App() {
   // </div>
   return (
     <>
-      <Routes>
-        <Route path="*" element={<TheLayout />} />
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/join" element={<SignUp />} />
-      </Routes>
+      <RecoilRoot>
+        <Routes>
+          <Route path="*" element={<TheLayout />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/join" element={<SignUp />} />
+        </Routes>
+      </RecoilRoot>
     </>
   );
 }
