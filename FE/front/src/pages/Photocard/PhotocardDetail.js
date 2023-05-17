@@ -17,7 +17,7 @@ function PhotocardDetail() {
   // User - memberSeq 임시 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!
   const [memberSeq, setMemberSeq] = useState(1);
 
-  const [gameSeq, setGameSeq] = useState();
+  const [gameSeq, setGameSeq] = useState(null);
   const [place, setPlace] = useState();
   const [time, setTime] = useState();
 
@@ -129,7 +129,9 @@ function PhotocardDetail() {
       const photocardSeq = Math.floor(Math.random() * HL.length);
       updatePhotocard(photocardSeq);
       updateMyPhotocard(memberSeq, photocardSeq);
-      getHL(gameSeq);
+      if (gameSeq !== null) {
+        getHL(gameSeq);
+      }
     } catch (error) {
       console.log("HL 구매 불가");
     }
@@ -159,7 +161,9 @@ function PhotocardDetail() {
   useEffect(() => {
     getGame();
     getPoint();
-    getHL();
+    if (gameSeq !== null) {
+      getHL(gameSeq);
+    }
   }, []);
 
   return (
