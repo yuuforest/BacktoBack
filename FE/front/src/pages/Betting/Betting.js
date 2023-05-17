@@ -54,51 +54,88 @@ function Betting(props) {
   const getBettingInfo = async () => {
     try {
       // 베팅 정보 받아오기
-      const response = await axios.get(
-        connectionUrl + '/member/' + member + '/info',
-        {
-          params: {
-            gameID: props.gameSeq,
-          },
-        }
-      );
-      setIsBetting(true);
-      // setBettingTeamSeq(response.data.teamSeq);
-      setBettingPoint(response.data.bettingPoint);
-      if (response.data.teamSeq === props.homeSeq) {
-        setHomeChecked(true);
-        setBettingTeamName(props.homeName);
-      } else if (response.data.teamSeq === props.awaySeq) {
-        setAwayChecked(true);
-        setBettingTeamName(props.awayName);
-      }
+      // const response = await axios.get(
+      //   connectionUrl + '/member/' + member + '/info',
+      //   {
+      //     params: {
+      //       gameID: props.gameSeq,
+      //     },
+      //   }
+      // );
+      // setIsBetting(true);
+      // // setBettingTeamSeq(response.data.teamSeq);
+      // setBettingPoint(response.data.bettingPoint);
+      // if (response.data.teamSeq === props.homeSeq) {
+      //   setHomeChecked(true);
+      //   setBettingTeamName(props.homeName);
+      // } else if (response.data.teamSeq === props.awaySeq) {
+      //   setAwayChecked(true);
+      //   setBettingTeamName(props.awayName);
+      // }
       // console.log("베팅 기록 있음");
+      await axios.get(connectionUrl + '/member/' + member + '/info',
+      {
+        params: {
+          gameID: props.gameSeq,
+        },
+      })
+      .then((response) => {
+        setIsBetting(true);
+        // setBettingTeamSeq(response.data.teamSeq);
+        setBettingPoint(response.data.bettingPoint);
+        if (response.data.teamSeq === props.homeSeq) {
+          setHomeChecked(true);
+          setBettingTeamName(props.homeName);
+        } else if (response.data.teamSeq === props.awaySeq) {
+          setAwayChecked(true);
+          setBettingTeamName(props.awayName);
+        }
+      });
+      console.log("베팅 기록 있음");
     } catch (error) {
-      // console.log("베팅 기록 없음 : Do Nothing..............");
+      console.log("베팅 기록 없음 : Do Nothing..............");
     }
   };
 
   const doBetting = async (teamSeq) => {
     try {
       // 베팅 진행
+      // await axios.post(connectionUrl + '/member/' + member, {
+      //   gameSeq: props.gameSeq,
+      //   teamSeq: teamSeq,
+      //   bettingPoint: bettingPoint,
+      // });
+      // setIsBetting(true);
+      // // setBettingTeamSeq(teamSeq);
+      // setBettingPoint(bettingPoint);
+      // if (teamSeq === props.homeSeq) {
+      //   setHomeChecked(true);
+      //   setBettingTeamName(props.homeName);
+      // } else if (teamSeq === props.awaySeq) {
+      //   setAwayChecked(true);
+      //   setBettingTeamName(props.awayName);
+      // }
+      // console.log("베팅 완료");
       await axios.post(connectionUrl + '/member/' + member, {
         gameSeq: props.gameSeq,
         teamSeq: teamSeq,
         bettingPoint: bettingPoint,
+      })
+      .then(() => {
+        setIsBetting(true);
+        // setBettingTeamSeq(teamSeq);
+        setBettingPoint(bettingPoint);
+        if (teamSeq === props.homeSeq) {
+          setHomeChecked(true);
+          setBettingTeamName(props.homeName);
+        } else if (teamSeq === props.awaySeq) {
+          setAwayChecked(true);
+          setBettingTeamName(props.awayName);
+        }
       });
-      setIsBetting(true);
-      // setBettingTeamSeq(teamSeq);
-      setBettingPoint(bettingPoint);
-      if (teamSeq === props.homeSeq) {
-        setHomeChecked(true);
-        setBettingTeamName(props.homeName);
-      } else if (teamSeq === props.awaySeq) {
-        setAwayChecked(true);
-        setBettingTeamName(props.awayName);
-      }
-      // console.log("베팅 완료");
+      console.log("베팅 완료");
     } catch (error) {
-      // console.log("베팅 실패");
+      console.log("베팅 실패");
       setMessage(error.response.data.message);
       handleErrorMessage();
     }
@@ -106,16 +143,28 @@ function Betting(props) {
 
   const getBettingResult = async () => {
     try {
-      const response = await axios.get(connectionUrl + '/member/' + member, {
+      // const response = await axios.get(connectionUrl + '/member/' + member, {
+      //   params: {
+      //     gameID: props.gameSeq,
+      //   },
+      // });
+      // setHomePercent(response.data.homePercent);
+      // setAwayPercent(response.data.awayPercent);
+      // setDividends(response.data.divdends);
+      // console.log("베팅 결과 전달 완료");
+      await axios.get(connectionUrl + '/member/' + member, {
         params: {
           gameID: props.gameSeq,
         },
+      })
+      .then((response) => {
+        setHomePercent(response.data.homePercent);
+        setAwayPercent(response.data.awayPercent);
+        setDividends(response.data.divdends);
       });
-      setHomePercent(response.data.homePercent);
-      setAwayPercent(response.data.awayPercent);
-      setDividends(response.data.divdends);
-      // console.log("베팅 결과 전달 완료");
+      console.log("베팅 결과 전달 완료");
     } catch (error) {
+      console.log("베팅 결과 전달 실패");
       setMessage(error.response.data.message);
       handleErrorMessage();
     }
@@ -127,7 +176,7 @@ function Betting(props) {
     // 항상 실행
     // console.log('always rendered......');
     getBettingInfo();
-  }, []);
+  }, [props.gameSeq]);
 
   useEffect(() => {
     setHomeLabel(props.homeName);
