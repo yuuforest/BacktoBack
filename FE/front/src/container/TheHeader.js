@@ -11,7 +11,7 @@ const TheHeader = () => {
       <Link to="/">
         <img alt="logo" src={Logo} style={{ height: "3rem" }}></img>
       </Link>
-      <Link className="menu-item" to="/live">
+      <Link className="menu-item-active" to="/live">
         라이브시청
       </Link>
       <Link className="menu-item" to="/photocard/home">

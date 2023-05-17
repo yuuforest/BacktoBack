@@ -31,40 +31,36 @@ function TheMain() {
   console.log(games);
   return (
     <div>
-      <TheHeader />
-      <div>
-        {loading ? (
-          <div>
-            <div className={styles.loader}>
-              <img src={stupid} alt="loading" />
+      {loading ? (
+        <div>
+          <div className={styles.loader}>
+            <img src={stupid} alt="loading" />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className={styles.title__container}>
+            <h1>오늘의 경기</h1>
+            <h3>오늘의 승리팀을 맞춰 포인트를 획득하세요</h3>
+          </div>
+          <div className={styles.game__container}>
+            <div>
+              {games.map((game) => (
+                <MainGames
+                  key={game.gameSeq}
+                  gameid={game.gameSeq}
+                  place={game.gamePlace}
+                  time={game.gameDateTime}
+                  homeTeamSeq={game.homeTeam.teamSeq}
+                  homeTeamName={game.homeTeam.teamName}
+                  awayTeamSeq={game.awayTeam.teamSeq}
+                  awayTeamName={game.awayTeam.teamName}
+                />
+              ))}
             </div>
           </div>
-        ) : (
-          <>
-            <div className={styles.title__container}>
-              <h1>오늘의 경기</h1>
-              <h3>오늘의 승리팀을 맞춰 포인트를 획득하세요</h3>
-            </div>
-            <div className={styles.game__container}>
-              <div>
-                {games.map((game) => (
-                  <MainGames
-                    key={game.gameSeq}
-                    gameid={game.gameSeq}
-                    place={game.gamePlace}
-                    time={game.gameDateTime}
-                    homeTeamSeq={game.homeTeam.teamSeq}
-                    homeTeamName={game.homeTeam.teamName}
-                    awayTeamSeq={game.awayTeam.teamSeq}
-                    awayTeamName={game.awayTeam.teamName}
-                  />
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-      <TheFooter />
+        </>
+      )}
     </div>
   );
 }
