@@ -14,8 +14,7 @@ function Cheer(props) {
 
   // ============================================================================================================================
 
-  // const cheerURL = "http://localhost:8089/api/cheer";
-  const connectionUrl = 'http://localhost:8000/api/cheer';
+  const connectionUrl = 'http://k8a708.p.ssafy.io/api/cheer';
 
   const $websocket = useRef(null);
 
@@ -64,7 +63,7 @@ function Cheer(props) {
   return (
     <div>
       <SockJsClient
-        url="http://localhost:8000/api/cheer/ws"
+        url="http://k8a708.p.ssafy.io/api/cheer/ws"
         topics={["/topics/game/" + props.gameSeq]}
         onMessage={(response) => {
           // console.log ("I can WebSocket! Yeah!");
