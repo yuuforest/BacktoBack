@@ -6,6 +6,7 @@ import SignUp from "./pages/Signup";
 import GameList from "./container/GameList";
 import PhotocardHome from "./pages/Photocard/PhotocardHome";
 import PhotocardDetail from "./pages/Photocard/PhotocardDetail";
+import GameRoom from "./pages/GameRoom";
 
 function App() {
   return (
@@ -29,12 +30,8 @@ function App() {
     <Routes>
       <Route path="*" element={<TheLayout />} />
       <Route path="*" element={<Navigate to="/" />} />
-      <Route path="/" element={<GameList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/join" element={<SignUp />} />
-      <Route path="/live" element={<GameList />} />
-      <Route path="/photocard/home" element={<PhotocardHome />} />
-      <Route path="/photocard/detail/:gameid" element={<PhotocardDetail />} />
     </Routes>
   );
 }

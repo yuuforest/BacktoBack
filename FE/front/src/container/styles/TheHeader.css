@@ -13,6 +13,20 @@
   font-size: 17px;
 }
 
+.menu-item-active {
+  color: #2776ae;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.menu-item-deactive {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 17px;
+}
+
 .nav-btn {
   padding: 15px;
   color: inherit;

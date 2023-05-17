@@ -17,7 +17,7 @@ function MainGames(props) {
     ".svg";
 
   return (
-    <Link to={`/games/${props.gameid}`} className={styles.game}>
+    <Link to={`/live/${props.gameid}`} className={styles.game}>
       <div className={styles.container}>
         <div className={styles.team__title}>
           <div className={styles.background_lt}>
