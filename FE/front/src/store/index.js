@@ -1,14 +1,11 @@
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import penderMiddleware from "redux-pender";
-import reducers from "./reducers";
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import LoginReducer from "./reducers/loginReducer";
 
-const initialState = {};
+const rootReducer = combineReducers({
+  login: LoginReducer,
+});
 
-const store = createStore(
-  reducers,
-  initialState,
-  composeWithDevTools(applyMiddleware(penderMiddleware())),
-);
-
-export default store;
+export const store = configureStore({
+  reducer: rootReducer,
+});
