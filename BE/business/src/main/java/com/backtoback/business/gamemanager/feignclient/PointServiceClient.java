@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name = "point-service", url = "http://k8a708.p.ssafy.io:8084")
 public interface PointServiceClient {
 
-  @PostMapping("/api/betting/start")
+  @PostMapping("/api/point/betting/start")
   public ResponseEntity<?> readyToStartBetting();
 }
