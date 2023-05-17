@@ -101,7 +101,8 @@ function PhotocardDetail() {
   const updatePhotocard = async (photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" + photocardSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" +
+          photocardSeq
       );
     } catch (error) {
       console.log("HL 조회 불가");
@@ -112,7 +113,7 @@ function PhotocardDetail() {
   const updateMyPhotocard = async (memberSeq, photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getHL/" +
+        "http://k8a708.p.ssafy.io/api/point/photocard/updateMyPhotocard/" +
           memberSeq +
           "/" +
           photocardSeq
@@ -129,6 +130,7 @@ function PhotocardDetail() {
       const photocardSeq = Math.floor(Math.random() * HL.length);
       updatePhotocard(photocardSeq);
       updateMyPhotocard(memberSeq, photocardSeq);
+      getHL();
     } catch (error) {
       console.log("HL 구매 불가");
     }
@@ -166,9 +168,9 @@ function PhotocardDetail() {
     }
   }, [gameSeq]);
 
-  useEffect(() => {
-    getHL();
-  }, [HL]);
+  // useEffect(() => {
+  //   getHL();
+  // }, [HL]);
 
   return (
     <div>
