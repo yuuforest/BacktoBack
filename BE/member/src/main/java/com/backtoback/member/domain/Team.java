@@ -14,7 +14,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "teams")
->>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 public class Team implements Serializable {
 
     @Id
