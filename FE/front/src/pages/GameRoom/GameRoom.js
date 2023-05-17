@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const GameRoom = () => {
+
   const {gameid} =  useParams();
 
   const [gameSeq, setGameSeq] = useState(gameid);

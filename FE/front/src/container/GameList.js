@@ -3,8 +3,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import routes, { defaultRedirect } from "../routes";
 import axios from "axios";
 
-import TheHeader from "./TheHeader";
-import TheFooter from "./TheFooter";
 import MainGames from "../pages/GameList/MainGames";
 import styles from "../container/styles/GameList.module.css";
 import stupid from "../images/stupid.gif";

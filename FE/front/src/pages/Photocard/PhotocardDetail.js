@@ -14,6 +14,9 @@ import stupid from "../../images/stupid.gif";
 function PhotocardDetail() {
   const { gameid } = useParams();
 
+  // User - memberSeq 임시 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!
+  const [memberSeq, setMemberSeq] = useState(1);
+
   const [gameSeq, setGameSeq] = useState();
   const [place, setPlace] = useState();
   const [time, setTime] = useState();
@@ -37,7 +40,7 @@ function PhotocardDetail() {
   // 해당 경기 받기
   const getGame = async () => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
       );
       setGameSeq(response.data[gameid % 5].gameSeq);
@@ -58,8 +61,8 @@ function PhotocardDetail() {
   // 포인트 받기
   const getPoint = async () => {
     try {
-      const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint"
+      const response = await axios.get(
+        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + memberSeq
       );
       setPoint(response.data);
     } catch (error) {
@@ -71,7 +74,7 @@ function PhotocardDetail() {
   const updatePoint = async () => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint"
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
       );
       getPoint();
     } catch (error) {
