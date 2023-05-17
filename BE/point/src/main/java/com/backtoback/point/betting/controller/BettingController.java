@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "베팅 API", tags = "betting")
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin("*")
 @RequestMapping("/betting")
 public class BettingController {
 
