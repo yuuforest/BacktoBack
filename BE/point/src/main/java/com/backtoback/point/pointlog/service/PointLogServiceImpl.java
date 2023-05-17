@@ -3,12 +3,15 @@ package com.backtoback.point.pointlog.service;
 import com.backtoback.point.member.service.MemberService;
 import com.backtoback.point.pointlog.domain.PointDetailType;
 import com.backtoback.point.pointlog.domain.PointLog;
+import com.backtoback.point.pointlog.dto.PointLogRes;
 import com.backtoback.point.pointlog.repository.PointLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +41,20 @@ public class PointLogServiceImpl implements PointLogService {
                 .member(memberService.getMember(memberSeq))
                 .build();
         pointLogRepository.save(log);
+    }
+
+    @Override
+    public List<PointLogRes> getPointLogs(Long memberSeq) {
+        List<PointLog> logs = pointLogRepository.findByMemberMemberSeqOrderByPointLogSeqDesc(memberSeq);
+        List<PointLogRes> pointLogs = new ArrayList<>();
+        for (PointLog log : logs) {
+            PointLogRes res = PointLogRes.builder()
+                    .point(log.getPoint())
+                    .detail(log.getPointDetail().toString())
+                    .time(log.getTime())
+                    .build();
+            pointLogs.add(res);
+        }
+        return pointLogs;
     }
 }

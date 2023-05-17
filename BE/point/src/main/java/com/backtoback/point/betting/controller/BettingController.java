@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "베팅 API", tags = "betting")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("*")
-@RequestMapping("/")
+@RequestMapping("/betting")
 public class BettingController {
 
     private final BettingService bettingService;
 
-    @PostMapping("betting/start")
+    @PostMapping("/start")
     @ApiOperation(value = "베팅을 위한 환경 설정", notes = "베팅을 시작하기 위해, Redis에 환경 설정")
     public ResponseEntity<?> readyToStartBetting(){
         bettingService.readyToStartBetting();
         return ResponseEntity.status(200).body("Success");  // 변경 가능성 있음
     } // OK
 
-    @GetMapping("member/{memberSeq}/betting/info")
+    @GetMapping("/member/{memberSeq}/info")
     @ApiOperation(value = "유저의 베팅 정보 조회", notes = "해당 경기에 대한 유저의 베팅 정보 조회")
     public ResponseEntity<BettingInfoRes> getBettingInfo(@PathVariable("memberSeq") Long memberSeq,
                                                          @RequestParam("gameID") Long gameSeq) {
@@ -34,7 +33,7 @@ public class BettingController {
         return ResponseEntity.status(200).body(bettingInfo);
     } // OK
 
-    @PostMapping("member/{memberSeq}/betting")
+    @PostMapping("/member/{memberSeq}")
     @ApiOperation(value = "베팅", notes = "회원 각자 베팅")
     public ResponseEntity<?> startBetting(@PathVariable("memberSeq") Long memberSeq,
                                           @RequestBody BettingInfoReq bettingInfoReq) {
@@ -42,7 +41,7 @@ public class BettingController {
         return ResponseEntity.status(200).body("Success");
     } // OK
 
-    @GetMapping("member/{memberSeq}/betting")
+    @GetMapping("/member/{memberSeq}")
     @ApiOperation(value = "베팅 예상 결과 전달", notes = "각 팀의 베팅률과 회원의 예상 배당금 전달")
     public ResponseEntity<BettingResultRes> anticipateBettingResult (@PathVariable("memberSeq") Long memberSeq,
                                                                      @RequestParam("gameID") Long gameSeq){
