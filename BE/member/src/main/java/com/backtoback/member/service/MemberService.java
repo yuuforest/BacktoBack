@@ -17,9 +17,6 @@ public interface MemberService {
     // void update(MemberUpdateReq request);
 
     void isExistId(String memberId);
-<<<<<<< HEAD
     void isExistNickname(String nickname);
-=======
->>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
 
 }
