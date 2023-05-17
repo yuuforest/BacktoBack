@@ -138,19 +138,15 @@ public class VideoServiceImpl implements VideoService {
 
   //경기 시작 kafka produce
   public void startGame(Long gameSeq) {
-<<<<<<< HEAD
+
     long mediaStartTime = startVideo(gameSeq);
     log.info("mediaStartTime 입니다"+mediaStartTime);
     streamBridge.send("producer-out-0", new MessageDto(gameSeq, GameActiveType.IN_GAME,mediaStartTime));
-=======
-    startVideo(gameSeq);
-    streamBridge.send("producer-out-0", new MessageDto(gameSeq, GameActiveType.IN_GAME));
->>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
   }
 
   //경기 끝 kafka produce
   public void endGame(Long gameSeq) {
-<<<<<<< HEAD
+
     long mediaEndTime = System.currentTimeMillis();
     log.info("mediaEndTime 입니다"+mediaEndTime);
     streamBridge.send("producer-out-0", new MessageDto(gameSeq, GameActiveType.AFTER_GAME,mediaEndTime));
@@ -158,23 +154,14 @@ public class VideoServiceImpl implements VideoService {
 
   //비디오 시작
   public long startVideo(Long gameSeq) {
-=======
-    streamBridge.send("producer-out-0", new MessageDto(gameSeq, GameActiveType.AFTER_GAME));
-  }
 
-  //비디오 시작
-  public void startVideo(Long gameSeq) {
->>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
     VideoRoom videoRoom = videoRoomRepository.findById(gameSeq.toString()).orElseThrow();
     PlayerEndpoint playerEndpoint = kurento.getById(videoRoom.getPlayerEndpointId(), PlayerEndpoint.class);
     RecorderEndpoint recorderEndpoint = kurento.getById(videoRoom.getRecordEndpointId(),RecorderEndpoint.class);
     recorderEndpoint.record();
     playerEndpoint.play();
-<<<<<<< HEAD
-    return System.currentTimeMillis();
-=======
 
->>>>>>> d3e242c9852359e36e08f18e14d7f969c3bdb292
+    return System.currentTimeMillis();
   }
 
   // 자정 지난 시점에 경기 생성
