@@ -28,10 +28,10 @@ spring:
   datasource:
     # develop 브랜치 용
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/backtoback?useUnicode=true&characterEncoding=utf-8
-    username: root
+    url: jdbc:mariadb://k8a708.p.ssafy.io:3306/backtoback?useUnicode=true&characterEncoding=utf-8
+    username: btob
     #    password: ssafy
-    password: root
+    password: backback
 
     hikari:
       pool-name: jpa-hikari-pool
