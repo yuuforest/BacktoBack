@@ -24,7 +24,7 @@ const MyPhotoCardList = ({ cards }) => {
   const gridItem = (product) => {
     return (
       <div className="col-12 sm:col-6 lg:col-4 xl:col-4 p-1">
-        <div className="p-4 border-1 shadow border-round surface-border surface-card flex flex-column align-items-center">
+        <div className="p-4 border-1 shadow border-round flex flex-column align-items-center">
           <img src={product.photocardUrl} alt={product.photocardSeq} />
         </div>
       </div>
