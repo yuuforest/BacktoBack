@@ -60,7 +60,7 @@ const Profile = ({ cards }) => {
               style={{ width: "100%", height: "auto" }}
             ></img>
           </div>
-          <div className="col-6">
+          <div className="col-6 justify-content-center">
             <div className="nickname">{curNickname}</div>
             {/* <i className="pi pi-cog" style={{ fontSize: "2rem" }}></i> */}
             <Button
