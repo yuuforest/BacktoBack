@@ -15,7 +15,6 @@ const TheHeader = () => {
   const pointValue = useRecoilValue(point);
 
   const onClickLogout = () => {
-    setIsLoggedIn(false);
     const accessToken = localStorage.getItem("accessToken");
 
     axios
@@ -35,7 +34,7 @@ const TheHeader = () => {
         console.log(err);
       });
 
-      
+    setIsLoggedIn(false);
     removeCookie("refreshToken");
     localStorage.removeItem("accessToken");
     document.location.href = "/";
