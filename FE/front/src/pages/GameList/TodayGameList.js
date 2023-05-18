@@ -27,7 +27,7 @@ const TodayGameList = (props) => {
               className="game-place"
               style={{ fontSize: "25px", fontWeight: "bold" }}
             >
-              {props.place}
+              🚩{props.place}
             </div>
           </div>
           <div className="flex justify-content-center col-5 away-info">
