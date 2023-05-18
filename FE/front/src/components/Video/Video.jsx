@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRef, useState } from "react";
-import { useParams,useHistory  } from "react-router-dom";
+import { useParams,useNavigate  } from "react-router-dom";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import kurentoUtils from "kurento-utils";
@@ -16,7 +16,7 @@ const MatchDetail = ({ gameSeq }) => {
   const [readyToStart, setReadyToStart] = useState(false);
   const [readyToVideo, setReadyToVideo] = useState(false);
   const [userId, setUserId] = useState(uuidv4());
-  const history = useHistory();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const MatchDetail = ({ gameSeq }) => {
             break;
           case "playEnd":
             alert("경기 종료")
-            history.push('/live');
+            navigate('/live');
             break;
           case "videoInfo":
             startStream();
