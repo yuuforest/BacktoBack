@@ -180,8 +180,7 @@ function PhotocardDetail() {
         </div>
       ) : (
         <>
-          {/* <div className={styles.container}> */}
-          <div>
+          <div className={styles.container}>
             <div className={styles.team__title}>
               <div><img src={homeImgPath} alt= "Home Image" className={styles.team__img}/></div>
               <div><h1>{homeTN}</h1></div>
@@ -198,7 +197,7 @@ function PhotocardDetail() {
           </div>
           <div>
             <PhotoCardCarousel {...{photocards: HL}}/>
-            <Button label="100p에 구매하기" className="point-check"/>
+            <Button label="100p에 구매하기" className="point-check" />
           </div>
         </>
       )}
