@@ -7,7 +7,7 @@ import axios from "axios";
 import { Button } from "primereact/button";
 import { Avatar } from "primereact/avatar";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import PhotoCardCarousel from "./PhotoCardCarousel";
+import PhotocardCarousel from "./PhotocardCarousel";
 
 // Image 받아오기
 import stupid from "../../images/stupid.gif";
@@ -217,7 +217,7 @@ function PhotocardDetail() {
           <div>
           {/* <div className={styles.carousel__container}> */}
             <div>
-              <PhotoCardCarousel {...{photocards: HL}}/>
+              <PhotocardCarousel {...{photocards: HL}}/>
               <Button
                   label="100p에 구매하기"
                   icon="pi pi-check"
