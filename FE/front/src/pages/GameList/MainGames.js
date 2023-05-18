@@ -33,7 +33,6 @@ function MainGames(props) {
           <div className="game-time">
             {props.time[0]} 년 {props.time[1]} 월 {props.time[2]} 일
           </div>
-
           <div className="game-place">{props.place}</div>
         </div>
 
