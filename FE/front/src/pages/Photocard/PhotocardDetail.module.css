@@ -109,3 +109,10 @@
     width: 100%;
   }
 } */
+
+.custom-vs {
+  background-color: #fdfdfd;
+  color: #606060;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.5),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.17), 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
+}

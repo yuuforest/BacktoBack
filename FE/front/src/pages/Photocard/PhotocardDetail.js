@@ -184,8 +184,9 @@ function PhotocardDetail() {
             <div className={styles.team__title}>
               <div>
                 <img
-                  src={homeImgPath}
-                  alt="Team Image"
+                  // src={homeImgPath}
+                  src = {process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".png"}
+                  alt= {process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".png"}
                   className={styles.team__img}
                 />
               </div>
@@ -194,8 +195,15 @@ function PhotocardDetail() {
               </div>
             </div>
             <div className={styles.game__detail}>
-              <h1>오늘의 경기</h1>
-              <h3>VS</h3>
+              {/* <h1>오늘의 경기</h1> */}
+              {/* <h3>VS</h3> */}
+              <Avatar
+                className="custom-vs"
+                label="VS"
+                size="large"
+                shape="circle"
+                raised
+              />
               <h3>
                 {time[0]} 년 {time[1]} 월 {time[2]} 일
               </h3>
