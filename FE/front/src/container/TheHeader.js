@@ -19,7 +19,7 @@ const TheHeader = () => {
     const accessToken = localStorage.getItem("accessToken");
 
     axios
-      .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
+      .post("http://k8a708.p.ssafy.io/api/auth/logout", JSON.stringify(data), {
       // .post("http://localhost:8000/api/auth/logout", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
