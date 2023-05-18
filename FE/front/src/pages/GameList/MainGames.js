@@ -30,11 +30,11 @@ function MainGames(props) {
           <div className={styles.vs__container}>
             <h2>VS</h2>
           </div>
-          <h3>
+          <div className="game-time">
             {props.time[0]} 년 {props.time[1]} 월 {props.time[2]} 일
-          </h3>
+          </div>
 
-          <h3>{props.place}</h3>
+          <div className="game-place">{props.place}</div>
         </div>
 
         <div className={styles.team__title}>
