@@ -138,10 +138,10 @@ function PhotocardDetail() {
   //   }
   // };
 
-  const homeImgPath =
-    process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".svg";
-  const awayImgPath =
-    process.env.PUBLIC_URL + "/images/team/" + awaySeq + ".svg";
+  const homeImgPath = "../../images/team/" + homeSeq + ".png";
+    // process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".svg";
+  const awayImgPath = "../../images/team/" + awaySeq + ".svg";
+    // process.env.PUBLIC_URL + "/images/team/" + awaySeq + ".svg";
 
   // HL 포토카드 받기
   // const getPhotocards = async () => {
@@ -239,8 +239,14 @@ function PhotocardDetail() {
                 ))}
               </Carousel> */}
               <PhotoCardCarousel />
+              <Button
+                  label="100p에 구매하기"
+                  icon="pi pi-check"
+                  // onClick={buyPhotocard()}
+                  className="point-check"
+                />
             </div>
-            <div>
+            {/* <div>
               <div>
                 <h3>{point}</h3>
               </div>
@@ -255,7 +261,7 @@ function PhotocardDetail() {
               <div>
                 <h1>{HL}</h1>
               </div>
-            </div>
+            </div> */}
           </div>
         </>
       )}
