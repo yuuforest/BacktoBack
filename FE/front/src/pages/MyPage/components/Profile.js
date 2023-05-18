@@ -14,7 +14,7 @@ import {
   teamSeq,
 } from "components/State/UserState";
 
-const Profile = ({ quantity }) => {
+const Profile = ({ cards }) => {
   //redux 데이터
   const memberTeamSeq = useRecoilValue(teamSeq);
   const curNickname = useRecoilValue(nickname);
@@ -30,7 +30,10 @@ const Profile = ({ quantity }) => {
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
 
+  const [quantity, setQuantity] = useState(0);
+
   useEffect(() => {
+    setQuantity(cards.length);
     setInfos([
       {
         "my-team": curTeamName,
@@ -40,7 +43,7 @@ const Profile = ({ quantity }) => {
       },
     ]);
     setImageUrl(process.env.PUBLIC_URL + "/team/" + memberTeamSeq + ".svg");
-  }, [quantity]);
+  }, [cards]);
 
   return (
     <div className="grid profile-container mt-3 mb-3">

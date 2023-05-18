@@ -10,8 +10,6 @@ const MyPage = () => {
   // const curMemberSeq = useRecoilValue(memberSeq);
 
   const [cards, setCards] = useState([]);
-  const [quantity, setQuantity] = useState(0);
-
   const [curMemberSeq, setMemberSeq] = useState(1);
 
   const getMyPhotoCards = async () => {
@@ -23,11 +21,7 @@ const MyPage = () => {
         )
         .then((response) => {
           console.log(response.data);
-          setCards(response.data, () => {
-            setQuantity(cards.length);
-            console.log("quantity: ", quantity);
-            console.log("cards", cards);
-          });
+          setCards(response.data);
         });
       console.log("Get Photo Card Success......");
     } catch (error) {
@@ -42,7 +36,7 @@ const MyPage = () => {
 
   return (
     <div>
-      <Profile cardCount={quantity} />
+      <Profile cards={cards} />
       <hr />
       <MyPhotoCardList cards={cards} />
     </div>
