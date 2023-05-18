@@ -1,53 +1,18 @@
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "./PhotoCardCarousel.module.css";
+
 import React, { useState, useEffect } from 'react';
-import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
-import { Tag } from 'primereact/tag';
-import { ProductService } from './ProductService';
+import { Card } from "primereact/card";
 
 export default function PhotoCardCarousel(props) {
 
     const [products, setProducts] = useState([]);
-    // const responsiveOptions = [
-    //     {
-    //         breakpoint: '1199px',
-    //         numVisible: 1,
-    //         numScroll: 1
-    //     },
-    //     {
-    //         breakpoint: '991px',
-    //         numVisible: 2,
-    //         numScroll: 1
-    //     },
-    //     {
-    //         breakpoint: '767px',
-    //         numVisible: 1,
-    //         numScroll: 1
-    //     }
-    // ];
-
-    // const getSeverity = (product) => {
-    //     switch (product.inventoryStatus) {
-    //         case 'INSTOCK':
-    //             return 'success';
-
-    //         case 'LOWSTOCK':
-    //             return 'warning';
-
-    //         case 'OUTOFSTOCK':
-    //             return 'danger';
-
-    //         default:
-    //             return null;
-    //     }
-    // };
 
     useEffect(() => {
         console.log(props.photocards);
         setProducts(props.photocards)
-        // ProductService.getProductsSmall().then((data) => {
-        //     console.log(data);
-        //     setProducts(data.slice(0, 9));
-        // });
     }, []);
 
     const productTemplate = (product) => {
@@ -55,10 +20,11 @@ export default function PhotoCardCarousel(props) {
             <div className="border-1 surface-border border-round m-2 text-center py-5 px-3">
                 <div className="mb-3">
                     {/* <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.name} className="w-6 shadow-2" /> */}
-                    <h2>{product.photocardUrl}</h2>
+                    {/* <h2>{product.photocardUrl}</h2> */}
+                    <img src={product.photocardUrl} alt="하이라이트 gif"/>
                 </div>
                 <div>
-                    <h2>{product.photocardQuantity}</h2>
+                    <Card className="photocard-quantity" header={product.photocardQuantity} />
                 </div>
             </div>
         );
@@ -66,7 +32,6 @@ export default function PhotoCardCarousel(props) {
 
     return (
         <div className="card">
-            {/* <Carousel value={products} numVisible={3} numScroll={3} responsiveOptions={responsiveOptions} itemTemplate={productTemplate} /> */}
             <Carousel value={products} numVisible={3} numScroll={3} itemTemplate={productTemplate} />
         </div>
     )

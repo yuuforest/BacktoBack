@@ -86,6 +86,11 @@ const SignUp = () => {
 
   const onClickExistId = () => {
     setModalOpen(true);
+
+    if(inputId === ""){
+      alert("아이디를 입력해주세요")
+    }
+    else{
     axios
       .get(`http://k8a708.p.ssafy.io/api/member/existId/${inputId}`)
       // .get(`http://localhost:8000/api/member/existId/${inputId}`)
@@ -104,11 +109,13 @@ const SignUp = () => {
         </Modal>;
         console.log(err);
       });
+    }
   };
 
   const onClickExistNickname = () => {
     setModalOpen(true);
-    axios
+    if(inputNickname==="") {alert("닉네임을 입력해주세요");}
+    else{axios
       .get(`http://k8a708.p.ssafy.io/api/member/existNickname/${inputNickname}`)
       // .get(`http://localhost:8000/api/member/existNickname/${inputNickname}`)
       .then((res) => {
@@ -124,7 +131,8 @@ const SignUp = () => {
           모달모달
         </Modal>;
         console.log(err);
-      });
+      });}
+    
   };
   return (
     <div className="sign-in-container">
