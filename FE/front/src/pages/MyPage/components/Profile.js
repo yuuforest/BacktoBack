@@ -30,15 +30,12 @@ const Profile = ({ cards }) => {
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
 
-  const [quantity, setQuantity] = useState(0);
-
   useEffect(() => {
-    setQuantity(cards.length);
     setInfos([
       {
         "my-team": curTeamName,
         "my-point": curPoint,
-        "card-quantity": quantity,
+        "card-quantity": cards.length,
         "win-rate": winRate + "%",
       },
     ]);
