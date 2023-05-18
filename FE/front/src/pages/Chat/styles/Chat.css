@@ -23,8 +23,9 @@
 
 .scrollable-content {
   width: 500px;
+  height: 420px;
   min-height: 300px;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: scroll;
   /* 스크롤바를 안 보이게 */
   -ms-overflow-style: none;
@@ -45,6 +46,7 @@
 }
 
 .chat-nickname {
+  margin-top: 16px;
   font-size: 12px;
 }
 
