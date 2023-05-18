@@ -1,12 +1,12 @@
 .custom-home-btn {
-  width: 322px;
+  width: 323px;
   height: 120px;
   margin-right: 10px;
   /* margin-left: 25px; */
   text-align: center;
   font-size: 40px;
   font-weight: bold;
-  background-size: 322px 120px;
+  background-size: 323px 120px;
   /* background-size: auto; */
 
   top: 10px;
@@ -14,13 +14,13 @@
 }
 
 .custom-away-btn {
-  width: 322px;
+  width: 323px;
   height: 120px;
   /* margin-right: 20px; */
   text-align: center;
   font-size: 40px;
   font-weight: bold;
-  background-size: 322px 120px;
+  background-size: 323px 120px;
   /* background-size: auto; */
 
   top: 10px;
