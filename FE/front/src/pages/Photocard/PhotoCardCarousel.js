@@ -41,7 +41,10 @@ export default function BasicDemo() {
     };
 
     useEffect(() => {
-        ProductService.getProductsSmall().then((data) => setProducts(data.slice(0, 9)));
+        ProductService.getProductsSmall().then((data) => {
+            console.log(data);
+            setProducts(data.slice(0, 9));
+        });
     }, []);
 
     const productTemplate = (product) => {

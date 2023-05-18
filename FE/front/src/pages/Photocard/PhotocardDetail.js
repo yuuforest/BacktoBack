@@ -149,7 +149,7 @@ function PhotocardDetail() {
   //     await fetch(
   //       `https://yts.mx/api/v2/list_movies.json?minimum_rating=9.8&sort_by=year`
   //     )
-  //   ).json();
+  //   ).json();npm 
   //   setPhotocards(json.data.movies);
   //   setLoading(false);
   // };
@@ -187,7 +187,7 @@ function PhotocardDetail() {
               <div>
                 <img
                   // src={homeImgPath}
-                  src = {homeImgPath}
+                  src = '../../images/team/1.png'
                   alt= {awayImgPath}
                   className={styles.team__img}
                 />
@@ -199,13 +199,7 @@ function PhotocardDetail() {
             <div className={styles.game__detail}>
               {/* <h1>오늘의 경기</h1> */}
               {/* <h3>VS</h3> */}
-              <Avatar
-                className="custom-vs"
-                label="VS"
-                size="large"
-                shape="circle"
-                raised
-              />
+              <Avatar className="custom-vs" label="VS" size="large" shape="circle" raised/>
               <h3>
                 {time[0]} 년 {time[1]} 월 {time[2]} 일
               </h3>
@@ -225,7 +219,8 @@ function PhotocardDetail() {
               </div>
             </div>
           </div>
-          <div className={styles.carousel__container}>
+          <div>
+          {/* <div className={styles.carousel__container}> */}
             <div>
               {/* <Carousel
                 showArrows={true}
