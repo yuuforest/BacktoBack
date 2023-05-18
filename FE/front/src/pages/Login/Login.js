@@ -20,6 +20,7 @@ import {
   nickname,
   teamSeq,
 } from "components/State/UserState";
+
 const Login = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -70,44 +71,42 @@ const Login = () => {
         selectbettingWin(res.data.betting_win);
         selectPoint(res.data.point);
         selectTeamSeq(res.data.teamSeq);
+
+        setCookie("refreshToken", `${refreshToken}`);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        console.log(localStorage.getItem("accessToken"));
+        document.location.href = "/";
       });
   };
 
   const onClickLogin = () => {
-    if (inputId==="" || inputPw==="") {
+    if (inputId === "" || inputPw === "") {
       alert("아이디, 비밀번호를 입력해주세요");
-    }
-    else{
+    } else {
+      axios
+        .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
+          // .post("http://localhost:8000/api/auth/login", JSON.stringify(data), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          if (!res.data) {
+          } else {
+            selectIsLogin(true);
 
-
-    axios
-      .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
-      // .post("http://localhost:8000/api/auth/login", JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        if (!res.data) {
-        } else {
-          selectIsLogin(true);
-
-          const refreshToken = res.data.refreshToken;
-          const memberSeq = res.data.memberSeq;
-          {
-            selectMember(memberSeq);
+            const refreshToken = res.data.refreshToken;
+            const memberSeq = res.data.memberSeq;
+            {
+              selectMember(memberSeq);
+            }
           }
-          setCookie("refreshToken", `${refreshToken}`);
-          localStorage.setItem("accessToken", res.data.accessToken);
-          console.log(localStorage.getItem("accessToken"));
-          document.location.href = "/";
-        }
-      })
-      .catch((err) => {
-        alert("아이디 또는 비밀번호 오류");
+        })
+        .catch((err) => {
+          alert("아이디 또는 비밀번호 오류");
 
-        console.log(err);
-      });
+          console.log(err);
+        });
     }
   };
 
@@ -143,10 +142,7 @@ const Login = () => {
             </div>
             <div className="form-item flex align-items-center justify-content-center mt-3">
               <Link to="/join" className="w-5 mt-5 mr-2">
-              <Button
-                label="회원가입"
-                icon="pi pi-user"
-              />
+                <Button label="회원가입" icon="pi pi-user" />
               </Link>
               <Button
                 label="로그인"
