@@ -142,14 +142,13 @@ function PhotocardDetail() {
   const homeImgPath = process.env.PUBLIC_URL + "/team/" + homeSeq + ".svg";
   const awayImgPath = process.env.PUBLIC_URL + "/team/" + awaySeq + ".svg";
 
-
   // HL 포토카드 받기
   // const getPhotocards = async () => {
   //   const json = await (
   //     await fetch(
   //       `https://yts.mx/api/v2/list_movies.json?minimum_rating=9.8&sort_by=year`
   //     )
-  //   ).json();npm 
+  //   ).json();npm
   //   setPhotocards(json.data.movies);
   //   setLoading(false);
   // };
@@ -209,7 +208,7 @@ function PhotocardDetail() {
             </div>
             <div className="col-2 game-info">
               <div className="game-time">
-              {time[0]} 년 {time[1]} 월 {time[2]} 일
+                {time[0]} 년 {time[1]} 월 {time[2]} 일
               </div>
               <div className="game-place">{place}</div>
             </div>
@@ -222,8 +221,12 @@ function PhotocardDetail() {
               <div className="team-name">{awayTN}</div>
             </div>
           </div>
-          <div><PhotoCardCarousel {...{photocards: HL}}/></div>
-          <div><Button label="100p에 구매하기" className="point-check" /></div>
+          <div>
+            <PhotoCardCarousel {...{ photocards: HL }} />
+          </div>
+          <div className="buy-button">
+            <Button label="100p에 구매하기" className="point-check" />
+          </div>
         </>
       )}
     </div>
