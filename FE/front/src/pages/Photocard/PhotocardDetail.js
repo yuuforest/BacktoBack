@@ -137,9 +137,9 @@ function PhotocardDetail() {
   // };
 
   const homeImgPath =
-    process.env.PUBLIC_URL + "/component/images/team/" + homeSeq + ".svg";
+    process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".svg";
   const awayImgPath =
-    process.env.PUBLIC_URL + "/component/images/team/" + awaySeq + ".svg";
+    process.env.PUBLIC_URL + "/images/team/" + awaySeq + ".svg";
 
   // HL 포토카드 받기
   // const getPhotocards = async () => {
