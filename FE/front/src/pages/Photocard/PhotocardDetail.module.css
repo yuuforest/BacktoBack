@@ -7,7 +7,7 @@
   border-radius: 5px;
   color: #adaeb9;
   display: grid;
-  /* grid-template-columns: repeat(3, minmax(330px, 1fr)); */
+  grid-template-columns: repeat(3, minmax(330px, 1fr));
   grid-gap: 10px;
   text-decoration: none;
   color: inherit;
@@ -39,7 +39,7 @@
   text-decoration: none;
   color: inherit;
 
-  /* grid-template-rows: minmax(200px, 1fr) fr; */
+  grid-template-rows: minmax(200px, 1fr) fr;
 
   justify-items: center;
   align-items: center;
