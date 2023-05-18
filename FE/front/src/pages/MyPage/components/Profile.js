@@ -4,7 +4,6 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import "./styles/Profile.css";
 import "primeicons/primeicons.css";
-import Modal from "../../Photocard/PhotoCardDetailModal";
 import PointModal from "./PointModal";
 import { useRecoilValue } from "recoil";
 import {
