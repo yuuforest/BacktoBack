@@ -195,10 +195,8 @@ function PhotocardDetail() {
               <div><h1>{awayTN}</h1></div>
             </div>
           </div>
-          <div>
-            <PhotoCardCarousel {...{photocards: HL}}/>
-            <Button label="100p에 구매하기" className="point-check" />
-          </div>
+          <div><PhotoCardCarousel {...{photocards: HL}}/></div>
+          <div><Button label="100p에 구매하기" className="point-check" /></div>
         </>
       )}
     </div>
