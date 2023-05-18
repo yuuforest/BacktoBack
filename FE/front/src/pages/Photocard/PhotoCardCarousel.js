@@ -1,11 +1,12 @@
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
+import "./PhotocardCarousel.module.css";
 
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'primereact/carousel';
 import { Card } from "primereact/card";
 
-export default function PhotoCardCarousel(props) {
+export default function PhotocardCarousel(props) {
 
     const [products, setProducts] = useState([]);
 
