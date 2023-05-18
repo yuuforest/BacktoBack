@@ -195,11 +195,14 @@ function PhotocardDetail() {
             </div>
             <div className={styles.game__detail}>
               <Avatar className="custom-vs" label="VS" size="large" shape="circle" raised/>
-              <h3>
+              {/* <h3>
                 {time[0]} 년 {time[1]} 월 {time[2]} 일
               </h3>
+              <h3>{place}</h3> */}
 
-              <h3>{place}</h3>
+              <p className="photocard_game_info">{time[0]} 년 {time[1]} 월 {time[2]} 일</p>
+              <p className="photocard_game_info">{place}</p>
+
             </div>
             <div className={styles.team__title}>
               <div>
