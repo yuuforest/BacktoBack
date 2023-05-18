@@ -29,9 +29,9 @@ spring:
 
   integration:
     poller:
-      fixed-delay: 5000
+      fixed-delay: 2500
       maxMessagesPerPoll: 10000
-      initialDelay: 5000
+      initialDelay: 2500
 
   #    redis:
   #      host: localhost
@@ -85,7 +85,7 @@ spring:
 
     listener:
       type: batch
-      idle-between-polls: 5000
+      idle-between-polls: 2500
       ack-mode: batch
       poll-timeout: 1
       idleEventInterval: 0

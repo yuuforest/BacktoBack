@@ -48,7 +48,7 @@ public class CustomListener
 
 	@Override
 	public void onMessage(List<ConsumerRecord<String, ChatMessageDto>> data, Consumer<?, ?> consumer) {
-		long highLightStartTime = calcTimeline(9000);
+		long highLightStartTime = calcTimeline(8000);
 
 		int listSize = data.size();
 		log.info("list size(): {}", listSize);

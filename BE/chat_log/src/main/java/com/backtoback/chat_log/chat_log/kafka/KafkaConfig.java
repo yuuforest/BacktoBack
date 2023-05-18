@@ -33,7 +33,7 @@ public class KafkaConfig {
 		factory.setAutoStartup(false);
 		factory.setBatchListener(true);
 		factory.getContainerProperties().setPollTimeout(1);
-		factory.getContainerProperties().setIdleBetweenPolls(5000);
+		factory.getContainerProperties().setIdleBetweenPolls(2500);
 		factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.BATCH);
 
 		return factory;
