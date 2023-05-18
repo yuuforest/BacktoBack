@@ -70,7 +70,6 @@ const Login = () => {
         selectbettingWin(res.data.betting_win);
         selectPoint(res.data.point);
         selectTeamSeq(res.data.teamSeq);
-        selectIsLogin(true);
       });
   };
 
@@ -85,14 +84,16 @@ const Login = () => {
       .then((res) => {
         if (!res.data) {
         } else {
+          selectIsLogin(true);
+
           const refreshToken = res.data.refreshToken;
           const memberSeq = res.data.memberSeq;
           {
             selectMember(memberSeq);
           }
           setCookie("refreshToken", `${refreshToken}`);
-          console.log(res.data.accessToken);
           localStorage.setItem("accessToken", res.data.accessToken);
+          console.log(localStorage.getItem("accessToken"));
           document.location.href = "/";
         }
       })
