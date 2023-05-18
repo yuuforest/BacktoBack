@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Avatar } from "primereact/avatar";
 
 import styles from "./MainGames.module.css";
 
 function MainGames(props) {
   const homeImgPath =
-    process.env.PUBLIC_URL +
-    "/component/images/team/" +
-    props.homeTeamSeq +
-    ".svg";
+    process.env.PUBLIC_URL + "/team/" + props.homeTeamSeq + ".svg";
   const awayImgPath =
-    process.env.PUBLIC_URL +
-    "/component/images/team/" +
-    props.awayTeamSeq +
-    ".svg";
+    process.env.PUBLIC_URL + "/team/" + props.awayTeamSeq + ".svg";
 
   return (
     <Link to={`/live/${props.gameid}`} className={styles.game}>
@@ -33,14 +28,20 @@ function MainGames(props) {
         </div>
 
         <div className={styles.game__detail}>
-          <div className={styles.vs__container}>
+          {/* <div className={styles.vs__container}>
             <h2>VS</h2>
-          </div>
-          <h3>
+          </div> */}
+          <Avatar
+            className="custom-vs"
+            label="VS"
+            size="large"
+            shape="circle"
+            raised
+          />
+          <div className="game-time">
             {props.time[0]} 년 {props.time[1]} 월 {props.time[2]} 일
-          </h3>
-
-          <h3>{props.place}</h3>
+          </div>
+          <div className="game-place">{props.place}</div>
         </div>
 
         <div className={styles.team__title}>
