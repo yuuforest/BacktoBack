@@ -202,7 +202,7 @@ function PhotocardDetail() {
             </div>
           </div> */}
 
-          <div className="grid game-card mt-2">
+          <div className="grid game-card mt-4">
             <div className="flex justify-content-center col-5 home-info">
               <img
                 className="team-image"
@@ -229,8 +229,8 @@ function PhotocardDetail() {
           <div>
             <PhotoCardCarousel {...{ photocards: HL }} />
           </div>
-          <div className="buy-button">
-            <Button label="100p에 구매하기" className="point-check" />
+          <div className="buy-button mt-3 flex justify-content-center align-items-center">
+            <Button label="100p에 구매하기" className="point-check" style={{width:"240px", height:"50px", fontSize="18px"}}/>
           </div>
         </>
       )}
