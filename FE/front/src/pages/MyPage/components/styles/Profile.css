@@ -26,3 +26,20 @@
   justify-content: center;
   align-items: center;
 }
+
+.custom-button.p-button {
+  border-radius: 50%; /* 버튼을 원형으로 만들기 */
+  background-color: black; /* 배경 색을 검은색으로 변경 */
+  color: white; /* 아이콘 색을 흰색으로 변경 */
+  width: 50px; /* 원의 크기를 조절하기 위한 너비 설정 */
+  height: 50px; /* 원의 크기를 조절하기 위한 높이 설정 */
+  border-color: black;
+}
+
+.custom-button.p-button:active,
+.custom-button.p-button:focus,
+.custom-button.p-button:hover {
+  background-color: white !important; /* 버튼 클릭 시 배경색 유지 */
+  color: black !important; /* 버튼 클릭 시 아이콘 색 유지 */
+  border-color: black;
+}
