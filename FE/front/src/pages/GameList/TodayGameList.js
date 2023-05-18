@@ -9,7 +9,7 @@ const TodayGameList = (props) => {
 
   return (
     <div>
-      <Link to={`/live/${props.gameid}`}>
+      <Link to={`/live/${props.gameid}`} className="link-body">
         <div className="grid game-card">
           <div className="flex justify-content-center col-5 home-info">
             <img
