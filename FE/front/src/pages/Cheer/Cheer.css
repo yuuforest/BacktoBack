@@ -8,7 +8,7 @@
   font-size: 30px;
   font-weight: bold;
   /* background-size: 310px 130px; */
-  background-size: cover;
+  background-size: contain;
 
   top: 10px;
   left: 0;
@@ -23,7 +23,7 @@
   font-size: 30px;
   font-weight: bold;
   /* background-size: 310px 130px; */
-  background-size: cover;
+  background-size: contain;
 
   top: 10px;
   left: 10px;
