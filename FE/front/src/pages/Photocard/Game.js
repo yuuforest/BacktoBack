@@ -10,11 +10,15 @@ function Game(props) {
       <img src={gameImage} alt={props.gameid} className={styles.game__img} />
       <div>
         <div className={styles.game__title}>
-          <span style={{ fontSize: "30px", fontWeight: "bold" }}>
+          <span style={{ fontSize: "25px", fontWeight: "bold" }}>
             {props.homeTeamName}
           </span>
-          <span style={{ fontSize: "15px" }}>VS</span>
-          <span style={{ fontSize: "30px", fontWeight: "bold" }}>
+          <span
+            style={{ fontSize: "15px", marginLeft: "8px", marginRight: "8px" }}
+          >
+            VS
+          </span>
+          <span style={{ fontSize: "25px", fontWeight: "bold" }}>
             {props.awayTeamName}
           </span>
         </div>
