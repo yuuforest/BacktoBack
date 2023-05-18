@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useHistory  } from "react-router-dom";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import kurentoUtils from "kurento-utils";
@@ -16,6 +16,8 @@ const MatchDetail = ({ gameSeq }) => {
   const [readyToStart, setReadyToStart] = useState(false);
   const [readyToVideo, setReadyToVideo] = useState(false);
   const [userId, setUserId] = useState(uuidv4());
+  const history = useHistory();
+
 
   useEffect(() => {
     sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
@@ -55,10 +57,8 @@ const MatchDetail = ({ gameSeq }) => {
             onError("Error message from server: " + parsedMessage.message);
             break;
           case "playEnd":
-            <Redirect
-              to={{ pathname: "/", state: { from: props.location } }}
-            />;
-            console.log("playEnd");
+            alert("경기 종료")
+            history.push('/live');
             break;
           case "videoInfo":
             startStream();
