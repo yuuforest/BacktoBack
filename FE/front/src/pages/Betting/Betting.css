@@ -1,5 +1,5 @@
 .toggleLeft {
-  width: 325px;
+  width: 350px;
   height: 80px;
   margin-right: 20px;
   font-size: 30px;
@@ -10,7 +10,7 @@
 }
 
 .toggleRight {
-  width: 325px;
+  width: 350px;
   height: 80px;
   font-size: 30px;
   text-align: left;
@@ -25,7 +25,7 @@
 }
 
 .point-input {
-  width: 520px;
+  width: 580px;
   height: 40px;
   margin-right: 10px;
 }
@@ -36,7 +36,7 @@
 }
 
 .point-check {
-  width: 670px;
+  width: 720px;
   height: 30px;
   font-size: 15px;
 }
@@ -50,7 +50,7 @@
 }
 
 .betting-message {
-  width: 670px;
+  width: 720px;
   height: 30px;
   font-size: 15px;
   /* font-weight: bold; */
@@ -58,7 +58,7 @@
 }
 
 .betting-card {
-  width: 670px;
+  width: 720px;
   height: 30px;
   font-size: 15px;
   font-weight: bold;
