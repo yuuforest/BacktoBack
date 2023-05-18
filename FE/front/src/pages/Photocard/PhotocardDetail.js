@@ -213,7 +213,7 @@ function PhotocardDetail() {
             </div>
             <div className="col-2 game-info">
               <div className="game-time">
-              {time[0]} 년 {time[1]} 월 {time[2]} 일
+                {time[0]} 년 {time[1]} 월 {time[2]} 일
               </div>
               <div className="game-place">{place}</div>
             </div>
@@ -229,8 +229,8 @@ function PhotocardDetail() {
           <div>
             <PhotoCardCarousel {...{ photocards: HL }} />
           </div>
-          <div>
-            <Button onClick={buyPhotocard} label="100p에 구매하기" className="point-check" />
+          <div className="buy-button">
+            <Button label="100p에 구매하기" className="point-check" />
           </div>
         </>
       )}

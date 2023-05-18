@@ -99,8 +99,8 @@
 }
 
 .point-check {
-  width: 800px;
-  height: 30px;
+  width: 500px;
+  height: 40px;
   font-size: 15px;
   justify-content: center;
   align-items: center;
@@ -129,6 +129,7 @@
 .game-card {
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
   margin-bottom: 70px;
   border: 1px solid lightgray;
   border-radius: 20px;
@@ -174,4 +175,10 @@
 
 .away-info {
   position: relative;
+}
+
+.buy-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
