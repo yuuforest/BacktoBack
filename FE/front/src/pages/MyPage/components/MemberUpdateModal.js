@@ -35,14 +35,14 @@ const MemberUpdateModal = ({ showModal, closeModal }) => {
     <div>
       <Dialog visible={showModal} onHide={closeModal} modal>
         <div className="flex align-items-center justify-content-center">
-          <div className="surface-card p-4 shadow-2 border-round lg:w-4">
+          <div className="surface-card">
             <div className="form-content">
               <div className="form-item">
                 <InputText
                   id="id"
                   type="text"
-                  placeholder="아이디"
-                  className="w-8 mb-3"
+                  placeholder=""
+                  className="w-7 mb-3"
                   value={inputId}
                   // onChange={handleInputId}
                 />
@@ -60,7 +60,7 @@ const MemberUpdateModal = ({ showModal, closeModal }) => {
                   // onChange={handleSelectedTeam}
                   options={teams}
                   optionLabel="name"
-                  placeholder="My팀을 선택해주세요."
+                  placeholder=""
                   className="w-12 mb-3"
                 />
               </div>
