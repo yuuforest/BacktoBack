@@ -2,3 +2,21 @@ spring:
   config:
     activate:
       on-profile: prod
+
+
+  kafka:
+    bootstrap-servers: k8a708.p.ssafy.io:9092
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: k8a708.p.ssafy.io:9092
+
+  redis:
+    host: k8a708.p.ssafy.io
+    port: 6379
+
+
+
+web.driver.path:

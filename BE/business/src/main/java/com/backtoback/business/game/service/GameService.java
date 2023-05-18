@@ -2,6 +2,7 @@ package com.backtoback.business.game.service;
 
 import java.util.List;
 
+import com.backtoback.business.game.dto.GameInfoWithTeamCode;
 import com.backtoback.business.game.dto.GameResponseDto;
 import com.backtoback.business.game.dto.GameRoomResponseDto;
 import com.backtoback.business.game.dto.GameTeamSeqAndTopicNumberResponseDto;
@@ -13,7 +14,7 @@ import com.backtoback.business.game.dto.betting.GameSimpleInfoRes;
 public interface GameService {
 
 	List<GameResponseDto> getAllTodayGame();
- 
+
 	GameTeamSeqResponseDto getGameTeamSeq(Long gameSeq);
 
 	GameTeamSeqAndTopicNumberResponseDto getGameTeamSeqAndTopicNumber(Long gameSeq);
@@ -24,9 +25,14 @@ public interface GameService {
 
 	GameRoomResponseDto getGameInformation(Long gameSeq);
 
-    List<GameSimpleInfoRes> getGameSimpleInfo();
+	List<GameSimpleInfoRes> getGameSimpleInfo();
 
-    GameInfoRes getGameInfo(Long gameSeq);
+	GameInfoRes getGameInfo(Long gameSeq);
 
-    GameResultRes getGameResult(Long gameSeq);
+	GameInfoWithTeamCode getGameInfoWithTeamCode(Long gameSeq);
+
+	GameResultRes getGameResult(Long gameSeq);
+
+	void afterGameResult(Long gameSeq);
+
 }
