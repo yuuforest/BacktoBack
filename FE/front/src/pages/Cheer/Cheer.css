@@ -3,8 +3,7 @@
   height: 130px;
   margin-right: 10px;
   /* margin-left: 25px; */
-  text-align: left;
-  padding-top: 70px;
+  text-align: center;
   font-size: 30px;
   font-weight: bold;
   background-size: 310px 100px;
@@ -18,8 +17,7 @@
   width: 310px;
   height: 130px;
   margin-right: 20px;
-  text-align: right;
-  padding-top: 70px;
+  text-align: center;
   font-size: 30px;
   font-weight: bold;
   background-size: 310px 100px;
