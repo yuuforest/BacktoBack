@@ -4,6 +4,8 @@ import Photocard from "./Photocard";
 import styles from "./PhotocardDetail.module.css";
 import axios from "axios";
 
+import { useRecoilValue } from "recoil";
+import { memberSeq } from "../../components/State/UserState";
 import { Button } from "primereact/button";
 import { Avatar } from "primereact/avatar";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -16,7 +18,7 @@ function PhotocardDetail() {
   const { gameid } = useParams();
 
   // User - memberSeq 임시 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!
-  const [memberSeq, setMemberSeq] = useState(1);
+  const memberSeq = useRecoilValue(memberSeq);
 
   const [gameSeq, setGameSeq] = useState(null);
   const [place, setPlace] = useState();
