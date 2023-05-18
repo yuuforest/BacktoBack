@@ -146,16 +146,9 @@ function Betting(props) {
   }, [props.awayName, props.homeName]);
 
   useEffect(() => {
-    setBettingTeamName(props.homeName);
-  }, [home_checked]);
-
-  useEffect(() => {
-    setBettingTeamName(props.awayName);
-  }, [away_checked]);
-
-  useEffect(() => {
     setBettingMessage(
-      bettingTeamName + "팀에 " + bettingPoint + "P 베팅하셨습니다."
+      // bettingTeamName + "팀에 " + bettingPoint + "P 베팅하셨습니다."
+      bettingPoint + "P 베팅하셨습니다."
     );
   }, [bettingTeamName, bettingPoint]);
 
