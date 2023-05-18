@@ -48,6 +48,7 @@
 .chat-nickname {
   margin-top: 16px;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .chat-message {
@@ -58,6 +59,12 @@
 .not-my-team {
   display: flex;
   justify-content: center;
+}
+
+.myteam-image {
+  margin-right: 5px;
+  width: 30px;
+  height: 30px;
 }
 
 /*ChatInput*/
