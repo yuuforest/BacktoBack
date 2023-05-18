@@ -32,6 +32,7 @@ function Cheer(props) {
       await axios
         .get(connectionUrl + "/game/" + props.gameSeq)
         .then((response) => {
+          console.log(response.data.homeCount + ',' + response.data.awayCount)
           setHomeCount(response.data.homeCount);
           setAwayCount(response.data.awayCount);
         });

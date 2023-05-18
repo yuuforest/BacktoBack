@@ -1,5 +1,5 @@
 .toggleLeft {
-  width: 310px;
+  width: 320px;
   height: 80px;
   margin-right: 20px;
   font-size: 30px;
@@ -10,7 +10,7 @@
 }
 
 .toggleRight {
-  width: 310px;
+  width: 320px;
   height: 80px;
   font-size: 30px;
   text-align: left;
@@ -25,7 +25,7 @@
 }
 
 .point-input {
-  width: 490px;
+  width: 500px;
   height: 40px;
   margin-right: 10px;
 }
