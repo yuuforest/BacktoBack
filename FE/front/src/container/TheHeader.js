@@ -17,29 +17,28 @@ const TheHeader = () => {
   const onClickLogout = () => {
     setIsLoggedIn(false);
     const accessToken = localStorage.getItem("accessToken");
-    console.log(`Bearer ${accessToken}`);
+
+    axios
+      .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
+      // .post("http://localhost:8000/api/auth/logout", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        if (!res.data) {
+        } else {
+
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      
     removeCookie("refreshToken");
     localStorage.removeItem("accessToken");
-    // axios
-    //   // .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
-    //   .post("http://localhost:8000/api/auth/logout", {
-    //     headers: {
-    //       "content-type": "application/json",
-    //       Authorization: `Bearer ${accessToken}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     if (!res.data) {
-    //     } else {
-    //       removeCookie("refreshToken");
-    //       localStorage.removeItem("accessToken");
-
-    //       document.location.href = "/";
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    document.location.href = "/";
   };
 
   console.log(isLoggedIn);
@@ -62,6 +61,9 @@ const TheHeader = () => {
               <div>{nicknameValue}</div>
               <div className="point">{pointValue}p</div>
             </div>
+            <Link className="nav-btn" to="/mypage">
+              마이페이지
+            </Link>
             <Link className="nav-btn" to="/logout" onClick={onClickLogout}>
               로그아웃
             </Link>
