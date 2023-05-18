@@ -70,8 +70,8 @@
   font-weight: 300;
   border-radius: 5px;
   color: #adaeb9;
-  display: grid;
-  grid-gap: 10px;
+  /* display: grid;
+  grid-gap: 10px; */
   text-decoration: none;
   color: inherit;
 
@@ -101,6 +101,8 @@
   /* width: 800px; */
   height: 30px;
   font-size: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
 /* @media screen and (max-width: 1090px) {
