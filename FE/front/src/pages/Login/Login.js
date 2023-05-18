@@ -135,12 +135,12 @@ const Login = () => {
               />
             </div>
             <div className="form-item flex align-items-center justify-content-center mt-3">
+              <Link to="/join" className="w-5 mt-5 mr-2">
               <Button
                 label="회원가입"
                 icon="pi pi-user"
-                className="w-5 mt-5 mr-2"
-                to="/join"
               />
+              </Link>
               <Button
                 label="로그인"
                 icon="pi pi-check"
