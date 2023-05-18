@@ -99,11 +99,9 @@
 }
 
 .point-check {
-  width: 500px;
-  height: 40px;
-  font-size: 15px;
-  justify-content: center;
-  align-items: center;
+  width: 240x;
+  height: 50px;
+  font-size: 18px;
 }
 
 /* @media screen and (max-width: 1090px) {
@@ -181,4 +179,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 }

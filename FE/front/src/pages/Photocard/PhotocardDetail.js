@@ -197,7 +197,7 @@ function PhotocardDetail() {
             </div>
           </div> */}
 
-          <div className="grid game-card">
+          <div className="grid game-card mt-2">
             <div className="flex justify-content-center col-5 home-info">
               <img
                 className="team-image"
