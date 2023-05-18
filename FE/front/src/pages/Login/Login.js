@@ -18,6 +18,7 @@ import {
   bettingWin,
   isLogin,
   nickname,
+  teamSeq,
 } from "components/State/UserState";
 const Login = () => {
   const [inputId, setInputId] = useState("");
@@ -31,6 +32,7 @@ const Login = () => {
   const selectbettingWin = useSetRecoilState(bettingWin);
   const selectIsLogin = useSetRecoilState(isLogin);
   const selectNickname = useSetRecoilState(nickname);
+  const selectTeamSeq = useSetRecoilState(teamSeq);
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -66,6 +68,7 @@ const Login = () => {
         selectbettingTotal(res.data.betting_total);
         selectbettingWin(res.data.betting_win);
         selectPoint(res.data.point);
+        selectTeamSeq(res.data.teamSeq);
         selectIsLogin(true);
       });
   };
