@@ -12,7 +12,7 @@ export default function PhotoCardCarousel(props) {
 
     useEffect(() => {
         console.log(props.photocards);
-        setProducts(props.photocards)
+        setProducts(props.photocards);
     }, []);
 
     const productTemplate = (product) => {
@@ -21,7 +21,7 @@ export default function PhotoCardCarousel(props) {
                 <div className="mb-3">
                     {/* <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.name} className="w-6 shadow-2" /> */}
                     {/* <h2>{product.photocardUrl}</h2> */}
-                    <img src={product.photocardUrl} alt="하이라이트 gif"/>
+                    <img className="photocard-gif" src={product.photocardUrl} alt="하이라이트 gif"/>
                 </div>
                 <div>
                     <Card className="photocard-quantity" header={product.photocardQuantity} />

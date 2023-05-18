@@ -40,7 +40,7 @@ function PhotocardHome() {
         <>
           <div className={styles.title__container}>
             <h1>오늘의 포토카드</h1>
-            <h3>오늘 딱 하루만 구매할 수 있는 포토카드 놓치지 마세요!</h3>
+            <h3>오늘 딱 하루만 구매할 수 있는 포토카드, 놓치지 마세요!</h3>
           </div>
           <div className={styles.game__container}>
             <div className={styles.games}>
