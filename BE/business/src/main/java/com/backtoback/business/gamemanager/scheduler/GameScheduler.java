@@ -1,6 +1,7 @@
 package com.backtoback.business.gamemanager.scheduler;
 
 
+import com.backtoback.business.gamemanager.feignclient.CheerServiceClient;
 import com.backtoback.business.gamemanager.feignclient.PointServiceClient;
 import com.backtoback.business.gamemanager.feignclient.VideoServiceClient;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class GameScheduler {
 
     private final PointServiceClient pointServiceClient;
 
+	private final CheerServiceClient cheerServiceClient;
+
 	private final StreamBridge streamBridge;
 
 //	@Scheduled(cron = "0 0 0 * * *")
@@ -39,6 +42,7 @@ public class GameScheduler {
 		log.info("dateChange!!!!!!");
 		videoServiceClient.makeRoom();
 		pointServiceClient.readyToStartBetting();
+		cheerServiceClient.readyToStartCheer();
 	}
 
 }
