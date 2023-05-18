@@ -47,6 +47,7 @@ const Login = () => {
   const selectMember = (memberSeq) => {
     axios
       .get(`http://k8a708.p.ssafy.io/api/member/member/${memberSeq}`)
+      // .get(`http://localhost:8000/api/member/member/${memberSeq}`)
       .then((res) => {
         console.log(res.data);
         // dispatch(
@@ -76,7 +77,7 @@ const Login = () => {
   const onClickLogin = () => {
     axios
       .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
-        // .post("http://localhost:8000/api/auth/login", JSON.stringify(data), {
+      // .post("http://localhost:8000/api/auth/login", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
@@ -93,7 +94,6 @@ const Login = () => {
           console.log(res.data.accessToken);
           localStorage.setItem("accessToken", res.data.accessToken);
           document.location.href = "/";
-
         }
       })
       .catch((err) => {
