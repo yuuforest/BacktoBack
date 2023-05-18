@@ -51,6 +51,12 @@ export const teamName = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const teamSeq = atom({
+  key: "teamSeq",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 // memberSeq: res.data.memberSeq,
 //             memberId: res.data.memberId,
 //             nickname: res.data.nickname,

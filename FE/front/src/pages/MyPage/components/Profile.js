@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./styles/Profile.css";
 import Modal from "./Modal";
 import PointModal from "./PointModal";
+import { useRecoilValue } from "recoil";
 import {
-  selectBettingTotal,
-  selectBettingWin,
-  selectNickName,
-  selectPoint,
-  selectTeamName,
-  selectTeamSeq,
-} from "store/reducers/loginReducer";
+  bettingTotal,
+  bettingWin,
+  nickname,
+  point,
+  teamName,
+  teamSeq,
+} from "components/State/UserState";
 
 const Profile = ({ quantity }) => {
-  const memberTeamSeq = useSelector(selectTeamSeq);
-  const nickname = useSelector(selectNickName);
-  const teamName = useSelector(selectTeamName);
-  const point = useSelector(selectPoint);
-  const bettingWin = parseFloat(useSelector(selectBettingWin));
-  const bettingTotal = parseFloat(useSelector(selectBettingTotal));
+  //redux 데이터
+  const memberTeamSeq = useRecoilValue(teamSeq);
+  const curNickname = useRecoilValue(nickname);
+  const curTeamName = useRecoilValue(teamName);
+  const curPoint = useRecoilValue(point);
+  const curBettingWin = parseFloat(useRecoilValue(bettingWin));
+  const curBettingTotal = parseFloat(useRecoilValue(bettingTotal));
 
   const winRate =
-    !isNaN(bettingWin) && !isNaN(bettingTotal) && bettingWin !== 0
-      ? (bettingTotal / bettingWin) * 100
+    !isNaN(curBettingWin) && !isNaN(curBettingTotal) && curBettingWin !== 0
+      ? (curBettingTotal / curBettingWin) * 100
       : 0;
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
@@ -32,8 +33,8 @@ const Profile = ({ quantity }) => {
   useEffect(() => {
     setInfos([
       {
-        "my-team": teamName,
-        "my-point": point,
+        "my-team": curTeamName,
+        "my-point": curPoint,
         "card-quantity": quantity,
         "win-rate": winRate + "%",
       },
@@ -52,7 +53,7 @@ const Profile = ({ quantity }) => {
           ></img>
         </div>
         <div className="col-6">
-          <div className="nickname">{nickname}</div>
+          <div className="nickname">{curNickname}</div>
           <i className="pi pi-cog" style={{ fontSize: "2rem" }}></i>
         </div>
       </div>
