@@ -130,7 +130,7 @@ function PhotocardDetail() {
       const photocardSeq = Math.floor(Math.random() * HL.length);
       updatePhotocard(photocardSeq);
       updateMyPhotocard(memberSeq, photocardSeq);
-      getHL();
+      // getHL();
     } catch (error) {
       console.log("HL 구매 불가");
     }
@@ -237,7 +237,7 @@ function PhotocardDetail() {
                 <Button
                   label="100p에 구매하기"
                   icon="pi pi-check"
-                  onClick={buyPhotocard(gameSeq)}
+                  onClick={buyPhotocard()}
                   className="point-check"
                 />
               </div>
