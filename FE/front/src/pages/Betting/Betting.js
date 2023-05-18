@@ -2,6 +2,8 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "./Betting.css";
 
+import { useRecoilValue } from "recoil";
+import { memberSeq } from "../../components/State/UserState";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -19,8 +21,8 @@ function Betting(props) {
   /* axios url */
   const connectionUrl = 'http://k8a708.p.ssafy.io/api/point/betting';
 
-  /*임시 */
-  const [member, setMember] = useState(2);
+  /* 멤버 정보 */
+  const memSeq = useRecoilValue(memberSeq);
 
   /* ToggleButton */
   const [home_checked, setHomeChecked] = useState(false);
@@ -54,26 +56,7 @@ function Betting(props) {
   const getBettingInfo = async () => {
     try {
       // 베팅 정보 받아오기
-      // const response = await axios.get(
-      //   connectionUrl + '/member/' + member + '/info',
-      //   {
-      //     params: {
-      //       gameID: props.gameSeq,
-      //     },
-      //   }
-      // );
-      // setIsBetting(true);
-      // // setBettingTeamSeq(response.data.teamSeq);
-      // setBettingPoint(response.data.bettingPoint);
-      // if (response.data.teamSeq === props.homeSeq) {
-      //   setHomeChecked(true);
-      //   setBettingTeamName(props.homeName);
-      // } else if (response.data.teamSeq === props.awaySeq) {
-      //   setAwayChecked(true);
-      //   setBettingTeamName(props.awayName);
-      // }
-      // console.log("베팅 기록 있음");
-      await axios.get(connectionUrl + '/member/' + member + '/info',
+      await axios.get(connectionUrl + '/member/' + memSeq + '/info',
       {
         params: {
           gameID: props.gameSeq,
@@ -84,15 +67,19 @@ function Betting(props) {
         // setBettingTeamSeq(response.data.teamSeq);
         setBettingPoint(response.data.bettingPoint);
         if (response.data.teamSeq === props.homeSeq) {
+          // console.log("HOME과 같습니다!!!!!!!!!!!!!!!!!!!")
           setHomeChecked(true);
           setBettingTeamName(props.homeName);
-        } else if (response.data.teamSeq === props.awaySeq) {
+        } else {
+          // console.log("AWAY과 같습니다!!!!!!!!!!!!!!!!!!!")
           setAwayChecked(true);
           setBettingTeamName(props.awayName);
         }
+        console.log(response.data);
       });
       console.log("베팅 기록 있음");
     } catch (error) {
+      setIsBetting(false);
       console.log("베팅 기록 없음 : Do Nothing..............");
     }
   };
@@ -100,23 +87,7 @@ function Betting(props) {
   const doBetting = async (teamSeq) => {
     try {
       // 베팅 진행
-      // await axios.post(connectionUrl + '/member/' + member, {
-      //   gameSeq: props.gameSeq,
-      //   teamSeq: teamSeq,
-      //   bettingPoint: bettingPoint,
-      // });
-      // setIsBetting(true);
-      // // setBettingTeamSeq(teamSeq);
-      // setBettingPoint(bettingPoint);
-      // if (teamSeq === props.homeSeq) {
-      //   setHomeChecked(true);
-      //   setBettingTeamName(props.homeName);
-      // } else if (teamSeq === props.awaySeq) {
-      //   setAwayChecked(true);
-      //   setBettingTeamName(props.awayName);
-      // }
-      // console.log("베팅 완료");
-      await axios.post(connectionUrl + '/member/' + member, {
+      await axios.post(connectionUrl + '/member/' + memSeq, {
         gameSeq: props.gameSeq,
         teamSeq: teamSeq,
         bettingPoint: bettingPoint,
@@ -143,16 +114,7 @@ function Betting(props) {
 
   const getBettingResult = async () => {
     try {
-      // const response = await axios.get(connectionUrl + '/member/' + member, {
-      //   params: {
-      //     gameID: props.gameSeq,
-      //   },
-      // });
-      // setHomePercent(response.data.homePercent);
-      // setAwayPercent(response.data.awayPercent);
-      // setDividends(response.data.divdends);
-      // console.log("베팅 결과 전달 완료");
-      await axios.get(connectionUrl + '/member/' + member, {
+      await axios.get(connectionUrl + '/member/' + memSeq, {
         params: {
           gameID: props.gameSeq,
         },
@@ -182,6 +144,14 @@ function Betting(props) {
     setHomeLabel(props.homeName);
     setAwayLabel(props.awayName);
   }, [props.awayName, props.homeName]);
+
+  useEffect(() => {
+    setBettingTeamName(props.homeName);
+  }, [home_checked]);
+
+  useEffect(() => {
+    setBettingTeamName(props.awayName);
+  }, [away_checked]);
 
   useEffect(() => {
     setBettingMessage(

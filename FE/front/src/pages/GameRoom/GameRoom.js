@@ -19,6 +19,8 @@ const GameRoom = () => {
   const [gameState, setGameState] = useState(null);
   const [topicNumber, setTopicNumber] = useState(0);
 
+
+
   const getGameInfo = async () => {
     try {
       // 게임 정보 받아오기
@@ -30,7 +32,7 @@ const GameRoom = () => {
           setAwaySeq(response.data.awaySeq);
           setHomeName(response.data.homeName);
           setAwayName(response.data.awayName);
-          setGameState(response.data.gameActiveType);
+          setGameState(response.data.isActive);
           setTopicNumber(response.data.topicNumber);
         });
       console.log("GameRoom Info Success..............");
@@ -59,9 +61,9 @@ const GameRoom = () => {
             {...{ gameSeq: gameSeq, homeSeq: homeSeq, awaySeq: awaySeq }}
           />
         </div>
-        <div>
+        {/* <div>
           <h2>{gameState}</h2>
-        </div>
+        </div> */}
         <div className="betting">
           <Betting
             {...{

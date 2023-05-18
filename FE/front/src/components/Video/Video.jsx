@@ -155,13 +155,9 @@ const MatchDetail = ({gameSeq}) => {
 
 
   return (<>
-    <div>{gameSeq}</div>
-     <div>
-      <video  poster={ require('images/Video/beforelive.png') } ref={videoRef} autoPlay/>
-    </div>
-     <button onClick={start}>비디오 시작</button>
-    <button onClick={startStream}>비디오 스트림 시작</button>
-    <button onClick={enterRoom}>방 입장</button>
+    <video style={{
+      width: "100%", height:"520px"
+    }} poster={require('images/Video/beforelive.png')} ref={videoRef} autoPlay />
   </>)
 }
 

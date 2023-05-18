@@ -17,12 +17,6 @@ function Chat(props) {
   const [sendTopic, setSendTopic] = useState("");
   const [receiveTopic, setReceiveTopic] = useState("");
 
-  //props 데이터
-  // const [gameSeq, setGameSeq] = useState(null);
-  // const [homeSeq, setHomeSeq] = useState(null);
-  // const [awaySeq, setAwaySeq] = useState(null);
-  // const [topicNumber, setTopicNumber] = useState(null);
-
   const [teamChatShow, setTeamChatShow] = useState(false);
   const clientRef = useRef(null);
   const wsConnectionUrl = "http://k8a708.p.ssafy.io/api/chat/ws-chat";
@@ -35,13 +29,11 @@ function Chat(props) {
   const nickname = useSelector(selectNickName);
   const memberTeamSeq = useSelector(selectTeamSeq);
 
-  //홈 팀 시퀀스 넘버와 원정팀 시퀀스 넘버를 가져온다.
-  // useEffect(() => {
-  //   setGameSeq(props.gameSeq);
-  //   setHomeSeq(props.homeSeq);
-  //   setAwaySeq(props.awaySeq);
-  //   setTopicNumber(props.topicNumber);
-  // }, []);
+  console.log("################ REDUX DATA ###############");
+  console.log("memberSeq: ", memberSeq);
+  console.log("nickname: ", nickname);
+  console.log("memberTeamSeq: ", memberTeamSeq);
+  console.log("############################################");
 
   //myteam에 따른 teamChat on/off
   useEffect(() => {
@@ -88,11 +80,6 @@ function Chat(props) {
       clientRef.current.sendMessage(sendTopic, JSON.stringify(msg));
     }
   };
-
-  console.log("gameSeq: " + props.gameSeq);
-  console.log("homeSeq: " + props.homeSeq);
-  console.log("awaySeq: " + props.awaySeq);
-  console.log("topicNumber: " + props.topicNumber);
 
   return (
     <div>

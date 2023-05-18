@@ -1,29 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./styles/Profile.css";
 import Modal from "./Modal";
 import PointModal from "./PointModal";
+import {
+  selectBettingTotal,
+  selectBettingWin,
+  selectNickName,
+  selectPoint,
+  selectTeamName,
+  selectTeamSeq,
+} from "store/reducers/loginReducer";
 
-const Profile = () => {
-  const [memberTeamSeq, setMemberTeamSeq] = useState(1);
-  const [nickname, setNickname] = useState("야구조아");
+const Profile = ({ quantity }) => {
+  const memberTeamSeq = useSelector(selectTeamSeq);
+  const nickname = useSelector(selectNickName);
+  const teamName = useSelector(selectTeamName);
+  const point = useSelector(selectPoint);
+  const bettingWin = parseFloat(useSelector(selectBettingWin));
+  const bettingTotal = parseFloat(useSelector(selectBettingTotal));
+
+  const winRate =
+    !isNaN(bettingWin) && !isNaN(bettingTotal) && bettingWin !== 0
+      ? (bettingTotal / bettingWin) * 100
+      : 0;
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
 
-  var data = {
-    "my-team": "SSG",
-    "my-point": 200,
-    "card-quantity": 9,
-    "win-rate": "73.2%",
-  };
-
   useEffect(() => {
-    setInfos([data]);
+    setInfos([
+      {
+        "my-team": teamName,
+        "my-point": point,
+        "card-quantity": quantity,
+        "win-rate": winRate + "%",
+      },
+    ]);
     setImageUrl(process.env.PUBLIC_URL + "/team/" + memberTeamSeq + ".svg");
-  }, []);
-
-  console.log("imageUrl: " + imageUrl);
+  }, [quantity]);
 
   return (
     <div className="grid profile-container mt-3 mb-3">
@@ -52,7 +68,6 @@ const Profile = () => {
       {/* Modal Test */}
       <Modal />
       <PointModal />
-
     </div>
   );
 };

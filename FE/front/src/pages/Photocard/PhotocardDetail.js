@@ -172,10 +172,13 @@ function PhotocardDetail() {
     }
   }, [gameSeq]);
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   getHL();
   // }, [HL]);
 
+=======
+>>>>>>> ffc2c00a7f7d199d0a3d6630ada5df625980a4fb
   return (
     <div>
       {loading ? (

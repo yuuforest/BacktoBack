@@ -8,10 +8,29 @@ import { setCookie } from "./cookies.js";
 import { setUser } from "store/reducers/loginReducer";
 import { useDispatch } from "react-redux";
 import { atom } from "recoil";
+import { useSetRecoilState } from "recoil";
+import {
+  teamName,
+  memberId,
+  memberSeq,
+  point,
+  bettingTotal,
+  bettingWin,
+  isLogin,
+  nickname,
+} from "components/State/UserState";
 const Login = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const dispatch = useDispatch();
+  const selectTeamName = useSetRecoilState(teamName);
+  const selectMemberId = useSetRecoilState(memberId);
+  const selectMemberSeq = useSetRecoilState(memberSeq);
+  const selectPoint = useSetRecoilState(point);
+  const selectbettingTotal = useSetRecoilState(bettingTotal);
+  const selectbettingWin = useSetRecoilState(bettingWin);
+  const selectIsLogin = useSetRecoilState(isLogin);
+  const selectNickname = useSetRecoilState(nickname);
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -28,24 +47,33 @@ const Login = () => {
       .get(`http://k8a708.p.ssafy.io/api/member/member/${memberSeq}`)
       .then((res) => {
         console.log(res.data);
-        dispatch(
-          setUser({
-            memberSeq: res.data.memberSeq,
-            memberId: res.data.memberId,
-            nickname: res.data.nickname,
-            bettingTotal: res.data.betting_total,
-            bettingWin: res.data.betting_win,
-            point: res.data.point,
-            teamName: res.data.teamName,
-            isLogin: true,
-          })
-        );
+        // dispatch(
+        //   setUser({
+        //     memberSeq: res.data.memberSeq,
+        //     memberId: res.data.memberId,
+        //     nickname: res.data.nickname,
+        //     bettingTotal: res.data.betting_total,
+        //     bettingWin: res.data.betting_win,
+        //     point: res.data.point,
+        //     teamName: res.data.teamName,
+        //     isLogin: true,
+        //   })
+        // );
+        selectTeamName(res.data.teamName);
+        selectMemberId(res.data.memberId);
+        selectMemberSeq(res.data.memberSeq);
+        selectNickname(res.data.nickname);
+        selectbettingTotal(res.data.betting_total);
+        selectbettingWin(res.data.betting_win);
+        selectPoint(res.data.point);
+        selectIsLogin(true);
       });
   };
 
   const onClickLogin = () => {
     axios
       .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
+        // .post("http://localhost:8000/api/auth/login", JSON.stringify(data), {
         headers: {
           "Content-Type": "application/json",
         },
