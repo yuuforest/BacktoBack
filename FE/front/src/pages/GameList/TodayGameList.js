@@ -20,15 +20,10 @@ const TodayGameList = (props) => {
             <div className="team-name">{props.homeTeamName}</div>
           </div>
           <div className="col-2 game-info">
-            <div className="game-time" style={{ fontSize: "20px" }}>
+            <div className="game-time">
               {props.time[0]} 년 {props.time[1]} 월 {props.time[2]} 일
             </div>
-            <div
-              className="game-place"
-              style={{ fontSize: "25px", fontWeight: "bold" }}
-            >
-              🚩{props.place}
-            </div>
+            <div className="game-place">{props.place}</div>
           </div>
           <div className="flex justify-content-center col-5 away-info">
             <img
