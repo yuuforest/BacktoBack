@@ -3,3 +3,6 @@ spring:
     activate:
       on-profile: test
 
+web:
+  driver:
+    path: C:/chromedriver_win32/chromedriver.exe
