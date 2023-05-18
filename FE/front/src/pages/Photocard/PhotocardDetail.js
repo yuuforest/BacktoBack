@@ -182,51 +182,23 @@ function PhotocardDetail() {
         <>
           <div className={styles.container}>
             <div className={styles.team__title}>
-              <div>
-                <img
-                  src={homeImgPath}
-                  alt= "Home Image"
-                  className={styles.team__img}
-                />
-              </div>
-              <div>
-                <h1>{homeTN}</h1>
-              </div>
+              <div><img src={homeImgPath} alt= "Home Image" className={styles.team__img}/></div>
+              <div><h1>{homeTN}</h1></div>
             </div>
             <div className={styles.game__detail}>
               <Avatar className="custom-vs" label="VS" size="large" shape="circle" raised/>
-              {/* <h3>
-                {time[0]} 년 {time[1]} 월 {time[2]} 일
-              </h3>
-              <h3>{place}</h3> */}
-
               <p className="photocard_game_info">{time[0]} 년 {time[1]} 월 {time[2]} 일</p>
               <p className="photocard_game_info">{place}</p>
-
             </div>
             <div className={styles.team__title}>
-              <div>
-                <img
-                  src={awayImgPath}
-                  alt="Team Image"
-                  className={styles.team__img}
-                />
-              </div>
-              <div>
-                <h1>{awayTN}</h1>
-              </div>
+              <div><img src={awayImgPath} alt="Team Image" className={styles.team__img} /></div>
+              <div><h1>{awayTN}</h1></div>
             </div>
           </div>
           <div>
-          {/* <div className={styles.carousel__container}> */}
             <div>
               <PhotoCardCarousel {...{photocards: HL}}/>
-              <Button
-                  label="100p에 구매하기"
-                  // icon="pi pi-check"
-                  // onClick={buyPhotocard()}
-                  className="point-check"
-                />
+              <Button label="100p에 구매하기" className="point-check"/>
             </div>
           </div>
         </>
