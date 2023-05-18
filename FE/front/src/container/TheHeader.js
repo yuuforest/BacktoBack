@@ -46,11 +46,12 @@ const TheHeader = () => {
   };
 
   const onClickLogout = () => {
-    setIsLoggedIn(false);
+    resetState();
     const accessToken = localStorage.getItem("accessToken");
     removeCookie("refreshToken");
     localStorage.removeItem("accessToken");
-    resetState();
+    document.location.href = "/";
+
     // axios
     //   // .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
     //   .post("http://localhost:8000/api/auth/logout", {
