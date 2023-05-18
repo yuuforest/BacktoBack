@@ -10,7 +10,7 @@ import routes, { defaultRedirect } from "../routes";
 
 const TheMain = () => (
   <main className="flex-shrink-0">
-    <div className="container mt-4">
+    <div className="container">
       <Routes>
         {routes.map((r) => (
           <Route path={r.path} element={<r.component />} key={r.path} />

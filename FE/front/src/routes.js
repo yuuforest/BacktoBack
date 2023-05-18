@@ -6,8 +6,14 @@ import PhotocardDetail from "./pages/Photocard/PhotocardDetail";
 import PhotocardHome from "./pages/Photocard/PhotocardHome";
 import GameList from "./container/GameList";
 import SignUp from "./pages/Signup";
+import Main from "pages/Main";
 
 const routes = [
+  // {
+  //   path: "/",
+  //   exact: true,
+  //   component: Main,
+  // },
   {
     path: "/live",
     exact: true,
