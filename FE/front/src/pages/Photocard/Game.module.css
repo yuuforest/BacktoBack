@@ -23,9 +23,8 @@
   height: 100%;
   object-fit: contain;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
+  margin: auto;
 }
 
 .game__title {
