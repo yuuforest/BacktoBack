@@ -241,6 +241,7 @@ function PhotocardDetail() {
             }}
           >
             <Button
+              onClick = {buyPhotocard}
               label="100p에 구매하기"
               className="point-check"
               style={{ width: "240px", height: "50px", fontSize: "18px" }}
