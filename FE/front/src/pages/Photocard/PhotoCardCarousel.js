@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { Carousel } from 'primereact/carousel';
 import { Card } from "primereact/card";
 
-export default function PhotocardCarousel(props) {
+export default function PhotoCardCarousel(props) {
 
     const [products, setProducts] = useState([]);
 
