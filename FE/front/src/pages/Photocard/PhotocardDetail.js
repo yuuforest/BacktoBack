@@ -71,16 +71,16 @@ function PhotocardDetail() {
   };
 
   // 포인트 차감
-  const updatePoint = async () => {
-    try {
-      const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
-      );
-      getPoint();
-    } catch (error) {
-      console.log("Point 조회 불가");
-    }
-  };
+  // const updatePoint = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
+  //     );
+  //     getPoint();
+  //   } catch (error) {
+  //     console.log("Point 조회 불가");
+  //   }
+  // };
 
   // HL 받아오기
   const getHL = async () => {
@@ -101,7 +101,8 @@ function PhotocardDetail() {
   const updatePhotocard = async (photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" + photocardSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" +
+          photocardSeq
       );
     } catch (error) {
       console.log("HL 조회 불가");
@@ -123,17 +124,17 @@ function PhotocardDetail() {
   };
 
   // 포토카드 구매 | 가격 차감 > HL 랜덤 > HL 수량 차감 > 유저-HL 등록
-  const buyPhotocard = async () => {
-    try {
-      updatePoint();
-      const photocardSeq = Math.floor(Math.random() * HL.length);
-      updatePhotocard(photocardSeq);
-      updateMyPhotocard(memberSeq, photocardSeq);
-      getHL();
-    } catch (error) {
-      console.log("HL 구매 불가");
-    }
-  };
+  // const buyPhotocard = async () => {
+  //   try {
+  //     updatePoint();
+  //     const photocardSeq = Math.floor(Math.random() * HL.length);
+  //     updatePhotocard(photocardSeq);
+  //     updateMyPhotocard(memberSeq, photocardSeq);
+  //     // getHL();
+  //   } catch (error) {
+  //     console.log("HL 구매 불가");
+  //   }
+  // };
 
   const homeImgPath =
     process.env.PUBLIC_URL + "/component/images/team/" + homeSeq + ".svg";
@@ -166,6 +167,10 @@ function PhotocardDetail() {
       getHL();
     }
   }, [gameSeq]);
+
+  // useEffect(() => {
+  //   getHL();
+  // }, [HL]);
 
   return (
     <div>
@@ -232,7 +237,7 @@ function PhotocardDetail() {
                 <Button
                   label="100p에 구매하기"
                   icon="pi pi-check"
-                  onClick={buyPhotocard(gameSeq)}
+                  // onClick={buyPhotocard()}
                   className="point-check"
                 />
               </div>

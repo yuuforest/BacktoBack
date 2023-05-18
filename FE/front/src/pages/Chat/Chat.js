@@ -1,15 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
 import SockJsClient from "react-stomp";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
 import { SelectButton } from "primereact/selectbutton";
 import "./styles/Chat.css";
-import {
-  selectMemberId,
-  selectNickName,
-  selectTeamSeq,
-} from "store/reducers/loginReducer";
+import { memberSeq, nickname, teamSeq } from "components/State/UserState";
+import { useRecoilValue } from "recoil";
 
 function Chat(props) {
   const [allMessages, setAllMessages] = useState([]); //전체 채팅 메시지들을 담을 배열
@@ -25,13 +21,13 @@ function Chat(props) {
   const [chatType, setChatType] = useState(options[0]);
 
   //redux 데이터
-  const memberSeq = useSelector(selectMemberId);
-  const nickname = useSelector(selectNickName);
-  const memberTeamSeq = useSelector(selectTeamSeq);
+  const curMemberSeq = useRecoilValue(memberSeq);
+  const curNickname = useRecoilValue(nickname);
+  const memberTeamSeq = useRecoilValue(teamSeq);
 
   console.log("################ REDUX DATA ###############");
-  console.log("memberSeq: ", memberSeq);
-  console.log("nickname: ", nickname);
+  console.log("memberSeq: ", curMemberSeq);
+  console.log("nickname: ", curNickname);
   console.log("memberTeamSeq: ", memberTeamSeq);
   console.log("############################################");
 
@@ -103,8 +99,8 @@ function Chat(props) {
           chatType={chatType}
           teamChatShow={teamChatShow}
           topicNumber={props.topicNumber}
-          memberSeq={memberSeq}
-          nickname={nickname}
+          memberSeq={curMemberSeq}
+          nickname={curNickname}
           memberTeamSeq={memberTeamSeq}
         />
       </div>
