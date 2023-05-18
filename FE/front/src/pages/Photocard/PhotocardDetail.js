@@ -6,7 +6,6 @@ import axios from "axios";
 
 import { Button } from "primereact/button";
 import { Avatar } from "primereact/avatar";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import PhotoCardCarousel from "./PhotoCardCarousel";
 
@@ -138,10 +137,9 @@ function PhotocardDetail() {
   //   }
   // };
 
-  const homeImgPath = "../../images/team/" + homeSeq + ".png";
-    // process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".svg";
-  const awayImgPath = "../../images/team/" + awaySeq + ".svg";
-    // process.env.PUBLIC_URL + "/images/team/" + awaySeq + ".svg";
+  const homeImgPath = process.env.PUBLIC_URL + "/team/" + homeSeq + ".svg";
+  const awayImgPath = process.env.PUBLIC_URL + "/team/" + awaySeq + ".svg";
+
 
   // HL 포토카드 받기
   // const getPhotocards = async () => {
@@ -186,9 +184,8 @@ function PhotocardDetail() {
             <div className={styles.team__title}>
               <div>
                 <img
-                  // src={homeImgPath}
-                  src = '../../images/team/1.png' 
-                  alt= {awayImgPath}
+                  src={homeImgPath}
+                  alt= "Home Image"
                   className={styles.team__img}
                 />
               </div>
@@ -197,8 +194,6 @@ function PhotocardDetail() {
               </div>
             </div>
             <div className={styles.game__detail}>
-              {/* <h1>오늘의 경기</h1> */}
-              {/* <h3>VS</h3> */}
               <Avatar className="custom-vs" label="VS" size="large" shape="circle" raised/>
               <h3>
                 {time[0]} 년 {time[1]} 월 {time[2]} 일
@@ -209,8 +204,7 @@ function PhotocardDetail() {
             <div className={styles.team__title}>
               <div>
                 <img
-                  // src={awayImgPath}
-                  src = '../images/team/1.png' 
+                  src={awayImgPath}
                   alt="Team Image"
                   className={styles.team__img}
                 />
@@ -223,17 +217,6 @@ function PhotocardDetail() {
           <div>
           {/* <div className={styles.carousel__container}> */}
             <div>
-              {/* <Carousel
-                showArrows={true}
-                showThumbs={true}
-                infiniteLoop={true}
-                autoPlay={true}
-                interval={3000}
-              >
-                {photocards.slice(0, 15).map((HL) => (
-                  <Photocard />
-                ))}
-              </Carousel> */}
               <PhotoCardCarousel {...{photocards: HL}}/>
               <Button
                   label="100p에 구매하기"
@@ -242,22 +225,6 @@ function PhotocardDetail() {
                   className="point-check"
                 />
             </div>
-            {/* <div>
-              <div>
-                <h3>{point}</h3>
-              </div>
-              <div>
-                <Button
-                  label="100p에 구매하기"
-                  icon="pi pi-check"
-                  // onClick={buyPhotocard()}
-                  className="point-check"
-                />
-              </div>
-              <div>
-                <h1>{HL}</h1>
-              </div>
-            </div> */}
           </div>
         </>
       )}
