@@ -15,24 +15,23 @@ const TheHeader = () => {
   const pointValue = useRecoilValue(point);
 
   const onClickLogout = () => {
-    const accessToken = localStorage.getItem("accessToken");
 
-    axios
-      .post("http://k8a708.p.ssafy.io/api/auth/logout", JSON.stringify(data), {
-      // .post("http://localhost:8000/api/auth/logout", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        if (!res.data) {
-        } else {
+    // axios
+      // .post("http://k8a708.p.ssafy.io/api/auth/logout", JSON.stringify(data), {
+      // // .post("http://localhost:8000/api/auth/logout", {
+      //   headers: {
+      //     Authorization: `Bearer ${accessToken}`,
+      //   },
+      // })
+      // .then((res) => {
+      //   if (!res.data) {
+      //   } else {
 
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      //   }
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      // });
 
     setIsLoggedIn(false);
     removeCookie("refreshToken");
