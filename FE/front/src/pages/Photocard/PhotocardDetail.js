@@ -33,7 +33,7 @@ function PhotocardDetail() {
   const [loseTN, setLoseTN] = useState();
 
   const [loading, setLoading] = useState(true);
-  const [photocards, setPhotocards] = useState([]);
+  // const [photocards, setPhotocards] = useState([]);
 
   const [HL, setHL] = useState();
 
@@ -187,7 +187,7 @@ function PhotocardDetail() {
               <div>
                 <img
                   // src={homeImgPath}
-                  src = '../../images/team/1.png'
+                  src = '../../images/team/1.png' 
                   alt= {awayImgPath}
                   className={styles.team__img}
                 />
@@ -209,7 +209,8 @@ function PhotocardDetail() {
             <div className={styles.team__title}>
               <div>
                 <img
-                  src={awayImgPath}
+                  // src={awayImgPath}
+                  src = '../images/team/1.png' 
                   alt="Team Image"
                   className={styles.team__img}
                 />
@@ -233,7 +234,7 @@ function PhotocardDetail() {
                   <Photocard />
                 ))}
               </Carousel> */}
-              <PhotoCardCarousel />
+              <PhotoCardCarousel {...{photocards: HL}}/>
               <Button
                   label="100p에 구매하기"
                   icon="pi pi-check"
