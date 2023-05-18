@@ -7,7 +7,7 @@ import MainGames from "../pages/GameList/MainGames";
 import styles from "../container/styles/GameList.module.css";
 import stupid from "../images/stupid.gif";
 
-function TheMain() {
+function GameList() {
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState();
   const getGames = async () => {
@@ -38,12 +38,12 @@ function TheMain() {
       ) : (
         <>
           <div className={styles.title__container}>
-            <div style={{ fontSize: "40px", fontWeight: "1100" }}>
-              오늘의 경기
+            <div style={{ fontSize: "40px", fontWeight: "900" }}>
+              🎊 오늘의 경기 🎊
             </div>
-            <div style={{ fontSize: "20px", fontWeight: "800" }}>
-              오늘의 승리팀을 맞춰{" "}
-              <span style={{ color: "tomato" }}>포인트</span>를 획득하세요
+            <div style={{ fontSize: "20px", fontWeight: "700" }}>
+              승리팀을 맞춰 <span style={{ color: "tomato" }}>포인트</span>를
+              획득하세요!
             </div>
           </div>
           <div className={styles.game__container}>
@@ -68,4 +68,4 @@ function TheMain() {
   );
 }
 
-export default TheMain;
+export default GameList;
