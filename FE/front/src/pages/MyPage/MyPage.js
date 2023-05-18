@@ -7,10 +7,10 @@ import { useRecoilValue } from "recoil";
 
 const MyPage = () => {
   //redux 데이터
-  // const curMemberSeq = useRecoilValue(memberSeq);
+  const curMemberSeq = useRecoilValue(memberSeq);
 
   const [cards, setCards] = useState([]);
-  const [curMemberSeq, setMemberSeq] = useState(1);
+  // const [curMemberSeq, setMemberSeq] = useState(1);
 
   const getMyPhotoCards = async () => {
     try {
