@@ -38,10 +38,15 @@ function MainGames(props) {
             shape="circle"
             raised
           />
-          <div className="game-time">
+          <div className="game-time" style={{ fontSize: "20px" }}>
             {props.time[0]} 년 {props.time[1]} 월 {props.time[2]} 일
           </div>
-          <div className="game-place">{props.place}</div>
+          <div
+            className="game-place"
+            style={{ fontSize: "25px", fontWeight: "bold" }}
+          >
+            {props.place}
+          </div>
         </div>
 
         <div className={styles.team__title}>
