@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Button } from "primereact/button";
 import "./styles/Profile.css";
 import PointModal from "./PointModal";
 import { useRecoilValue } from "recoil";

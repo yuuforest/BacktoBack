@@ -1,6 +1,7 @@
 import { nickname, teamSeq } from "components/State/UserState";
 import { Dialog } from "primereact/dialog";
 import { useRecoilValue } from "recoil";
+import { Button } from "primereact/button";
 
 const MemberUpdateModal = ({ showModal, closeModal }) => {
   const curNickname = useRecoilValue(nickname);
