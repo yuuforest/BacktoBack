@@ -43,7 +43,9 @@ function PhotocardDetail() {
   // 해당 경기 받기
   const getGame = async () => {
     try {
-      const response = await axios.get("http://k8a708.p.ssafy.io/api/point/photocard/getGames");
+      const response = await axios.get(
+        "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
+      );
       setGameSeq(response.data[gameid % 5].gameSeq);
       setPlace(response.data[gameid % 5].gamePlace);
       setTime(response.data[gameid % 5].gameDateTime);
@@ -101,7 +103,8 @@ function PhotocardDetail() {
   const updatePhotocard = async (photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" + photocardSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" +
+          photocardSeq
       );
     } catch (error) {
       console.log("HL 조회 불가");
@@ -229,8 +232,19 @@ function PhotocardDetail() {
           <div>
             <PhotoCardCarousel {...{ photocards: HL }} />
           </div>
-          <div className="buy-button mt-3 flex justify-content-center align-items-center">
-            <Button label="100p에 구매하기" className="point-check" style={{width:"240px", height:"50px", fontSize="18px"}}/>
+          <div
+            className="buy-button mt-3"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              label="100p에 구매하기"
+              className="point-check"
+              style={{ width: "240px", height: "50px", fontSize: "18px" }}
+            />
           </div>
         </>
       )}
