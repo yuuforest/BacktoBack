@@ -36,7 +36,7 @@
 }
 
 .point-check {
-  width: 820px;
+  width: 640px;
   height: 30px;
   font-size: 15px;
 }
@@ -50,7 +50,7 @@
 }
 
 .betting-message {
-  width: 700px;
+  width: 640px;
   height: 30px;
   font-size: 15px;
   /* font-weight: bold; */
@@ -58,7 +58,7 @@
 }
 
 .betting-card {
-  width: 820px;
+  width: 640px;
   height: 30px;
   font-size: 15px;
   font-weight: bold;
