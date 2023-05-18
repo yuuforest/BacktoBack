@@ -1,0 +1,16 @@
+.team-image {
+  opacity: 0.7;
+  object-fit: contain;
+}
+
+.team-name {
+  text-decoration: none;
+  color: inherit;
+  z-index: 2;
+}
+
+.game-time {
+}
+
+.game-place {
+}

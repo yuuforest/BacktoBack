@@ -6,6 +6,7 @@ import axios from "axios";
 import MainGames from "../pages/GameList/MainGames";
 import styles from "../container/styles/GameList.module.css";
 import stupid from "../images/stupid.gif";
+import TodayGameList from "pages/GameList/TodayGameList";
 
 function GameList() {
   const [loading, setLoading] = useState(true);
@@ -48,8 +49,20 @@ function GameList() {
           </div>
           <div className={styles.game__container}>
             <div>
-              {games.map((game) => (
+              {/* {games.map((game) => (
                 <MainGames
+                  key={game.gameSeq}
+                  gameid={game.gameSeq}
+                  place={game.gamePlace}
+                  time={game.gameDateTime}
+                  homeTeamSeq={game.homeTeam.teamSeq}
+                  homeTeamName={game.homeTeam.teamName}
+                  awayTeamSeq={game.awayTeam.teamSeq}
+                  awayTeamName={game.awayTeam.teamName}
+                />
+              ))} */}
+              {games.map((game) => (
+                <TodayGameList
                   key={game.gameSeq}
                   gameid={game.gameSeq}
                   place={game.gamePlace}
