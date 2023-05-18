@@ -5,8 +5,10 @@ import styles from "./PhotocardDetail.module.css";
 import axios from "axios";
 
 import { Button } from "primereact/button";
+import { Avatar } from "primereact/avatar";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import PhotoCardCarousel from "./PhotoCardCarousel";
 
 // Image 받아오기
 import stupid from "../../images/stupid.gif";
@@ -225,7 +227,7 @@ function PhotocardDetail() {
           </div>
           <div className={styles.carousel__container}>
             <div>
-              <Carousel
+              {/* <Carousel
                 showArrows={true}
                 showThumbs={true}
                 infiniteLoop={true}
@@ -235,7 +237,8 @@ function PhotocardDetail() {
                 {photocards.slice(0, 15).map((HL) => (
                   <Photocard />
                 ))}
-              </Carousel>
+              </Carousel> */}
+              <PhotoCardCarousel />
             </div>
             <div>
               <div>
