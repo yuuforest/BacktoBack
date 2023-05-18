@@ -38,8 +38,10 @@ function TheMain() {
       ) : (
         <>
           <div className={styles.title__container}>
-            <div className="main-title">오늘의 경기</div>
-            <div className="sub-title">
+            <div style={{ fontSize: "40px", fontWeight: "1100" }}>
+              오늘의 경기
+            </div>
+            <div style={{ fontSize: "20px", fontWeight: "800" }}>
               오늘의 승리팀을 맞춰{" "}
               <span style={{ color: "tomato" }}>포인트</span>를 획득하세요
             </div>

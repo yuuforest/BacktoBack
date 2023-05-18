@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { Avatar } from "primereact/avatar";
 
 import styles from "./MainGames.module.css";
 
@@ -27,9 +28,16 @@ function MainGames(props) {
         </div>
 
         <div className={styles.game__detail}>
-          <div className={styles.vs__container}>
+          {/* <div className={styles.vs__container}>
             <h2>VS</h2>
-          </div>
+          </div> */}
+          <Avatar
+            className="custom-vs"
+            label="VS"
+            size="large"
+            shape="circle"
+            raised
+          />
           <div className="game-time">
             {props.time[0]} 년 {props.time[1]} 월 {props.time[2]} 일
           </div>
