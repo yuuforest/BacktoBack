@@ -1,48 +1,48 @@
-import { useEffect } from 'react';
-import { useRef,useState } from 'react';
-import {useParams} from 'react-router-dom'
+import { useEffect } from "react";
+import { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import kurentoUtils from "kurento-utils";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 let stomp;
 let webRtcPeer;
 let sockJs;
 
-const MatchDetail = ({gameSeq}) => {
+const MatchDetail = ({ gameSeq }) => {
   const videoRef = useRef(null);
   // const {gameId} = useParams();
-  const [readyToStart,setReadyToStart] = useState(false);
-  const [readyToVideo,setReadyToVideo] = useState(false);
+  const [readyToStart, setReadyToStart] = useState(false);
+  const [readyToVideo, setReadyToVideo] = useState(false);
   const [userId, setUserId] = useState(uuidv4());
-  
+
   useEffect(() => {
-     sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
-     stomp = Stomp.over(sockJs);
-     enterRoom();
-     return () => { 
+    sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
+    stomp = Stomp.over(sockJs);
+    enterRoom();
+    return () => {
       stomp.disconnect();
-     }
+    };
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (readyToStart === true) {
       console.log("start");
-        start();
-      }
-  },[readyToStart]);
+      start();
+    }
+  }, [readyToStart]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (readyToVideo === true) {
-        console.log("start Stream")
-        // startStream();
-      }
-  },[readyToVideo]);
+      console.log("start Stream");
+      // startStream();
+    }
+  }, [readyToVideo]);
 
   const enterRoom = () => {
-    console.log("enterRoom!!!!!")
-    const headers = { "gameId": gameSeq, "userId": userId }
+    console.log("enterRoom!!!!!");
+    const headers = { gameId: gameSeq, userId: userId };
     //2. connection이 맺어지면 실행
     stomp.connect(headers, function () {
       stomp.subscribe(`/user/${userId}/sub/${gameSeq}`, function (message) {
@@ -55,7 +55,9 @@ const MatchDetail = ({gameSeq}) => {
             onError("Error message from server: " + parsedMessage.message);
             break;
           case "playEnd":
-            <Redirect to={{ pathname: '/',state: {from: props.location}}}/>
+            <Redirect
+              to={{ pathname: "/", state: { from: props.location } }}
+            />;
             console.log("playEnd");
             break;
           case "videoInfo":
@@ -63,15 +65,20 @@ const MatchDetail = ({gameSeq}) => {
             setReadyToVideo(true);
             break;
           case "iceCandidate":
-            webRtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
-              if (error) return console.error("Error adding candidate: " + error);
-            });
+            webRtcPeer.addIceCandidate(
+              parsedMessage.candidate,
+              function (error) {
+                if (error)
+                  return console.error("Error adding candidate: " + error);
+              }
+            );
             break;
           case "seek":
             console.log(parsedMessage.message);
             break;
           case "position":
-            document.getElementById("videoPosition").value = parsedMessage.position;
+            document.getElementById("videoPosition").value =
+              parsedMessage.position;
             break;
           default:
             onError("Unrecognized message", parsedMessage);
@@ -79,37 +86,38 @@ const MatchDetail = ({gameSeq}) => {
       });
       // start();
       setReadyToStart(true);
-      
     });
-  }
+  };
 
-  const start = ()=> {
+  const start = () => {
     // Video and audio by default
     var userMediaConstraints = {
       audio: true,
       video: true,
     };
-    
-    console.log('videoRef current'+videoRef.current);
+
+    console.log("videoRef current" + videoRef.current);
     var options = {
-      video:videoRef.current,
+      video: videoRef.current,
       mediaConstraints: userMediaConstraints,
       onicecandidate: onIceCandidate,
     };
-  
+
     console.info("User media constraints" + userMediaConstraints);
-  
-    webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {
-      if (error) return console.error(error);
-      webRtcPeer.generateOffer(onOffer);
-    });
-  
-  }
-  
+
+    webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+      options,
+      function (error) {
+        if (error) return console.error(error);
+        webRtcPeer.generateOffer(onOffer);
+      }
+    );
+  };
+
   const onOffer = (error, offerSdp) => {
     if (error) return console.error("Error generating the offer");
     console.info("Invoking SDP offer callback function " + "location.host");
-  
+
     var message = {
       id: "start",
       gameId: gameSeq,
@@ -118,15 +126,15 @@ const MatchDetail = ({gameSeq}) => {
       // videourl: document.getElementById("videourl").value,
     };
     sendMessage(message);
-  }
-  
+  };
+
   const onError = (error) => {
     console.error(error);
-  }
-  
+  };
+
   const onIceCandidate = (candidate) => {
     console.log("Local candidate" + JSON.stringify(candidate));
-  
+
     var message = {
       id: "onIceCandidate",
       gameId: gameSeq,
@@ -134,31 +142,37 @@ const MatchDetail = ({gameSeq}) => {
       candidate: candidate,
     };
     sendMessage(message);
-  }
-  
-  const startResponse = (message) => {  
+  };
+
+  const startResponse = (message) => {
     webRtcPeer.processAnswer(message.sdpAnswer, function (error) {
       if (error) return console.error(error);
-      
     });
-  }
-  
+  };
+
   const startStream = () => {
-    console.log("start remoteStream"+webRtcPeer.getRemoteStream)
+    console.log("start remoteStream" + webRtcPeer.getRemoteStream);
     videoRef.current.srcObject = webRtcPeer.getRemoteStream();
-  }
-  
-  const sendMessage = function(message){
+  };
+
+  const sendMessage = function (message) {
     var jsonMessage = JSON.stringify(message);
     stomp.send(`/pub/video/${message.id}`, {}, jsonMessage);
-  }
+  };
 
-
-  return (<>
-    <video style={{
-      width: "100%", height:"520px"
-    }} poster={require('images/Video/beforelive.png')} ref={videoRef} autoPlay />
-  </>)
-}
+  return (
+    <>
+      <video
+        style={{
+          width: "100%",
+          height: "550px",
+        }}
+        poster={require("images/Video/beforelive.png")}
+        ref={videoRef}
+        autoPlay
+      />
+    </>
+  );
+};
 
 export default MatchDetail;

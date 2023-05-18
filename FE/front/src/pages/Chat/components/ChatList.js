@@ -17,7 +17,14 @@ function ChatList({ messages, chatType, teamChatShow }) {
           {chatType === "전체 채팅" || teamChatShow ? (
             messages.map((message, index) => (
               <div className="chat-list-content" key={index}>
-                <p className="chat-nickname">{message.nickname}</p>
+                <p className="chat-nickname">
+                  <img
+                    className="myteam-image"
+                    alt="teamImage"
+                    src={`${process.env.PUBLIC_URL}/team/${message.memberTeamSeq}.svg`}
+                  />
+                  {message.nickname}
+                </p>
                 <p className="chat-message">{message.message}</p>
               </div>
             ))

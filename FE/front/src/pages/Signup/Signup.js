@@ -63,6 +63,7 @@ const SignUp = () => {
     if (checkId && checkNickname && selectedTeam !== "") {
       axios
         .post(
+          // "http://localhost:8000/api/member/signup",
           "http://k8a708.p.ssafy.io/api/member/signup",
           JSON.stringify(data),
           {
@@ -73,6 +74,8 @@ const SignUp = () => {
           }
         )
         .then((res) => {
+          document.location.href = "/";
+
           console.log(res.data);
         })
         .catch((err) => {
@@ -85,6 +88,7 @@ const SignUp = () => {
     setModalOpen(true);
     axios
       .get(`http://k8a708.p.ssafy.io/api/member/existId/${inputId}`)
+      // .get(`http://localhost:8000/api/member/existId/${inputId}`)
       .then((res) => {
         setCheckId(true);
 
@@ -106,6 +110,7 @@ const SignUp = () => {
     setModalOpen(true);
     axios
       .get(`http://k8a708.p.ssafy.io/api/member/existNickname/${inputNickname}`)
+      // .get(`http://localhost:8000/api/member/existNickname/${inputNickname}`)
       .then((res) => {
         alert("사용 가능한 닉네임 입니다.");
         setCheckNickname(true);
