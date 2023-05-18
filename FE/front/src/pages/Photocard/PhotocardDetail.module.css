@@ -37,7 +37,7 @@
   color: #adaeb9;
   display: grid;
   grid-gap: 10px;
-  /* text-decoration: none; */
+  text-decoration: none;
   color: inherit;
 
   grid-template-rows: minmax(200px, 1fr) fr;
@@ -71,8 +71,8 @@
   font-weight: 300;
   border-radius: 5px;
   color: #adaeb9;
-  /* display: grid;
-  grid-gap: 10px; */
+  display: grid;
+  grid-gap: 10px;
   text-decoration: none;
   color: inherit;
 
@@ -99,7 +99,7 @@
 }
 
 .point-check {
-  /* width: 800px; */
+  width: 800px;
   height: 30px;
   font-size: 15px;
   justify-content: center;
