@@ -11,6 +11,7 @@
   grid-gap: 10px;
   text-decoration: none;
   color: inherit;
+  height: 120%;
 }
 
 .game {
@@ -18,12 +19,13 @@
   background-color: white;
   margin-bottom: 40px;
   max-width: 100%;
-  max-height: 1200px;
+  max-height: 280px;
   font-weight: 300;
   padding: 10px;
   border-radius: 5px;
   color: #adaeb9;
   display: grid;
+  height: 120%;
 
   text-decoration: none;
   color: inherit;
@@ -55,8 +57,8 @@
   border-radius: 5px;
   color: #adaeb9;
   display: grid;
-  grid-gap: 10px;
-  text-decoration: none;
+  /* grid-gap: 10px; */
+  /* text-decoration: none; */
   color: inherit;
 
   justify-items: center;
@@ -138,15 +140,6 @@
   color: inherit;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
     0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
-}
-
-.game-time {
-  font-size: 20px;
-}
-
-.game-place {
-  font-size: 25px;
-  font-weight: bold;
 }
 
 .custom-vs {
