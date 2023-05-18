@@ -223,7 +223,7 @@ function PhotocardDetail() {
               <PhotoCardCarousel {...{photocards: HL}}/>
               <Button
                   label="100p에 구매하기"
-                  icon="pi pi-check"
+                  // icon="pi pi-check"
                   // onClick={buyPhotocard()}
                   className="point-check"
                 />
