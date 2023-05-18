@@ -23,9 +23,9 @@ export default function PhotoCardCarousel(props) {
                     {/* <h2>{product.photocardUrl}</h2> */}
                     <img className="photocard-gif" src={product.photocardUrl} alt="하이라이트 gif"/>
                 </div>
-                <div>
+                <div className="photocard-quantity">
                     {/* <Card className="photocard-quantity" header={product.photocardQuantity} /> */}
-                    <Card className="photocard-quantity" header={product.photocardQuantity}/>
+                    {product.photocardQuantity}
                 </div>
             </div>
         );
