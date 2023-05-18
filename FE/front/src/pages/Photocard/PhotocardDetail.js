@@ -7,7 +7,7 @@ import axios from "axios";
 import { Button } from "primereact/button";
 import { Avatar } from "primereact/avatar";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import PhotocardCarousel from "./PhotocardCarousel";
+import PhotocardCarousel from "./PhotoCardCarousel";
 
 // Image 받아오기
 import stupid from "../../images/stupid.gif";
