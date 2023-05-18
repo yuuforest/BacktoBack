@@ -4,7 +4,8 @@ import { Carousel } from 'primereact/carousel';
 import { Tag } from 'primereact/tag';
 import { ProductService } from './ProductService';
 
-export default function BasicDemo() {
+export default function PhotoCardCarousel(props) {
+
     const [products, setProducts] = useState([]);
     const responsiveOptions = [
         {
@@ -41,6 +42,7 @@ export default function BasicDemo() {
     };
 
     useEffect(() => {
+        console.log(props.photocards);
         ProductService.getProductsSmall().then((data) => {
             console.log(data);
             setProducts(data.slice(0, 9));
@@ -62,6 +64,7 @@ export default function BasicDemo() {
                         <Button icon="pi pi-star-fill" className="p-button-success p-button-rounded" />
                     </div>
                 </div>
+                <h2>아휴</h2>
             </div>
         );
     };
