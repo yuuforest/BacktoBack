@@ -9,9 +9,15 @@ function Game(props) {
     <Link to={`/photocard/detail/${props.gameid}`} className={styles.game}>
       <img src={gameImage} alt={props.gameid} className={styles.game__img} />
       <div>
-        <h2 className={styles.game__title}>
-          {props.homeTeamName} VS {props.awayTeamName}
-        </h2>
+        <div className={styles.game__title}>
+          <span style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {props.homeTeamName}
+          </span>
+          <span style={{ fontSize: "15px" }}>VS</span>
+          <span style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {props.awayTeamName}
+          </span>
+        </div>
       </div>
     </Link>
   );
