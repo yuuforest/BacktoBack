@@ -230,7 +230,7 @@ function PhotocardDetail() {
             <PhotoCardCarousel {...{ photocards: HL }} />
           </div>
           <div className="buy-button mt-3 flex justify-content-center align-items-center">
-            <Button label="100p에 구매하기" className="point-check" style={{width:"240px", height:"50px", fontSize="18px"}}/>
+            <Button onClick = {buyPhotocard} label="100p에 구매하기" className="point-check" style={{width:"240px", height:"50px", fontSize="18px"}}/>
           </div>
         </>
       )}
