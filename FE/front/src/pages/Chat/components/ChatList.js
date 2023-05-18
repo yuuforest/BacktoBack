@@ -19,6 +19,7 @@ function ChatList({ messages, chatType, teamChatShow }) {
               <div className="chat-list-content" key={index}>
                 <p className="chat-nickname">
                   <img
+                    style="width: 30px; height: 30px;"
                     alt="teamImage"
                     src={`${process.env.PUBLIC_URL}/team/${message.memberTeamSeq}.svg`}
                   />
