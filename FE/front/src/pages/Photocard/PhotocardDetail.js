@@ -101,12 +101,8 @@ function PhotocardDetail() {
   const updatePhotocard = async (photocardSeq) => {
     try {
       const response = await axios.post(
-<<<<<<< HEAD
         "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" +
           photocardSeq
-=======
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" + photocardSeq
->>>>>>> 3715b2a593957be0694bd3570392115355336e56
       );
     } catch (error) {
       console.log("HL 조회 불가");
@@ -172,13 +168,10 @@ function PhotocardDetail() {
     }
   }, [gameSeq]);
 
-<<<<<<< HEAD
   // useEffect(() => {
   //   getHL();
   // }, [HL]);
 
-=======
->>>>>>> ffc2c00a7f7d199d0a3d6630ada5df625980a4fb
   return (
     <div>
       {loading ? (
