@@ -5,20 +5,52 @@ import Logo from "../images/logo.svg";
 import axios from "axios";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { isLogin, nickname, point } from "components/State/UserState";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { removeCookie } from "pages/Login/cookies";
+import {
+  teamName,
+  memberId,
+  memberSeq,
+  point,
+  bettingTotal,
+  bettingWin,
+  isLogin,
+  nickname,
+  teamSeq,
+} from "components/State/UserState";
 
 const TheHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLogin);
   const nicknameValue = useRecoilValue(nickname);
   const pointValue = useRecoilValue(point);
+  const resetTeamName = useResetRecoilState(teamName);
+  const resetMemberId = useResetRecoilState(memberId);
+  const resetMemberSeq = useResetRecoilState(memberSeq);
+  const resetPoint = useResetRecoilState(point);
+  const resetbettingTotal = useResetRecoilState(bettingTotal);
+  const resetbettingWin = useResetRecoilState(bettingWin);
+  const resetIsLogin = useResetRecoilState(isLogin);
+  const resetNickname = useResetRecoilState(nickname);
+  const resetTeamSeq = useResetRecoilState(teamSeq);
+
+  const resetState = () => {
+    resetTeamName();
+    resetMemberId();
+    resetMemberSeq();
+    resetPoint();
+    resetbettingTotal();
+    resetbettingWin();
+    resetIsLogin();
+    resetNickname();
+    resetTeamSeq();
+  };
 
   const onClickLogout = () => {
     setIsLoggedIn(false);
     const accessToken = localStorage.getItem("accessToken");
     removeCookie("refreshToken");
     localStorage.removeItem("accessToken");
+    resetState();
     // axios
     //   // .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
     //   .post("http://localhost:8000/api/auth/logout", {
