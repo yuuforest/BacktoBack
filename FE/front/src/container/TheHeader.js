@@ -15,28 +15,30 @@ const TheHeader = () => {
   const pointValue = useRecoilValue(point);
 
   const onClickLogout = () => {
-
-    // axios
-      // .post("http://k8a708.p.ssafy.io/api/auth/logout", JSON.stringify(data), {
-      // // .post("http://localhost:8000/api/auth/logout", {
-      //   headers: {
-      //     Authorization: `Bearer ${accessToken}`,
-      //   },
-      // })
-      // .then((res) => {
-      //   if (!res.data) {
-      //   } else {
-
-      //   }
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      // });
-
     setIsLoggedIn(false);
+    const accessToken = localStorage.getItem("accessToken");
     removeCookie("refreshToken");
     localStorage.removeItem("accessToken");
-    document.location.href = "/";
+    // axios
+    //   // .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
+    //   .post("http://localhost:8000/api/auth/logout", {
+    //     headers: {
+    //       "content-type": "application/json",
+    //       Authorization: `Bearer ${accessToken}`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     if (!res.data) {
+    //     } else {
+    //       removeCookie("refreshToken");
+    //       localStorage.removeItem("accessToken");
+
+    //       document.location.href = "/";
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   console.log(isLoggedIn);
