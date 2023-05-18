@@ -32,7 +32,6 @@ function Cheer(props) {
       await axios
         .get(connectionUrl + "/game/" + props.gameSeq)
         .then((response) => {
-          console.log(response.data.homeCount + ',' + response.data.awayCount)
           setHomeCount(response.data.homeCount);
           setAwayCount(response.data.awayCount);
         });
@@ -84,7 +83,7 @@ function Cheer(props) {
       <div className="total-div m-1">
         <Button
           className="custom-home-btn"
-          label={homeCount}
+          label={homeCount !== 0 ? homeCount : "0"}
           outlined={false}
           onClick={handleHomeCheer}
           raised="true"
@@ -103,7 +102,7 @@ function Cheer(props) {
         />
         <Button
           className="custom-away-btn"
-          label={awayCount}
+          label={awayCount !== 0 ? awayCount : "0"}
           outlined={false}
           onClick={handleAwayCheer}
           raised="true"
