@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import "./styles/Profile.css";
-import Modal from "./Modal";
+import Modal from "../../Photocard/PhotoCardDetailModal";
 import PointModal from "./PointModal";
 import {
   selectBettingTotal,
@@ -65,8 +65,6 @@ const Profile = ({ quantity }) => {
         </DataTable>
       </div>
 
-      {/* Modal Test */}
-      <Modal />
       <PointModal />
     </div>
   );
