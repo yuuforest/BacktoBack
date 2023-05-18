@@ -72,9 +72,6 @@ const Login = () => {
         selectPoint(res.data.point);
         selectTeamSeq(res.data.teamSeq);
 
-        setCookie("refreshToken", `${refreshToken}`);
-        localStorage.setItem("accessToken", res.data.accessToken);
-        console.log(localStorage.getItem("accessToken"));
         document.location.href = "/";
       });
   };
@@ -97,6 +94,9 @@ const Login = () => {
 
             const refreshToken = res.data.refreshToken;
             const memberSeq = res.data.memberSeq;
+            setCookie("refreshToken", `${refreshToken}`);
+            localStorage.setItem("accessToken", res.data.accessToken);
+            console.log(localStorage.getItem("accessToken"));
             {
               selectMember(memberSeq);
             }
