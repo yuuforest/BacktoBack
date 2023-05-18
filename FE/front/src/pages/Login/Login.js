@@ -92,6 +92,8 @@ const Login = () => {
           setCookie("refreshToken", `${refreshToken}`);
           console.log(res.data.accessToken);
           localStorage.setItem("accessToken", res.data.accessToken);
+          document.location.href = "/";
+
         }
       })
       .catch((err) => {
