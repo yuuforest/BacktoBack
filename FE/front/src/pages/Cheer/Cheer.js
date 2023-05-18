@@ -14,7 +14,7 @@ function Cheer(props) {
 
   // ============================================================================================================================
 
-  const connectionUrl = 'http://k8a708.p.ssafy.io/api/cheer';
+  const connectionUrl = "http://k8a708.p.ssafy.io/api/cheer";
 
   const $websocket = useRef(null);
 
@@ -29,11 +29,12 @@ function Cheer(props) {
       // const response = await axios.get(connectionUrl + '/game/' + props.gameSeq);
       // setHomeCount(response.data.homeCount);
       // setAwayCount(response.data.awayCount);
-      await axios.get(connectionUrl + '/game/' + props.gameSeq)
-      .then((response) => {
-        setHomeCount(response.data.homeCount);
-        setAwayCount(response.data.awayCount);
-      })
+      await axios
+        .get(connectionUrl + "/game/" + props.gameSeq)
+        .then((response) => {
+          setHomeCount(response.data.homeCount);
+          setAwayCount(response.data.awayCount);
+        });
       console.log("getCheerInfo 성공");
     } catch (error) {
       console.log("getCheerInfo 실패");

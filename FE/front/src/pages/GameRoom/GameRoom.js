@@ -8,8 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const GameRoom = () => {
-
-  const {gameid} =  useParams();
+  const { gameid } = useParams();
 
   const [gameSeq, setGameSeq] = useState(gameid);
   const [homeSeq, setHomeSeq] = useState(1);
@@ -18,8 +17,6 @@ const GameRoom = () => {
   const [awayName, setAwayName] = useState(null);
   const [gameState, setGameState] = useState(null);
   const [topicNumber, setTopicNumber] = useState(0);
-
-
 
   const getGameInfo = async () => {
     try {
@@ -51,7 +48,7 @@ const GameRoom = () => {
       <div class="col-7 left">
         <div
           className="streaming"
-          style={{ height: "530px", border: "1px solid black" }}
+          // style={{ height: "530px", border: "1px solid black" }}
           //style해제하고 스트리밍 컴포넌트 넣으면 됩니다.
         >
           <Video {...{ gameSeq }} />
