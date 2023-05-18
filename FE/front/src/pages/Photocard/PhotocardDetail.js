@@ -187,8 +187,8 @@ function PhotocardDetail() {
               <div>
                 <img
                   // src={homeImgPath}
-                  src = {process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".png"}
-                  alt= {process.env.PUBLIC_URL + "/images/team/" + homeSeq + ".png"}
+                  src = {homeImgPath}
+                  alt= {awayImgPath}
                   className={styles.team__img}
                 />
               </div>
