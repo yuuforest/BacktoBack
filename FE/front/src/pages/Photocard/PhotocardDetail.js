@@ -43,9 +43,7 @@ function PhotocardDetail() {
   // 해당 경기 받기
   const getGame = async () => {
     try {
-      const response = await axios.get(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getGames"
-      );
+      const response = await axios.get("http://k8a708.p.ssafy.io/api/point/photocard/getGames");
       setGameSeq(response.data[gameid % 5].gameSeq);
       setPlace(response.data[gameid % 5].gamePlace);
       setTime(response.data[gameid % 5].gameDateTime);
@@ -73,17 +71,16 @@ function PhotocardDetail() {
     }
   };
 
-  // 포인트 차감
-  // const updatePoint = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
-  //     );
-  //     getPoint();
-  //   } catch (error) {
-  //     console.log("Point 조회 불가");
-  //   }
-  // };
+  const updatePoint = async () => {
+    try {
+      const response = await axios.post(
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
+      );
+      getPoint();
+    } catch (error) {
+      console.log("Point 조회 불가");
+    }
+  };
 
   // HL 받아오기
   const getHL = async () => {
@@ -104,8 +101,7 @@ function PhotocardDetail() {
   const updatePhotocard = async (photocardSeq) => {
     try {
       const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" +
-          photocardSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePhotocard/" + photocardSeq
       );
     } catch (error) {
       console.log("HL 조회 불가");
@@ -126,18 +122,17 @@ function PhotocardDetail() {
     }
   };
 
-  // 포토카드 구매 | 가격 차감 > HL 랜덤 > HL 수량 차감 > 유저-HL 등록
-  // const buyPhotocard = async () => {
-  //   try {
-  //     updatePoint();
-  //     const photocardSeq = Math.floor(Math.random() * HL.length);
-  //     updatePhotocard(photocardSeq);
-  //     updateMyPhotocard(memberSeq, photocardSeq);
-  //     // getHL();
-  //   } catch (error) {
-  //     console.log("HL 구매 불가");
-  //   }
-  // };
+  const buyPhotocard = async () => {
+    try {
+      await updatePoint();
+      const photocardSeq = Math.floor(Math.random() * HL.length);
+      await updatePhotocard(photocardSeq);
+      await updateMyPhotocard(memberSeq, photocardSeq);
+      await getHL();
+    } catch (error) {
+      console.log("HL 구매 불가");
+    }
+  };
 
   const homeImgPath = process.env.PUBLIC_URL + "/team/" + homeSeq + ".svg";
   const awayImgPath = process.env.PUBLIC_URL + "/team/" + awaySeq + ".svg";
@@ -183,17 +178,27 @@ function PhotocardDetail() {
         <>
           {/* <div className={styles.container}>
             <div className={styles.team__title}>
-              <div><img src={homeImgPath} alt= "Home Image" className={styles.team__img}/></div>
-              <div><h1>{homeTN}</h1></div>
+              <div>
+                <img src={homeImgPath} alt="Home Image" className={styles.team__img} />
+              </div>
+              <div>
+                <h1>{homeTN}</h1>
+              </div>
             </div>
             <div className={styles.game__detail}>
-              <Avatar className="custom-vs" label="VS" size="large" shape="circle" raised/>
-              <p className="photocard_game_info">{time[0]} 년 {time[1]} 월 {time[2]} 일</p>
+              <Avatar className="custom-vs" label="VS" size="large" shape="circle" raised />
+              <p className="photocard_game_info">
+                {time[0]} 년 {time[1]} 월 {time[2]} 일
+              </p>
               <p className="photocard_game_info">{place}</p>
             </div>
             <div className={styles.team__title}>
-              <div><img src={awayImgPath} alt="Team Image" className={styles.team__img} /></div>
-              <div><h1>{awayTN}</h1></div>
+              <div>
+                <img src={awayImgPath} alt="Team Image" className={styles.team__img} />
+              </div>
+              <div>
+                <h1>{awayTN}</h1>
+              </div>
             </div>
           </div> */}
 
