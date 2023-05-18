@@ -1,7 +1,10 @@
+import React, { useEffect, useState } from "react";
 import { nickname, teamSeq } from "components/State/UserState";
 import { Dialog } from "primereact/dialog";
 import { useRecoilValue } from "recoil";
 import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
 
 const MemberUpdateModal = ({ showModal, closeModal }) => {
   const curNickname = useRecoilValue(nickname);
