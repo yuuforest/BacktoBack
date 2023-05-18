@@ -6,15 +6,9 @@ import styles from "./MainGames.module.css";
 
 function MainGames(props) {
   const homeImgPath =
-    process.env.PUBLIC_URL +
-    "/component/images/team/" +
-    props.homeTeamSeq +
-    ".svg";
+    process.env.PUBLIC_URL + "/team/" + props.homeTeamSeq + ".svg";
   const awayImgPath =
-    process.env.PUBLIC_URL +
-    "/component/images/team/" +
-    props.awayTeamSeq +
-    ".svg";
+    process.env.PUBLIC_URL + "/team/" + props.awayTeamSeq + ".svg";
 
   return (
     <Link to={`/live/${props.gameid}`} className={styles.game}>
