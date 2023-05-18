@@ -13,6 +13,8 @@ import {
   teamName,
   teamSeq,
 } from "components/State/UserState";
+import MemberUpdateModeal from "./MemberUpdateModal";
+import MemberUpdateModal from "./MemberUpdateModal";
 
 const Profile = ({ cards }) => {
   //redux 데이터
@@ -29,6 +31,11 @@ const Profile = ({ cards }) => {
       : 0;
   const [infos, setInfos] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
+  const handleUpdateModal = () => {
+    setShowModal(!showModal);
+  };
 
   useEffect(() => {
     setInfos([
@@ -54,7 +61,16 @@ const Profile = ({ cards }) => {
         </div>
         <div className="col-6">
           <div className="nickname">{curNickname}</div>
-          <i className="pi pi-cog" style={{ fontSize: "2rem" }}></i>
+          {/* <i className="pi pi-cog" style={{ fontSize: "2rem" }}></i> */}
+          <Button
+            icon="pi pi-cog"
+            onClick={handleUpdateModal}
+            style={{ fontSize: "2rem" }}
+          />
+          <MemberUpdateModal
+            showModal={showModal}
+            closeModal={handleUpdateModal}
+          />
         </div>
       </div>
       <div className="col-7 profile-right">
