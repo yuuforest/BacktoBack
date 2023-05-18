@@ -1,5 +1,5 @@
 .toggleLeft {
-  width: 300px;
+  width: 310px;
   height: 80px;
   margin-right: 20px;
   font-size: 30px;
@@ -10,7 +10,7 @@
 }
 
 .toggleRight {
-  width: 300px;
+  width: 310px;
   height: 80px;
   font-size: 30px;
   text-align: left;
@@ -25,13 +25,13 @@
 }
 
 .point-input {
-  width: 650px;
+  width: 490px;
   height: 40px;
   margin-right: 10px;
 }
 
 .betting-btn {
-  width: 160px;
+  width: 140px;
   height: 40px;
 }
 
