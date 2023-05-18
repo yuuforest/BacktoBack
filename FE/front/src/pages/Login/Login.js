@@ -74,6 +74,12 @@ const Login = () => {
   };
 
   const onClickLogin = () => {
+    if (inputId==="" || inputPw==="") {
+      alert("아이디, 비밀번호를 입력해주세요");
+    }
+    else{
+
+
     axios
       .post("http://k8a708.p.ssafy.io/api/auth/login", JSON.stringify(data), {
       // .post("http://localhost:8000/api/auth/login", JSON.stringify(data), {
@@ -102,6 +108,7 @@ const Login = () => {
 
         console.log(err);
       });
+    }
   };
 
   return (
