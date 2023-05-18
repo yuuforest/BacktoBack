@@ -153,13 +153,19 @@ function Betting(props) {
   }, [bettingTeamName, bettingPoint]);
 
   useEffect(() => {
-    setMessage(
-      bettingTeamName + " 승리 시 예상 배당금 : " + divdends + " P 획득"
-    );
+    // setMessage(
+    //   bettingTeamName + " 승리 시 예상 배당금 : " + divdends + " P 획득"
+    // );
+    if(home_checked) {
+      setMessage(props.homeName + " 승리 시 예상 배당금 : " + divdends + " P 획득");
+    } else {
+      setMessage(props.awayName + " 승리 시 예상 배당금 : " + divdends + " P 획득");
+    }
     if (homePercent !== null && awayPercent !== null) {
       setHomeLabel(props.homeName + " " + homePercent + "%");
       setAwayLabel(props.awayName + " " + awayPercent + "%");
     }
+
   }, [divdends]);
 
   useEffect(() => {
