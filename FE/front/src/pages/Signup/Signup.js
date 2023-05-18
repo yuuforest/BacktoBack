@@ -59,80 +59,86 @@ const SignUp = () => {
         teamName: selectedTeam.name,
       },
     };
+    if (inputId === "" || inputNickname === "" || inputPw === "") {
+      alert("아이디, 닉네임, 비밀번호를 입력해주세요");
+    } else {
+      if (checkId && checkNickname && selectedTeam !== "") {
+        axios
+          .post(
+            // "http://localhost:8000/api/member/signup",
+            "http://k8a708.p.ssafy.io/api/member/signup",
+            JSON.stringify(data),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              data: {},
+            }
+          )
+          .then((res) => {
+            document.location.href = "/";
 
-    if (checkId && checkNickname && selectedTeam !== "") {
-      axios
-        .post(
-          // "http://localhost:8000/api/member/signup",
-          "http://k8a708.p.ssafy.io/api/member/signup",
-          JSON.stringify(data),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            data: {},
-          }
-        )
-        .then((res) => {
-          document.location.href = "/";
-
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else alert("아이디와 닉네임 중복확인, 팀 선택을 해주세요");
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else alert("아이디와 닉네임 중복확인, 팀 선택을 해주세요");
+    }
   };
 
   const onClickExistId = () => {
     setModalOpen(true);
 
-    if(inputId === ""){
-      alert("아이디를 입력해주세요")
-    }
-    else{
-    axios
-      .get(`http://k8a708.p.ssafy.io/api/member/existId/${inputId}`)
-      // .get(`http://localhost:8000/api/member/existId/${inputId}`)
-      .then((res) => {
-        setCheckId(true);
+    if (inputId === "") {
+      alert("아이디를 입력해주세요");
+    } else {
+      axios
+        .get(`http://k8a708.p.ssafy.io/api/member/existId/${inputId}`)
+        // .get(`http://localhost:8000/api/member/existId/${inputId}`)
+        .then((res) => {
+          setCheckId(true);
 
-        alert("사용 가능한 ID입니다.");
+          alert("사용 가능한 ID입니다.");
 
-        console.log(res.data);
-      })
-      .catch((err) => {
-        alert("이미 사용중인  ID입니다.");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          alert("이미 사용중인  ID입니다.");
 
-        <Modal open={modalOpen} close={closeModal} header="Modal heading">
-          모달모달
-        </Modal>;
-        console.log(err);
-      });
+          <Modal open={modalOpen} close={closeModal} header="Modal heading">
+            모달모달
+          </Modal>;
+          console.log(err);
+        });
     }
   };
 
   const onClickExistNickname = () => {
     setModalOpen(true);
-    if(inputNickname==="") {alert("닉네임을 입력해주세요");}
-    else{axios
-      .get(`http://k8a708.p.ssafy.io/api/member/existNickname/${inputNickname}`)
-      // .get(`http://localhost:8000/api/member/existNickname/${inputNickname}`)
-      .then((res) => {
-        alert("사용 가능한 닉네임 입니다.");
-        setCheckNickname(true);
+    if (inputNickname === "") {
+      alert("닉네임을 입력해주세요");
+    } else {
+      axios
+        .get(
+          `http://k8a708.p.ssafy.io/api/member/existNickname/${inputNickname}`
+        )
+        // .get(`http://localhost:8000/api/member/existNickname/${inputNickname}`)
+        .then((res) => {
+          alert("사용 가능한 닉네임 입니다.");
+          setCheckNickname(true);
 
-        console.log(res.data);
-      })
-      .catch((err) => {
-        alert("이미 사용중인 닉네임 입니다.");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          alert("이미 사용중인 닉네임 입니다.");
 
-        <Modal open={modalOpen} close={closeModal} header="Modal heading">
-          모달모달
-        </Modal>;
-        console.log(err);
-      });}
-    
+          <Modal open={modalOpen} close={closeModal} header="Modal heading">
+            모달모달
+          </Modal>;
+          console.log(err);
+        });
+    }
   };
   return (
     <div className="sign-in-container">
