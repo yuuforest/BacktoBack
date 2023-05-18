@@ -176,7 +176,7 @@ function PhotocardDetail() {
         </div>
       ) : (
         <>
-          <div className={styles.container}>
+          {/* <div className={styles.container}>
             <div className={styles.team__title}>
               <div>
                 <img src={homeImgPath} alt="Home Image" className={styles.team__img} />
@@ -199,6 +199,31 @@ function PhotocardDetail() {
               <div>
                 <h1>{awayTN}</h1>
               </div>
+            </div>
+          </div> */}
+
+          <div className="grid game-card">
+            <div className="flex justify-content-center col-5 home-info">
+              <img
+                className="team-image"
+                src={homeImgPath}
+                alt="Home Image"
+              ></img>
+              <div className="team-name">{homeTN}</div>
+            </div>
+            <div className="col-2 game-info">
+              <div className="game-time">
+              {time[0]} 년 {time[1]} 월 {time[2]} 일
+              </div>
+              <div className="game-place">{place}</div>
+            </div>
+            <div className="flex justify-content-center col-5 away-info">
+              <img
+                className="team-image"
+                src={awayImgPath}
+                alt="Away Image"
+              ></img>
+              <div className="team-name">{awayTN}</div>
             </div>
           </div>
           <div>
