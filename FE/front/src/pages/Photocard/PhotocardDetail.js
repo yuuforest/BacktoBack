@@ -64,8 +64,11 @@ function PhotocardDetail() {
   // 포인트 받기
   const getPoint = async () => {
     try {
-      const response = await axios.get(
-            "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + memSeq
+      // const response = await axios.get(
+      //       "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + memSeq
+      // );
+       const response = await axios.get(
+            "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + 6
       );
       setPoint(response.data);
     } catch (error) {
@@ -75,8 +78,11 @@ function PhotocardDetail() {
 
   const updatePoint = async () => {
     try {
-      const response = await axios.post(
-        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
+      // const response = await axios.post(
+      //   "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + memberSeq
+      // );
+        const response = await axios.post(
+        "http://k8a708.p.ssafy.io/api/point/photocard/updatePoint/" + 6
       );
       getPoint();
     } catch (error) {
@@ -114,9 +120,16 @@ function PhotocardDetail() {
   // 유저-HL 등록
   const updateMyPhotocard = async (memberSeq, photocardSeq) => {
     try {
-      const response = await axios.post(
+      // const response = await axios.post(
+      //   "http://k8a708.p.ssafy.io/api/point/photocard/updateMyPhotocard/" +
+      //     memberSeq +
+      //     "/" +
+      //     photocardSeq
+      // );
+
+        const response = await axios.post(
         "http://k8a708.p.ssafy.io/api/point/photocard/updateMyPhotocard/" +
-          memberSeq +
+          6 +
           "/" +
           photocardSeq
       );
