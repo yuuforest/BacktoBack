@@ -75,4 +75,34 @@ class BusinessApplicationTests {
 			));
 	}
 
+	@Test
+	void gameSchedule() {
+		GameResultCrawlingDto gameResultCrawlingDto = GameResultCrawlingDto.builder()
+			.date("230516")
+			.homeTeamCode(TeamCode.valueOf("OB"))
+			.awayTeamCode(TeamCode.valueOf("WO"))
+			.build();
+
+		WebDriverUtil util = new WebDriverUtil(gameResultCrawlingDto) {
+			@Override
+			public Object process(WebDriver driver, Object param) {
+
+				driver.findElement(By.xpath("//select[@id='ddlMonth']/option[text()='04']"))
+					.click();
+				WebElement table = driver.findElement(By.id("tblSchedule")).findElement(By.tagName("tbody"));
+
+				List<WebElement> trs = table.findElements(By.tagName("tr"));
+				// for (int i = 0; i )
+
+				System.out.println(table.getText());
+
+				return param;
+			}
+		};
+
+		util.useDriver(
+			"https://www.koreabaseball.com/Schedule/Schedule.aspx"
+		);
+	}
+
 }

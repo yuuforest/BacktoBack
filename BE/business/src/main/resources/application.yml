@@ -49,7 +49,7 @@ spring:
     log-request-details: true # request의 parameter 값 등을 log에서 못 보는 설정 해제
   cloud:
     function:
-      definition: consumer;producer
+      definition: consumer;producer;getGameCondition;game-result
     stream:
       bindings:
         producer-out-0:
@@ -60,6 +60,12 @@ spring:
           destination: game-event
         consumer-in-0:
           destination: game-event
+        game-result-out-0:
+          destination: game.result
+        getGameCondition-in-0:
+          destination: game-event
+          group: game-group2 # 컨슈머 그룹
+
 #      kafka:
 #        binder:
 #          brokers: k8a708.p.ssafy.io:9092
