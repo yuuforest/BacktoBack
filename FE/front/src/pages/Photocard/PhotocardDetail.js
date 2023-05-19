@@ -18,7 +18,7 @@ function PhotocardDetail() {
   const { gameid } = useParams();
 
   // User - memberSeq 임시 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!
-  const memSeq = useRecoilValue(memberSeq);
+  const memberSeq = useRecoilValue(memberSeq);
 
   const [gameSeq, setGameSeq] = useState(null);
   const [place, setPlace] = useState();
@@ -65,7 +65,7 @@ function PhotocardDetail() {
   const getPoint = async () => {
     try {
       const response = await axios.get(
-        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + memSeq
+        "http://k8a708.p.ssafy.io/api/point/photocard/getPoint/" + memberSeq
       );
       setPoint(response.data);
     } catch (error) {
