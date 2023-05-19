@@ -145,6 +145,7 @@ function PhotocardDetail() {
       await updatePhotocard(photocardSeq);
       await updateMyPhotocard(memberSeq, photocardSeq);
       await getHL();
+      alert("구매 완료");
     } catch (error) {
       console.log("HL 구매 불가");
     }
