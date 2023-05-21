@@ -75,7 +75,7 @@ const MatchDetail = ({ gameSeq }) => {
             setReadyToVideo(true);
             break;
           case "iceCandidate":
-            webRtcPeer.addIceCandidate(
+            webRtcPeer.current.addIceCandidate(
               parsedMessage.candidate,
               function (error) {
                 if (error)
@@ -185,11 +185,11 @@ const MatchDetail = ({ gameSeq }) => {
 
   //   console.info("User media constraints" + userMediaConstraints);
 
-    webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+    webRtcPeer.current = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
       options,
       function (error) {
         if (error) return console.error(error);
-        webRtcPeer.generateOffer(onOffer);
+        webRtcPeer.current.generateOffer(onOffer);
       }
     );
   };
@@ -225,14 +225,14 @@ const MatchDetail = ({ gameSeq }) => {
   };
 
   const startResponse = (message) => {
-    webRtcPeer.processAnswer(message.sdpAnswer, function (error) {
+    webRtcPeer.current.processAnswer(message.sdpAnswer, function (error) {
       if (error) return console.error(error);
     });
   };
 
   const startStream = () => {
-    console.log("start remoteStream" + webRtcPeer.getRemoteStream);
-    videoRef.current.srcObject = webRtcPeer.getRemoteStream();
+    console.log("start remoteStream" + webRtcPeer.current.getRemoteStream);
+    videoRef.current.srcObject = webRtcPeer.current.getRemoteStream();
   };
 
   const sendMessage = function (message) {
