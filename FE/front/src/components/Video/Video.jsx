@@ -7,13 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
 
-let stomp;
-let webRtcPeer;
-let sockJs;
+
 
 const MatchDetail = ({ gameSeq }) => {
   const videoRef = useRef(null);
   const client = useRef({});
+  const webRtcPeer = useRef(null);
   // const {gameId} = useParams();
   const [readyToStart, setReadyToStart] = useState(false);
   const [readyToVideo, setReadyToVideo] = useState(false);
