@@ -41,6 +41,7 @@ const MatchDetail = ({ gameSeq }) => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
+        console.log("on Connect 합니다")
         subscribe();
       },
       onStompError: (frame) => {
@@ -237,7 +238,7 @@ const MatchDetail = ({ gameSeq }) => {
 
   const sendMessage = function (message) {
     var jsonMessage = JSON.stringify(message);
-    stomp.send(`/pub/video/${message.id}`, {}, jsonMessage);
+    client.current.send(`/pub/video/${message.id}`, {}, jsonMessage);
   };
 
   return (
