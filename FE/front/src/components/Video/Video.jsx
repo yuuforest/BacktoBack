@@ -7,12 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
 
-
+let webRtcPeer;
 
 const MatchDetail = ({ gameSeq }) => {
   const videoRef = useRef(null);
   const client = useRef({});
-  const webRtcPeer = useRef(null);
+  
   // const {gameId} = useParams();
   const [readyToStart, setReadyToStart] = useState(false);
   const [readyToVideo, setReadyToVideo] = useState(false);
@@ -75,7 +75,7 @@ const MatchDetail = ({ gameSeq }) => {
             setReadyToVideo(true);
             break;
           case "iceCandidate":
-            webRtcPeer.current.addIceCandidate(
+            webRtcPeer.addIceCandidate(
               parsedMessage.candidate,
               function (error) {
                 if (error)
@@ -185,13 +185,13 @@ const MatchDetail = ({ gameSeq }) => {
 
   //   console.info("User media constraints" + userMediaConstraints);
 
-    webRtcPeer.current = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+    webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
       options,
       function (error) {
         if (error) return console.error(error);
-        console.log(webRtcPeer.current);
+       
         console.log(onOffer);
-        webRtcPeer.current.generateOffer(onOffer);
+        webRtcPeer.generateOffer(onOffer);
       }
     );
   };
@@ -227,14 +227,13 @@ const MatchDetail = ({ gameSeq }) => {
   };
 
   const startResponse = (message) => {
-    webRtcPeer.current.processAnswer(message.sdpAnswer, function (error) {
+    webRtcPeer.processAnswer(message.sdpAnswer, function (error) {
       if (error) return console.error(error);
     });
   };
 
   const startStream = () => {
-    console.log("start remoteStream" + webRtcPeer.current.getRemoteStream);
-    videoRef.current.srcObject = webRtcPeer.current.getRemoteStream();
+    videoRef.current.srcObject = webRtcPeer.getRemoteStream();
   };
 
   const sendMessage = function (message) {
