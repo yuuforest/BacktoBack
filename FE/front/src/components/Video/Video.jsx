@@ -189,6 +189,8 @@ const MatchDetail = ({ gameSeq }) => {
       options,
       function (error) {
         if (error) return console.error(error);
+        console.log(webRtcPeer.current);
+        console.log(onOffer);
         webRtcPeer.current.generateOffer(onOffer);
       }
     );
