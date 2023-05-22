@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { useRef, useState } from "react";
 import { useParams,useNavigate  } from "react-router-dom";
-
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 import kurentoUtils from "kurento-utils";
 import { v4 as uuidv4 } from "uuid";
-import * as StompJs from "@stomp/stompjs";
-import * as SockJS from "sockjs-client";
 
+let stomp;
 let webRtcPeer;
+let sockJs;
 
 const MatchDetail = ({ gameSeq }) => {
   const videoRef = useRef(null);
-  const client = useRef({});
-  
   // const {gameId} = useParams();
   const [readyToStart, setReadyToStart] = useState(false);
   const [readyToVideo, setReadyToVideo] = useState(false);
@@ -21,43 +20,34 @@ const MatchDetail = ({ gameSeq }) => {
 
 
   useEffect(() => {
-    connect();
-    return () => disconnect();
+    sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
+    stomp = Stomp.over(sockJs);
+    enterRoom();
+    return () => {
+      stomp.disconnect();
+    };
   }, []);
 
-  const connect = () => {
-    client.current = new StompJs.Client({
-      // brokerURL: "http://k8a708.p.ssafy.io/api/media/video", // 웹소켓 서버로 직접 접속
-      webSocketFactory: () => new SockJS("http://k8a708.p.ssafy.io/api/media/video"), // proxy를 통한 접속
-      connectHeaders: {
-        gameId: gameSeq,
-        userId: userId
-      },
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-      onConnect: () => {
-        console.log("on Connect 합니다")
-        subscribe();
-      },
-      onStompError: (frame) => {
-        console.error(frame);
-      },
-    });
+  useEffect(() => {
+    if (readyToStart === true) {
+      console.log("start");
+      start();
+    }
+  }, [readyToStart]);
 
-    client.current.activate();
-  };
+  useEffect(() => {
+    if (readyToVideo === true) {
+      console.log("start Stream");
+      // startStream();
+    }
+  }, [readyToVideo]);
 
-  const disconnect = () => {
-    client.current.deactivate();
-  };
-
-  const subscribe = () => {
-    // enterRoom();
-    client.current.subscribe(`/user/${userId}/sub/${gameSeq}`, function (message) {
+  const enterRoom = () => {
+    console.log("enterRoom!!!!!");
+    const headers = { gameId: gameSeq, userId: userId };
+    //2. connection이 맺어지면 실행
+    stomp.connect(headers, function () {
+      stomp.subscribe(`/user/${userId}/sub/${gameSeq}`, function (message) {
         var parsedMessage = JSON.parse(message.body);
         switch (parsedMessage.id) {
           case "startResponse":
@@ -94,80 +84,10 @@ const MatchDetail = ({ gameSeq }) => {
             onError("Unrecognized message", parsedMessage);
         }
       });
-    
-      start();
-      setReadyToStart(true);
-  };
-
-  // useEffect(() => {
-  //   sockJs = new SockJS("http://k8a708.p.ssafy.io/api/media/video");
-  //   stomp = Stomp.over(sockJs);
-  //   enterRoom();
-  //   return () => {
-  //     stomp.disconnect();
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (readyToStart === true) {
-  //     console.log("start");
-  //     start();
-  //   }
-  // }, [readyToStart]);
-
-  useEffect(() => {
-    if (readyToVideo === true) {
-      console.log("start Stream");
-      // startStream();
-    }
-  }, [readyToVideo]);
-
-  // const enterRoom = () => {
-  //   console.log("enterRoom!!!!!");
-  //   const headers = { gameId: gameSeq, userId: userId };
-  //   //2. connection이 맺어지면 실행
-  //   stomp.connect(headers, function () {
-      // stomp.subscribe(`/user/${userId}/sub/${gameSeq}`, function (message) {
-      //   var parsedMessage = JSON.parse(message.body);
-      //   switch (parsedMessage.id) {
-      //     case "startResponse":
-      //       startResponse(parsedMessage);
-      //       break;
-      //     case "error":
-      //       onError("Error message from server: " + parsedMessage.message);
-      //       break;
-      //     case "playEnd":
-      //       alert("경기 종료")
-      //       navigate('/live');
-      //       break;
-      //     case "videoInfo":
-      //       startStream();
-      //       setReadyToVideo(true);
-      //       break;
-      //     case "iceCandidate":
-      //       webRtcPeer.addIceCandidate(
-      //         parsedMessage.candidate,
-      //         function (error) {
-      //           if (error)
-      //             return console.error("Error adding candidate: " + error);
-      //         }
-      //       );
-      //       break;
-      //     case "seek":
-      //       console.log(parsedMessage.message);
-      //       break;
-      //     case "position":
-      //       document.getElementById("videoPosition").value =
-      //         parsedMessage.position;
-      //       break;
-      //     default:
-      //       onError("Unrecognized message", parsedMessage);
-      //   }
-      // });
       // start();
-      // setReadyToStart(true);
-  //   });
-  // };
+      setReadyToStart(true);
+    });
+  };
 
   const start = () => {
     // Video and audio by default
@@ -176,21 +96,19 @@ const MatchDetail = ({ gameSeq }) => {
       video: true,
     };
 
-  //   console.log("videoRef current" + videoRef.current);
+    console.log("videoRef current" + videoRef.current);
     var options = {
       video: videoRef.current,
       mediaConstraints: userMediaConstraints,
       onicecandidate: onIceCandidate,
     };
 
-  //   console.info("User media constraints" + userMediaConstraints);
+    console.info("User media constraints" + userMediaConstraints);
 
     webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
       options,
       function (error) {
         if (error) return console.error(error);
-       
-        console.log(onOffer);
         webRtcPeer.generateOffer(onOffer);
       }
     );
@@ -233,12 +151,13 @@ const MatchDetail = ({ gameSeq }) => {
   };
 
   const startStream = () => {
+    console.log("start remoteStream" + webRtcPeer.getRemoteStream);
     videoRef.current.srcObject = webRtcPeer.getRemoteStream();
   };
 
   const sendMessage = function (message) {
     var jsonMessage = JSON.stringify(message);
-    client.current.send(`/pub/video/${message.id}`, {}, jsonMessage);
+    stomp.send(`/pub/video/${message.id}`, {}, jsonMessage);
   };
 
   return (
