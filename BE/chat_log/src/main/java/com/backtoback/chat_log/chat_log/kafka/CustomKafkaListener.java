@@ -106,6 +106,7 @@ public class CustomKafkaListener {
 		}
 
 		container.stop();
+		kafkaListenerEndpointRegistry.unregisterListenerContainer(containerId);
 
 		return container;
 	}
