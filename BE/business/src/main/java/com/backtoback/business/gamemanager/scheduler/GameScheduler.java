@@ -37,7 +37,7 @@ public class GameScheduler {
 //		pointServiceClient.readyToStartBetting();
 //    }
 
-	@Scheduled(initialDelay = 20000, fixedDelay = 500000)
+	@Scheduled(initialDelay = 20000, fixedDelay = 300000)
 	public void dateChange() {
 		log.info("dateChange!!!!!!");
 		videoServiceClient.makeRoom();
