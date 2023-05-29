@@ -57,7 +57,7 @@ spring:
           predicates:
             - Path=/api/cheer/**
         - id: media
-          uri: http://k8a7081.p.ssafy.io:8091/
+          uri: http://k8a708.p.ssafy.io:8091/
           predicates:
             - Path=/api/media/**
         - id: member
