@@ -33,7 +33,7 @@
 <br><br>
 
 ## 🔌 서비스 아키텍처
-<img src=".\Document\images\시스템아키텍처.png">
+<img src=".\Document\images\시스템아키텍처2.png">
 
 <br>
 
