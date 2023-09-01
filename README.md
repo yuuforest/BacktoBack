@@ -35,7 +35,7 @@
 
 <br>
 
-<img src=".\Document\images\팀원소개.PNG">
+<img src=".\Document\images\팀원소개.PNG" height="400" width="700">
 
 
 <br><br>
@@ -58,46 +58,46 @@
 ## 🌈 주요 기능
 
 #### **⚾️ 경기 목록 및 중계 화면** <br>
-오늘 경기 목록에서 중계 화면으로 이동할 수 있습니다. 
+오늘 경기 목록에서 중계 화면으로 이동할 수 있습니다. <br>
 (kurento Media Server를 사용하여 비디오 스트리밍 환경 구축)
-<img src=".\Document\images\경기목록.png">
-<img src=".\Document\images\실시간전체.png">
+<img src=".\Document\images\경기목록.png" height="450" width="600">
+<img src=".\Document\images\실시간전체.png" height="450" width="600">
 
 #### **⚾️ 베팅** <br>
 경기 시작 전에 예상한 승리팀에 원하는 포인트 만큼 베팅하고 <br>
 경기가 시작하면 각 팀의 베팅률과 예상 배당금을 확인할 수 있습니다. <br>
-경기가 끝나면 경기 결과에 따라 예상 배당금이 지급됩니다. 
+경기가 끝나면 경기 결과에 따라 예상 배당금이 지급됩니다.  <br>
 (예상 승리팀에 포인트를 베팅하고, 경기 결과에 따라 배당금을 지급받는 Restful API 개발)
-<img src=".\Document\images\베팅.gif">
-<img src=".\Document\images\배당금.gif">
+<img src=".\Document\images\베팅.gif"  height="400" width="700">
+<img src=".\Document\images\배당금.gif"  height="400" width="700">
 
 
 #### **⚾️ 응원** <br>
-경기 시작 전, 후에 상관없이 원하는 팀의 클릭수를 올려 응원할 수 있습니다.  
+경기 시작 전, 후에 상관없이 원하는 팀의 클릭수를 올려 응원할 수 있습니다. <br>
 (Websocket을 사용하여 원하는 팀을 클릭하여 응원하는 서비스 구현)
-<img src=".\Document\images\응원.gif"> 
+<img src=".\Document\images\응원.gif"  height="400" width="700"> 
 
 
 #### **⚾️ 채팅** <br>
 회원가입 시 선택한 My 야구 팀이 동일한 회원들만 참여 가능한 팀 채팅과 <br>
-팀 관계없이 모두 참여 가능한 전체 채팅을 할 수 있습니다. 
+팀 관계없이 모두 참여 가능한 전체 채팅을 할 수 있습니다. <br> 
 (STOMP(Websocket), Kafka를 사용하여 전체 채팅 / 마이팀 채팅 구현)
-<img src=".\Document\images\마이팀채팅.gif">
-<img src=".\Document\images\전체채팅.gif">
+<img src=".\Document\images\마이팀채팅.gif"  height="400" width="700">
+<img src=".\Document\images\전체채팅.gif"  height="400" width="700">
 
 
 #### **⚾️ 포토카드** <br>
 경기 중, 채팅 로그를 통해 채팅이 일시적으로 급증하는 것을 감지한 후 해당 장면에 대한 포토카드를 생성합니다. <br>
-(채팅 데이터 추이를 분석하여 하이라이트 시간대 추출 → 비디오를 .GIF로 변환)
-경기가 끝나면 랜덤으로 사용자들이 포토카드를 구매할 수 있습니다. 
+(채팅 데이터 추이를 분석하여 하이라이트 시간대 추출 → 비디오를 .GIF로 변환) <br>
+경기가 끝나면 랜덤으로 사용자들이 포토카드를 구매할 수 있습니다. <br> 
 (유저의 포인트를 차감하여 카드를 구매하는 Restful API 개발)
-<img src=".\Document\images\포토카드구매.gif">
+<img src=".\Document\images\포토카드구매.gif"  height="400" width="700">
 
 #### **⚾️ 마이페이지** <br>
 회원의 기본 정보와 구매한 포토카드 목록을 확인할 수 있습니다. <br>
 또, 포인트 사용 내역을 리스트로 확인할 수 있습니다. 
-<img src=".\Document\images\마이페이지.png">
-<img src=".\Document\images\포인트로그.PNG">
+<img src=".\Document\images\마이페이지.png" height="450" width="600">
+<img src=".\Document\images\포인트로그.PNG" height="450" width="600">
 
 <br>
 
