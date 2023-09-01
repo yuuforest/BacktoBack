@@ -68,8 +68,8 @@
 경기가 시작하면 각 팀의 베팅률과 예상 배당금을 확인할 수 있습니다. <br>
 경기가 끝나면 경기 결과에 따라 예상 배당금이 지급됩니다.  <br>
 (예상 승리팀에 포인트를 베팅하고, 경기 결과에 따라 배당금을 지급받는 Restful API 개발)
-<img src=".\Document\images\베팅.gif"  height="400" width="700">
-<img src=".\Document\images\배당금.gif"  height="400" width="700">
+<img src=".\Document\images\베팅.gif"  height="210" width="620">
+<img src=".\Document\images\배당금.gif"  height="210" width="620">
 
 
 #### **⚾️ 응원** <br>
@@ -96,8 +96,8 @@
 #### **⚾️ 마이페이지** <br>
 회원의 기본 정보와 구매한 포토카드 목록을 확인할 수 있습니다. <br>
 또, 포인트 사용 내역을 리스트로 확인할 수 있습니다. 
-<img src=".\Document\images\마이페이지.png" height="450" width="600">
-<img src=".\Document\images\포인트로그.PNG" height="450" width="600">
+<img src=".\Document\images\마이페이지.png" height="350" width="600">
+<img src=".\Document\images\포인트로그.PNG" height="350" width="600">
 
 <br>
 
