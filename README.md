@@ -33,10 +33,7 @@
 
 ## 🚴 팀원소개
 
-<br>
-
 <img src=".\Document\images\팀원소개.PNG" height="400" width="700">
-
 
 <br><br>
 
@@ -48,12 +45,12 @@
 ## 🔌 서비스 아키텍처
 <img src=".\Document\images\시스템아키텍처.png">
 
-<br>
+<br><br>
 
 ## ☁️ 데이터베이스 구조 (ERD)
 <img src=".\Document\images\erd.png">
 
-<br>
+<br><br>
 
 ## 🌈 주요 기능
 
@@ -99,7 +96,7 @@
 <img src=".\Document\images\마이페이지.png" height="350" width="600">
 <img src=".\Document\images\포인트로그.PNG" height="350" width="600">
 
-<br>
+<br><br>
 
 ## 🎥 UCC
 👉 [보러가기](https://github.com/yuuforest/BacktoBack/tree/develop/Document/ucc/BacktoBack.avi)
