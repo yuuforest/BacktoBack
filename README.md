@@ -62,6 +62,8 @@
 <img src=".\Document\images\경기목록.png" height="450" width="600">
 <img src=".\Document\images\실시간전체.png" height="450" width="600">
 
+<br>
+
 ### **⚾️ 베팅**
 ```
 경기 시작 전에 예상한 승리팀에 원하는 포인트 만큼 베팅하고 
@@ -72,6 +74,7 @@
 <img src=".\Document\images\베팅.gif"  height="210" width="620">
 <img src=".\Document\images\배당금.gif"  height="210" width="620">
 
+<br>
 
 ### **⚾️ 응원**
 ```
@@ -80,6 +83,7 @@
 ```
 <img src=".\Document\images\응원.gif"  height="350" width="620"> 
 
+<br>
 
 ### **⚾️ 채팅**
 ```
@@ -89,6 +93,8 @@
 ```
 <img src=".\Document\images\마이팀채팅.gif"  height="350" width="620">
 <img src=".\Document\images\전체채팅.gif"  height="350" width="620">
+
+<br>
 
 ### **✨ 하이라이트 포토카드 생성**
 ```
@@ -103,6 +109,8 @@
 → 유저의 포인트를 차감하여 카드를 구매하는 Restful API 개발
 ```
 <img src=".\Document\images\포토카드구매.gif"  height="350" width="620">
+
+<br>
 
 ### **⚾️ 마이페이지**
 ```
