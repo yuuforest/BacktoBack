@@ -31,12 +31,6 @@
 
 <br><br>
 
-## 🚴 팀원소개
-
-<img src=".\Document\images\팀원소개.PNG" height="400" width="700">
-
-<br><br>
-
 ## 🔧 기술스택
 <img src=".\Document\images\기술스택2.png">
 
@@ -125,4 +119,8 @@
 ## 🎥 UCC
 👉 [보러가기](https://github.com/yuuforest/BacktoBack/tree/develop/Document/ucc/BacktoBack.avi)
 
-<br/>
+<br><br>
+
+## 🚴 팀원소개
+
+<img src=".\Document\images\팀원소개.PNG" height="400" width="700">
